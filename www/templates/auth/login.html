@@ -1,0 +1,29 @@
+<ion-view>
+   <ion-content id="loginform">
+      <div layout="row" layout-align="center center">
+         <div flex="33">
+            <div>
+               <div class="md-toolbar-tool">
+                  <h2>
+                     <span layout="row" layout-align="center">LOGIN</span>
+                  </h2>
+               </div>
+            </div>
+            <div layout-padding>
+               <form name="loginForm" novalidate>
+                  <div class="md-block">
+                     <input placeholder="Email Address" type="email" ng-model="newUser.userEmail" name="userEmail" required>
+                  </div>
+                  <div class="md-block">
+                     <input placeholder="Password" type="password" ng-model="newUser.userPassword" name="userPassword" required class="md-block" >
+                  </div>
+                  <section layout="row" layout-align="space-around start">
+                     <button type="submit" class="md-raised md-primary" ng-click="Login(loginForm)">Login</button>
+                     <button md-no-ink ui-sref="forgot" class="md-raised" >Reset Password</button>
+                  </section>
+               </form>
+            </div>
+         </div>
+      </div>
+   </ion-content>
+</ion-view>
