@@ -20,7 +20,7 @@ app.factory("AuthenticationService", function($http, $location, $timeout){
          });
          // TODO: set path to redirect to after login
          $timeout(function(){
-            $location.path('/app/home');
+            $location.path('/home');
          }, 0);
 
          //TODO: error handling if gmail account is accessed through normal login.

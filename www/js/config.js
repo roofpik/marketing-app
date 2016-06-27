@@ -20,6 +20,17 @@ app
       controller: 'LoginCtrl'
    });
 
+   $stateProvider.state("home", {
+      url: '/home',
+      templateUrl: 'templates/home/home.html',
+      controller: 'HomeCtrl',
+      resolve: {
+         currentAuth: function(AuthenticationService){
+            return AuthenticationService.checkAuthentication();
+         }
+      }
+   });
+
    // if none of the above states are matched, use this as the fallback
    $urlRouterProvider.otherwise('/landing');
 });
