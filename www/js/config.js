@@ -1,23 +1,18 @@
-app
-.config(function($stateProvider, $urlRouterProvider) {
+app.config(function($stateProvider, $urlRouterProvider) {
 
-   $stateProvider
-   .state('landing', {
-      url: '/landing',
-      templateUrl: 'templates/auth/landing.html',
-      controller: 'LandingCtrl'
-   })
-   .state('intro-slider', {
-      url: '/intro-slider',
-      templateUrl: 'templates/auth/intro-slider.html',
-      controller: 'IntroSliderCtrl'
-   })
+  
 
    //State for login
    $stateProvider.state('login', {
       url: '/login',
       templateUrl: 'templates/auth/login.html',
       controller: 'LoginCtrl'
+   });
+
+   $stateProvider.state('resetPassword', {
+      url: '/resetPassword',
+      templateUrl: 'templates/auth/forgot-password.html',
+      controller: 'resetPasswordCtrl'
    });
 
    $stateProvider.state("home", {
@@ -32,5 +27,5 @@ app
    });
 
    // if none of the above states are matched, use this as the fallback
-   $urlRouterProvider.otherwise('/landing');
+   $urlRouterProvider.otherwise('/login');
 });
