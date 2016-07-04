@@ -74,6 +74,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 	// getLocations();
 
 	function getLocations(){
+		console.log('location/'+$scope.project.projectDetails.address.cityId, $scope.project.projectDetails.address.zoneId);
 		var locationData = firebase.database().ref('location/'+$scope.project.projectDetails.address.cityId).orderByChild('zoneId').equalTo($scope.project.projectDetails.address.zoneId);
 		console.log(locationData);
 	     locationData.on('value', function(data) {

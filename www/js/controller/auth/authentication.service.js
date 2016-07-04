@@ -32,6 +32,12 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
                 $window.localStorage.removeItem('name');
                 $window.localStorage.removeItem('email');
                 $window.localStorage.removeItem('uid');
+                $window.localStorage.removeItem('project');
+                $window.localStorage.removeItem('cityid');
+                $window.localStorage.removeItem('projectid');
+                $window.localStorage.removeItem('customerInfo');
+                $window.localStorage.removeItem('selectedLocation');
+
                 console.log(window.localStorage);
 
             }, function(error) {

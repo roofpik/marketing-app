@@ -2,8 +2,10 @@ app.controller('CreateProjectCtrl', ['$scope', '$timeout', '$ionicPopup', '$stat
 
 	getCities();
 
-	$scope.myId = window.localStorage.uid;
-	$scope.myName = window.localStorage.name;
+	//$scope.myId = window.localStorage.uid;
+	$scope.myId = window.localStorage.getItem('uid');
+	//$scope.myName = window.localStorage.name;
+	$scope.myName = window.localStorage.getItem('name');
 	console.log($scope.myId);
 
 	$scope.cities = [];
