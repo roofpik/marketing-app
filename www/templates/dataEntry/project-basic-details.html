@@ -1,0 +1,207 @@
+<ion-view class="project-basic-details">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Project Details</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="item item-divider">
+				Address
+			</div>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Address Line 1</span>
+			    <input type="text" placeholder="Address Line 1" ng-model = "projectDetails.address.addressLine1">
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Address Line 2</span>
+			    <input type="text" placeholder="Address Line 2" ng-model = "projectDetails.address.addressLine2">
+		 	</label>
+		  	<label class="item item-input item-floating-label">
+		    	<span class="input-label labels">Pincode</span>
+		    	<input type="number" placeholder="Pincode" ng-model = "projectDetails.address.pincode">
+			</label>
+		  	<div class="latlng">
+				<label class="item item-input item-floating-label lat">
+					<span class="input-label labels">Latitude</span>
+			    	<input type="number" placeholder="Latitude" ng-model = "projectDetails.address.lat">
+				</label>
+				<label class="item item-input item-floating-label lng">
+			    	<span class="input-label labels">Longitude</span>
+			    	<input type="number" placeholder="Longitude" ng-model = "projectDetails.address.lng">
+				</label>
+			</div>
+			<div class="location">
+				<div class="list" id="locationSelect" ng-click="displayLocation()">
+					<p>Select Location</p>
+				</div>
+				<div class="item" ng-repeat="location in locations" ng-show="wantLocations" ng-click="selectLocation(location)">
+					<div class="row">
+						<div class="col-90">{{location.locationName}}</div>
+						<div class="col-10" ng-show="location.checked"><i class="icon ion-checkmark-circled"></i></div>
+					</div>
+				</div>
+			</div>
+			<div class="item item-divider">
+				Other Details
+			</div>
+			<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Total Units</span>
+			    <input type="number" placeholder="Total Units" ng-model = "projectDetails.totalUnits">
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Total Towers</span>
+			    <input type="number" placeholder="Total Towers" ng-model = "projectDetails.totalTowers">
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Green Area</span>
+			    <input type="number" placeholder="Green Area" ng-model = "projectDetails.greenArea">
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Land Area</span>
+			    <input type="number" placeholder="Land Area" ng-model = "projectDetails.landArea">
+		  	</label>
+		  	<div class="item item-divider">
+				Lifts
+			</div>
+			<div class="lifts">
+				<label class="item item-input item-floating-label min">
+			    	<span class="input-label labels">Min</span>
+			    	<input type="number" placeholder="Min" ng-model = "projectDetails.lifts.min">
+				</label>
+				<label class="item item-input item-floating-label max">
+					<span class="input-label labels">Max</span>
+			    	<input type="number" placeholder="Max" ng-model = "projectDetails.lifts.max">
+				</label>
+			</div>
+			<div class="item item-divider">
+				Floors
+			</div>
+			<div class="floors">
+				<label class="item item-input item-floating-label min">
+			    	<span class="input-label labels">Min</span>
+			    	<input type="number" placeholder="Min" ng-model = "projectDetails.floors.min">
+				</label>
+				<label class="item item-input item-floating-label max">
+					<span class="input-label labels">Max</span>
+			    	<input type="number" placeholder="Max" ng-model = "projectDetails.floors.max">
+				</label>
+			</div>
+			<div class="project-type">
+				<div class="item item-divider">
+					Type
+				</div>
+				<div class="row row1">
+					<div class="col" ng-click="selectType(0)" ng-class="type[0]?'selected': 'notSelected'">
+						<i class="icon ion-ios-home"></i>
+						<p>Apartment</p>
+					</div>
+					<div class="col" ng-click="selectType(1)" ng-class="type[1]?'selected': 'notSelected'">
+						<i class="icon ion-ios-home"></i>
+						<p>Villa</p>
+					</div>
+					<div class="col" ng-click="selectType(2)" ng-class="type[2]?'selected': 'notSelected'">
+						<i class="icon ion-ios-home"></i>
+						<p>Row House</p>
+					</div>
+				</div>
+				<div class="row row2">
+					<div class="col" ng-click="selectType(3)" ng-class="type[3]?'selected': 'notSelected'">
+						<i class="icon ion-ios-home"></i>
+						<p>Studio</p>
+					</div>
+					<div class="col" ng-click="selectType(4)" ng-class="type[4]?'selected': 'notSelected'">
+						<i class="icon ion-ios-home"></i>
+						<p>Serviced Apartments</p>
+					</div>
+				</div>
+			</div>
+			<div class="parking-vastu">
+				<div class="item item-divider">
+					Extra
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectExtras(0)" ng-class="extra[0]?'selected': 'notSelected'"> 
+						<i class="icon ion-android-car"></i>
+						<p>Car Parking</p>
+					</div>
+					<div class="col" ng-click="selectExtras(1)" ng-class="extra[1]?'selected': 'notSelected'">
+						<i class="icon ion-model-s"></i>
+						<p>Visitor Car Parking</p>
+					</div>
+					<div class="col" ng-click="selectExtras(2)" ng-class="extra[2]?'selected': 'notSelected'">
+						<i class="icon ion-android-compass"></i>
+						<p>Vastu Compliant</p>
+					</div>
+				</div>
+			</div>
+			<div class="bank-loans">
+				<div class="item item-divider">
+					Approved Bank Loans
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectBank(0)" ng-class="banks[0]?'selected': 'notSelected'"> 
+						<p>HDFC</p>
+					</div>
+					<div class="col" ng-click="selectBank(1)" ng-class="banks[1]?'selected': 'notSelected'">
+						<p>SBI</p>
+					</div>
+					<div class="col" ng-click="selectBank(2)" ng-class="banks[2]?'selected': 'notSelected'">
+						<p>AXIS</p>
+					</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectBank(3)" ng-class="banks[3]?'selected': 'notSelected'"> 
+						<p>ICICI</p>
+					</div>
+					<div class="col" ng-click="selectBank(4)" ng-class="banks[4]?'selected': 'notSelected'">
+						<p>KOTAK</p>
+					</div>
+					<div class="col" ng-click="selectBank(5)" ng-class="banks[5]?'selected': 'notSelected'">
+						<p>HSBC</p>
+					</div>
+				</div>
+			</div>
+			<div class="partners">
+				<div class="item item-divider">
+					Construction Company
+				</div>
+				<label class="item item-input item-floating-label">
+				    <span class="input-label labels">Name</span>
+				    <input type="text" placeholder="Name" ng-model = "projectDetails.partners.constructionCompany.name">
+			 	</label>
+			  	<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Website</span>
+			    	<input type="text" placeholder="Website" ng-model = "projectDetails.partners.constructionCompany.website">
+				</label>
+
+				<div class="item item-divider">
+					Architect
+				</div>
+				<label class="item item-input item-floating-label">
+				    <span class="input-label labels">Name</span>
+				    <input type="text" placeholder="Name" ng-model = "projectDetails.partners.architect.name">
+			 	</label>
+			  	<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Website</span>
+			    	<input type="text" placeholder="Website" ng-model = "projectDetails.partners.architect.website">
+				</label>
+
+				<div class="item item-divider">
+					Landscape Designer
+				</div>
+				<label class="item item-input item-floating-label">
+				    <span class="input-label labels">Name</span>
+				    <input type="text" placeholder="Name" ng-model = "projectDetails.partners.landscapeDesigner.name">
+			 	</label>
+			  	<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Website</span>
+			    	<input type="text" placeholder="Website" ng-model = "projectDetails.partners.landscapeDesigner.website">
+				</label>
+			</div>
+			<div>
+				<button class="button button-block button-dark" ng-click="save()">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

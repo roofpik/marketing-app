@@ -1,0 +1,56 @@
+<ion-view class="home-delivery">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Home Delivery</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="item item-divider" style="text-align:center;">
+				Select Type
+			</div>
+			<div class="row" id="homeDeliveryTypes">
+				<div class="col" ng-click="selectShop('restaurant')" ng-class="vendorType=='restaurant'?'selected': 'notSelected'">Restaurant</div>
+				<div class="col" ng-click="selectShop('grocery')" ng-class="vendorType=='grocery'?'selected': 'notSelected'">Grocery</div>
+				<div class="col" ng-click="selectShop('pharmacy')" ng-class="vendorType=='pharmacy'?'selected': 'notSelected'">Pharmacy</div>
+			</div>
+			<div class = "row" id="homeDeliveryTypes">
+				<div class="col" ng-click="selectShop('cableProvider')" ng-class="vendorType=='cableProvider'?'selected': 'notSelected'">Cable Provider</div>
+				<div class="col" ng-click="selectShop('isp')" ng-class="vendorType=='isp'?'selected': 'notSelected'">ISP</div>
+				<div class="col" ng-click="selectShop('parlour')" ng-class="vendorType=='parlour'?'selected': 'notSelected'">Parlour</div>
+			</div>
+			<div class = "row" id="homeDeliveryTypes">
+				<div class="col" ng-click="selectShop('milkman')" ng-class="vendorType=='milkman'?'selected': 'notSelected'">Milkman</div>
+				<div class="col" ng-click="selectShop('newspaperDelivery')" ng-class="vendorType=='newspaperDelivery'?'selected': 'notSelected'">Newspaper Delivery</div>
+				<div class="col" ng-click="selectShop('laundry')" ng-class="vendorType=='laundry'?'selected': 'notSelected'">Laundry</div>
+			</div>
+			<div class="home-delivery-options">
+				<div class="add">
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Name</span>
+					   	<input type="text" placeholder="Name" ng-model = "homeDeliveryDetails.name">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Contact Number</span>
+					   	<input type="number" placeholder="Contact Number" ng-model = "homeDeliveryDetails.contact">
+					</label>
+					<div class="addBtn">
+						<button class="button button-dark" ng-click="addShop()">Add</button>
+					</div>
+				</div>
+				<div class="display" ng-show="vendorsCount">
+					<div class="row headings">
+						<div class="col">Name</div>
+						<div class="col">Contact</div>
+						<div class="col">Type</div>
+					</div>
+					<div class="row" ng-repeat="vendor in vendors">
+						<div class="col"><strong>{{vendor.name}}</strong></div>
+						<div class="col"><strong>{{vendor.contact}}</strong></div>
+						<div class="col"><strong>{{vendor.type}}</strong></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

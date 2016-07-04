@@ -1,0 +1,151 @@
+<ion-view class="sports-n-clubhouse">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Sports And Clubhouse</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card sportsNclub">
+			<div class="item item-divider">
+				Sports Activities
+			</div>
+			<div class="sports">
+				<div class="row">
+					<div class="col" ng-click="selectSports('cricket')" ng-class="sportsActivities.cricket? 'selected': 'notSelected'">Cricket</div>
+					<div class="col" ng-click="selectSports('football')" ng-class="sportsActivities.football? 'selected': 'notSelected'">Football</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('tennis')" ng-class="sportsActivities.tennis? 'selected': 'notSelected'">Tennis</div>
+					<div class="col" ng-click="selectSports('squash')" ng-class="sportsActivities.squash? 'selected': 'notSelected'">Squash</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('baseball')" ng-class="sportsActivities.baseball? 'selected': 'notSelected'">Basketball</div>
+					<div class="col" ng-click="selectSports('volleyball')" ng-class="sportsActivities.volleyball? 'selected': 'notSelected'">Volleyball</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('multiPurposeCourt')" ng-class="sportsActivities.multiPurposeCourt? 'selected': 'notSelected'">Multi Purpose Court</div>
+					<div class="col" ng-click="selectSports('bowlingAlley')" ng-class="sportsActivities.bowlingAlley? 'selected': 'notSelected'">Bowling Alley</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('skatingRink')" ng-class="sportsActivities.skatingRink? 'selected': 'notSelected'">Skating Rink</div>
+					<div class="col" ng-click="selectSports('snookerTable')" ng-class="sportsActivities.snookerTable? 'selected': 'notSelected'">Snooker Table</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('badminton')" ng-class="sportsActivities.badminton? 'selected': 'notSelected'">Badminton</div>
+					<div class="col" ng-click="selectSports('pitchAndPutt')" ng-class="sportsActivities.pitchAndPutt? 'selected': 'notSelected'">Pitch And Putt</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('tableTennis')" ng-class="sportsActivities.tableTennis? 'selected': 'notSelected'">Table Tennis</div>
+					<div class="col" ng-click="selectSports('poolTable')" ng-class="sportsActivities.poolTable? 'selected': 'notSelected'">Pool Table</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('joggingTrack')" ng-class="sportsActivities.joggingTrack? 'selected': 'notSelected'">Jogging Track</div>
+					<div class="col" ng-click="selectSports('amphitheatre')" ng-class="sportsActivities.amphitheatre? 'selected': 'notSelected'">Amphitheatre</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('swimmingPool')" ng-class="sportsActivities.swimmingPool? 'selected': 'notSelected'">Swimming Pool</div>
+					<div class="col" ng-click="selectSports('kidsSwimmingPool')" ng-class="sportsActivities.kidsSwimmingPool? 'selected': 'notSelected'">Kids Swimming Pool</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectSports('kidsPlayArea')" ng-class="sportsActivities.kidsPlayArea? 'selected': 'notSelected'">Kids Play Area</div>
+				</div>
+			</div>
+			<div class="item item-divider">
+				Clubhouse
+			</div>
+			<div class="clubTimings row">
+				<div class="col">
+					<label class="item item-input item-floating-label start">
+						<span class="input-label labels">Opening Time</span>
+				    	<input type="text" placeholder="Opening Time" ng-model = "clubHouse.operatingTimes.start">
+					</label>
+				</div>
+				<div class="col">
+					<label class="item item-input item-floating-label end">
+				    	<span class="input-label labels">Closing Time</span>
+				    	<input type="text" placeholder="Closing Time" ng-model = "clubHouse.operatingTimes.end">
+					</label>
+				</div>
+			</div>
+			<div class="holiday">
+				<h5>Clubhouse Holiday</h5>
+				<div class="row">
+					<div class="col">
+						<ion-checkbox ng-model="day.monday">Monday</ion-checkbox> 
+					</div>
+					<div class="col">
+						<ion-checkbox ng-model="day.tuesday">Tuesday</ion-checkbox>
+					</div>
+	  			</div>
+	  			<div class="row">
+	  				<div class="col">
+	  					<ion-checkbox ng-model="day.wednesday">Wednesday</ion-checkbox>
+	  				</div>
+	  				<div class="col">
+	  					<ion-checkbox ng-model="day.thursday">Thursday</ion-checkbox>
+	  				</div>
+	  			</div>
+	  			<div class="row">
+	  				<div class="col">
+	  					<ion-checkbox ng-model="day.friday">Friday</ion-checkbox>
+	  				</div>
+	  				<div class="col">
+	  					<ion-checkbox ng-model="day.saturday">Saturday</ion-checkbox>
+	  				</div>
+	  			</div>
+	  			<div class="row">
+	  				<div class="col">
+	  					<ion-checkbox ng-model="day.sunday">Sunday</ion-checkbox>
+	  				</div>
+	  				<div class="col"></div>
+	  			</div>
+			</div>
+			
+			<div class="clubhouse">
+				<h5>Clubhouse Amenities</h5>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('miniTheatre')" ng-class="clubHouse.miniTheatre? 'selected': 'notSelected'">Mini Theatre</div>
+					<div class="col" ng-click="selectClubActivity('restaurant')" ng-class="clubHouse.restaurant? 'selected': 'notSelected'">Restaurant</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('yogaRoom')" ng-class="clubHouse.yogaRoom? 'selected': 'notSelected'">YogaRoom</div>
+					<div class="col" ng-click="selectClubActivity('aerobicsRooms')" ng-class="clubHouse.aerobicsRooms? 'selected': 'notSelected'">Aerobics Room</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('danceRoom')" ng-class="clubHouse.danceRoom? 'selected': 'notSelected'">Dance Room</div>
+					<div class="col" ng-click="selectClubActivity('musicRoom')" ng-class="clubHouse.musicRoom? 'selected': 'notSelected'">Music Room</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('salon')" ng-class="clubHouse.salon? 'selected': 'notSelected'">Salon</div>
+					<div class="col" ng-click="selectClubActivity('spa')" ng-class="clubHouse.spa? 'selected': 'notSelected'">Spa</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('gym')" ng-class="clubHouse.gym? 'selected': 'notSelected'">Gym</div>
+					<div class="col" ng-click="selectClubActivity('videoGames')" ng-class="clubHouse.videoGames? 'selected': 'notSelected'">Video Games</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('jacuzzi')" ng-class="clubHouse.jacuzzi? 'selected': 'notSelected'">Jacuzzi</div>
+					<div class="col" ng-click="selectClubActivity('kidsZone')" ng-class="clubHouse.kidsZone? 'selected': 'notSelected'">Kids Zone</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('bar')" ng-class="clubHouse.bar? 'selected': 'notSelected'">Bar</div>
+					<div class="col" ng-click="selectClubActivity('cafe')" ng-class="clubHouse.cafe? 'selected': 'notSelected'">Cafe</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('businessCentre')" ng-class="clubHouse.businessCentre? 'selected': 'notSelected'">Business Centre</div>
+					<div class="col" ng-click="selectClubActivity('guestrooms')" ng-class="clubHouse.guestrooms? 'selected': 'notSelected'">Guest Room</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('steamRoom')" ng-class="clubHouse.steamRoom? 'selected': 'notSelected'">Steam Room</div>
+					<div class="col" ng-click="selectClubActivity('saunaRoom')" ng-class="clubHouse.saunaRoom? 'selected': 'notSelected'">Sauna Room</div>
+				</div>
+				<div class="row">
+					<div class="col" ng-click="selectClubActivity('multiPurposeHall')" ng-class="clubHouse.multiPurposeHall? 'selected': 'notSelected'">Multi Purpose Hall</div>
+				</div>
+			</div>
+			<div>
+				<button class="button button-block button-dark" ng-click="save()">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

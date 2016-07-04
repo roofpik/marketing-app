@@ -1,0 +1,30 @@
+<ion-view class="rwa-details">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">RWA Details</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Name</span>
+				<input type="text" placeholder="Contact Name" ng-model="rwa.contactName">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Email Address</span>
+				<input type="email" placeholder="Email Address" ng-model="rwa.emailAddress">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Number</span>
+				<input type="number" placeholder="Contact Number" ng-model="rwa.contactNumber">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Rules</span>
+				<textarea rows="4" cols="50"  placeholder="Rules" ng-model="rwa.rules"></textarea>
+			</label>
+			<div>
+				<button class="button button-block button-dark" ng-click="save()">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

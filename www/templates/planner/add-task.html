@@ -1,0 +1,55 @@
+<ion-view class="add-task">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Add Task</h1>
+		<!-- <button class="button button-balanced" ng-click="addThisTask()">Add</button> -->
+	</ion-header-bar>
+	<ion-content>
+		<div class = "card">
+			<label class="item item-input item-select">
+				    <div class="input-label">
+				        Select City
+				    </div>
+				    <select ng-change="selectCity(cityDetails)" ng-model="cityDetails">
+				        <option 
+				            ng-repeat="city in cities" 
+				            value="{{city}}">
+				                {{city.cityName}}
+				        </option>
+				    </select>
+			</label>
+
+			<label class="item item-input item-select" ng-show="citySelected">
+			    <div class="input-label">
+			        Select Project
+			    </div>
+			    <select ng-change="selectProject(projectDetails)" ng-model="projectDetails">
+			        <option 
+			            ng-repeat="project in projects" 
+			            value="{{project}}">
+			                {{project.projectName}}
+			        </option>
+			    </select>
+			</label>
+
+			<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Start Time</span>
+			    <input type="text" placeholder="Start Time" ng-model="data.start.time" >
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">End Time</span>
+			    <input type="text" placeholder="End Time" ng-model="data.end.time">
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Purpose</span>
+			    <input type="text" placeholder="Purpose" ng-model="data.purpose" >
+		  	</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Comments</span>
+			    <input type="text" placeholder="Comments" ng-model="data.comments" >
+		  	</label>
+		</div>
+
+		<ion-button class="button button-block button-positive" ng-click="addTask()">Add Data Entry Task</ion-button>
+	</ion-content>
+</ion-view>

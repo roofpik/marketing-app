@@ -1,0 +1,92 @@
+<ion-view class="ranking-rating">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Project Ranking Rating</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="rating">
+				<div class="item item-divider">
+					Rating
+				</div>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Number</span>
+					<input type="number" placeholder="Number" ng-model="ratings.number">
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Average</span>
+					<input type="number" placeholder="Average" ng-model="ratings.average">
+				</label>
+			</div>
+			<div class="ranking">
+				<div class="item item-divider">
+					Ranking
+				</div>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Score</span>
+					<input type="number" placeholder="Between 0 and 1 like 0.9898" ng-model="ranking.score">
+				</label>
+			</div>
+			<div class="priceRange">
+				<div class="item item-divider">
+					Price Range
+				</div>
+				<div class="buy">
+					<div class="priceRangeHeading">
+						<h5>BUY</h5>
+					</div>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Max</span>
+						<input type="number" placeholder="Max" ng-model="priceRange.buy.max">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Min</span>
+						<input type="number" placeholder="Min" ng-model="priceRange.buy.min">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Average</span>
+						<input type="number" placeholder="Average" ng-model="priceRange.buy.average">
+					</label>
+				</div>
+				<div class="rent">
+					<div class="priceRangeHeading">
+						<h5>RENT</h5>
+					</div>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Max</span>
+						<input type="number" placeholder="Max" ng-model="priceRange.rent.max">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Min</span>
+						<input type="number" placeholder="Min" ng-model="priceRange.rent.min">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Average</span>
+						<input type="number" placeholder="Average" ng-model="priceRange.rent.average">
+					</label>
+				</div>
+			</div>
+			<div class="areaDetails">
+				<div class="item item-divider">
+					Area Details
+				</div>
+				<label class="item item-input item-floating-label">
+						<span class="input-label labels">Max</span>
+						<input type="number" placeholder="Max" ng-model="areas.max">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Min</span>
+						<input type="number" placeholder="Min" ng-model="areas.min">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Price Per Sq. Ft.</span>
+						<input type="number" placeholder="Price Per Sq. Ft." ng-model="areas.pricePerSquareFeet">
+					</label>
+			</div>
+			<div>
+				<button class="button button-block button-dark" ng-click="save()">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

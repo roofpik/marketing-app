@@ -1,0 +1,48 @@
+<ion-view view-title="Data Entry" >
+
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/data-entry-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/data-entry/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/data-entry-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content >
+        <div class="row">
+            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity()">
+            {{toggle}}
+            </ion-button>
+            <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">
+            Cancel
+            </ion-button>
+        </div>
+
+
+        <form name="myForm" novalidate>
+            <div class="list card">
+                <label class="item item-icon-left " >
+                   <div class="ion-location" > Start Time</div>
+                   </br>
+                   <p>Start time: {{startTime}}</p>
+                </label>
+
+                <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-android-chat"> Remarks</span>
+                      <textarea rows="5" ng-change="change()" ng-model="activity.remark" ng-init="remark=null"></textarea>
+                </label>
+                <ion-button class="button button-block button-stable" ng-click="data_entry()">Data Entry</ion-button>
+
+                <label class="item item-icon-left ">
+                       <div class="ion-location" > End Time</div>
+                        </br>
+                    
+                        <p>End time: {{endTime}}</p>
+                </label>
+
+            </div>
+            </br>
+            </br>
+        </form>
+    </ion-content>
+</ion-view>

@@ -106,3 +106,402 @@ blockquote p:before{
 .admintext{
   float: right;
 }
+
+
+
+
+
+
+
+ /*Aditi's View*/
+ .border-l-b{
+border-left: rgba(255,0,0,0.4);
+border-bottom:  rgba(0,0,128,0.2);
+border-style: groove;
+border-width: 0.5px;
+padding: 20px;
+}
+.border-r-b{
+border-right: rgba(255,0,0,0.4);
+border-bottom:  rgba(0,0,128,0.2);
+border-style: groove;
+border-width: 0.5px;
+padding: 10px;
+}
+.border-r-bb{
+border-right:  rgba(255,0,0,0.4);
+border-bottom:  rgba(0,0,128,0.2);
+border-style: groove;
+border-width: 0.5px;
+border-top: #FA8072;
+}
+.border-l-bb{
+border-left:   rgba(255,0,0,0.4);
+border-bottom:  rgba(0,0,128,0.2);
+border-style: groove;
+border-top: #FA8072;
+border-width: 0.5px;
+}
+a:link{
+  text-decoration: none;
+  line-height: 2;
+  letter-spacing: 0.8px;
+  word-spacing: 1px;
+  color : blue;
+  font-family: "Times of india";
+  font-size: 20px;
+}
+a:visited{
+  text-decoration: underline;
+  line-height: 2px;
+  letter-spacing: 0.8px;
+  word-spacing: 1px;
+  color : red;
+  font-family: "Times of india";
+  font-size: 20px;
+}
+a:hover{
+  text-decoration: underline;
+  line-height: 2;
+  letter-spacing: 0.8px;
+  word-spacing: 1px;
+  color : green;
+  font-family:"Times of india";
+  font-size: 20px;
+}
+a:active{
+  text-decoration: none;
+  line-height: 2;
+  letter-spacing: 0.8px;
+  word-spacing: 1px;
+  color : red;
+  font-family:"Times of india";
+  font-size: 20px;
+}
+
+
+
+/*Anu's code*/
+/* Empty. Add your own CSS if you like */
+
+/*project-basic-details*/
+.ion-chevron-left {
+  color:#fff;
+}
+
+.labels {
+  color:#003300;
+}
+
+.latlng .lat {
+  width:49%;
+  float:left;
+  border-right:1px solid #999999;
+}
+
+.latlng .lng {
+  width:49%;
+  float:right;
+}
+
+.parking-vastu {
+  border-top:1px solid #999999;
+}
+
+.parking-vastu i{
+  font-size:1.5em;
+}
+
+.parking-vastu p{
+  margin-top:5px;
+  font-size:0.8em;
+}
+
+.parking-vastu .col{ 
+  padding-top: 15px;
+    padding-bottom: 0px;
+    border: 1px solid #ccc;
+}
+
+.lifts .min, .floors .min {
+  width:49%;
+  float:left;
+  border-right:1px solid #999999;
+}
+
+.lifts .max, .floors .max {
+  width:49%;
+  float:right;
+}
+
+.project-type{
+  /*margin-bottom:-20px;*/
+}
+
+.project-type i{
+  font-size:1.5em;
+}
+
+.project-type p{
+  font-size:0.8em;
+}
+
+.row2{
+  margin:0px auto;
+  width:67%;
+}
+.row1 .col, .row2 .col, .parking-vastu .col, .bank-loans .col{
+  text-align:center;
+  color:#666666;
+  border:1px solid #b3b3b3;
+}
+
+.selected {
+  border:1px solid green !important;
+  background-color:#e6ffe6;
+}
+
+.selected i{
+  color:#000;
+}
+
+.selected p{
+  color:#000;
+}
+
+#locationSelect {
+  height: 40px;
+}
+
+.location{
+    margin-top: 72px;
+    border: 1px solid #ccc;
+    background-color:#e6e6e6;
+}
+
+.location p{
+  font-size: 1.2em;
+    line-height: 30px;
+    margin-left: 15px;
+    margin-top: 15px;
+    font-weight: 500;
+}
+
+.location .ion-checkmark-circled{
+  font-size:1.7em;
+  color:#00b300;
+}
+
+/*Create Project*/
+
+div.radio-content {
+  font-size:0.9em;
+}
+
+.addProjectButton{
+  text-align:center;
+}
+
+.builder-name ion-list{
+  border:1px solid #ccc;
+}
+
+/*sports and clubhouse*/
+.sportsNclub {
+  text-align: center;
+}
+.sports .col, .clubhouse .col{
+    color: #666666;
+    border: 1px solid #b3b3b3;
+    height: 50px;
+    padding-top: 15px;
+    font-size: 0.9em;
+}
+
+.clubTimings .col {
+  background-color:#f2f2f2;
+  border: 1px solid #808080;
+}
+
+.clubTimings .card .item.item-input input {
+    font-size: 0.7em; 
+}
+
+.holiday {
+  border-top:1px solid #999;
+  border-bottom:1px solid #999;
+}
+.holiday h5{
+  color:#1a1a1a;
+}
+
+.holiday .col .item{
+  font-size:1em;
+}
+
+/*Security*/
+.main-gate .col, .tower .col {
+  color: #666666;
+    border: 1px solid #b3b3b3;
+    height: 50px;
+    padding-top: 5px;
+    font-size: 0.9em;
+    text-align:center;
+}
+
+.other-security .ion-checkmark-circled {
+  font-size:1.7em;
+  color:#00b300;
+}
+
+.other-security .row{
+  border-top:1px solid #ccc;
+  min-height:50px;
+}
+
+.other-security .col-10{
+  padding-top:15px;
+}
+
+.other-security p{
+  margin-top:10px;
+}
+
+.numOfEntryExit {
+  border:1px solid #ccc;
+  border-radius:5px;
+  margin-bottom:10px;
+}
+
+/*Other Details*/
+.other-details .ion-checkmark-circled {
+  font-size:1.7em;
+  color:#00b300;
+}
+
+.other-details .row{
+  border-top:1px solid #ccc;
+  min-height:50px;
+}
+
+.other-details .col-10{
+  padding-top:15px;
+}
+
+.other-details p{
+  margin-top:10px;
+}
+
+/*Connectivity*/
+.airport span{
+  font-size:0.9em;
+}
+
+.otherModes, .all-fields{
+  border-top:1px solid #ccc;
+  /*border-bottom:1px solid #ccc;*/
+}
+
+/*Society shops*/
+
+.shops {
+  border:1px solid #ccc;
+}
+
+.addBtn {
+  margin:10px;
+  text-align:right;
+}
+
+#shopTypes {
+  text-align:center;
+  font-size:1em;
+}
+
+#shopTypes .col{
+    border: 1px solid #b3b3b3;
+    height: 50px;
+    padding-top: 15px;
+    font-size: 1em;
+}
+
+.display .row{
+  text-align:center;
+  font-size:1em;
+}
+.display .headings .col{
+  background-color:#ccc;
+}
+.display .col{
+  border:1px solid #999;
+}
+
+/*home-delivery*/
+.home-delivery-options {
+  border:1px solid #ccc;
+}
+
+#homeDeliveryTypes {
+  text-align:center;
+  font-size:1em;
+}
+
+#homeDeliveryTypes .col{
+    border: 1px solid #b3b3b3;
+    height: 60px;
+    padding-top: 15px;
+    font-size: 0.9em;
+}
+
+/*units*/
+.units .ion-checkmark-circled {
+  font-size:1.7em;
+  color:#00b300;
+}
+
+.units .row{
+  border-top:1px solid #ccc;
+  min-height:50px;
+}
+
+.units .col-10{
+  padding-top:15px;
+}
+
+.units p{
+  margin-top:10px;
+}
+
+.units .heading{
+  background-color:#ccc;
+  text-align:center;
+  font-size: 1.3em;
+  font-weight:500;
+}
+
+
+/*all projects*/
+
+.allProjects {
+  padding:5px 10px;
+  margin:10px;
+}
+
+
+/*ranking rating*/
+
+.priceRangeHeading {
+  text-align: center;
+    background-color: #ccc;
+    margin: 0px;
+    height: 30px;
+}
+
+ .priceRangeHeading h5{
+  line-height:30px;
+ }
+
+ .buy .priceRangeHeading h5{
+  margin-top:0px;
+ }
+

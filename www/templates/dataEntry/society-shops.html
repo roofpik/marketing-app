@@ -1,0 +1,46 @@
+<ion-view class="society-shops">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Society Shops</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="item item-divider" style="text-align:center;">
+				Select Type
+			</div>
+			<div class="row" id="shopTypes">
+				<div class="col" ng-click="selectShop('grocery')" ng-class="shopType=='grocery'?'selected': 'notSelected'">Grocery</div>
+				<div class="col" ng-click="selectShop('pharmacy')" ng-class="shopType=='pharmacy'?'selected': 'notSelected'">Pharmacy</div>
+				<div class="col" ng-click="selectShop('parlour')" ng-class="shopType=='parlour'?'selected': 'notSelected'">Parlour</div>
+			</div>
+			<div class="shops">
+				<div class="add">
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Name</span>
+					   	<input type="text" placeholder="Name" ng-model = "shopDetails.name">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Contact Number</span>
+					   	<input type="number" placeholder="Contact Number" ng-model = "shopDetails.contact">
+					</label>
+					<div class="addBtn">
+						<button class="button button-dark" ng-click="addShop()">Add</button>
+					</div>
+				</div>
+				<div class="display" ng-show="shopsCount">
+					<div class="row headings">
+						<div class="col">Name</div>
+						<div class="col">Contact</div>
+						<div class="col">Type</div>
+					</div>
+					<div class="row" ng-repeat="shop in shops">
+						<div class="col"><strong>{{shop.name}}</strong></div>
+						<div class="col"><strong>{{shop.contact}}</strong></div>
+						<div class="col"><strong>{{shop.type}}</strong></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

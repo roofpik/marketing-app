@@ -1,0 +1,66 @@
+<ion-view class="create-project">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Create Project</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+            <div class="placeSelection">
+            	<label class="item item-input item-select">
+				    <div class="input-label">
+				        Select City
+				    </div>
+				    <select ng-change="getZones()" ng-model="address.selectedCity">
+				        <option 
+				            ng-repeat="city in cities" 
+				            value="{{city}}">
+				                {{city.cityName}}
+				        </option>
+				    </select>
+				</label>
+				<label class="item item-input item-select" ng-show="hasCity">
+				    <div class="input-label">
+				        Select Zone
+				    </div>
+				    <select ng-change="selectZone()" ng-model="address.selectedZone">
+				        <option 
+				            ng-repeat="zone in zones" 
+				            value="{{zone}}">
+				                {{zone.zoneName}}
+				        </option>
+				    </select>
+				</label>
+            </div>
+		  	<div class="projStatus">
+			  	<div class="item item-divider">
+				    Project Status
+				</div>
+			  	<ion-radio ng-model="project.projectStatus" ng-value="'Under Construction'">Under Construction</ion-radio>
+				<ion-radio ng-model="project.projectStatus" ng-value="'Ready To Move'">Ready To Move</ion-radio>
+			</div>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Project Name</span>
+				<input type="text" placeholder="Project Name" ng-model="project.projectDetails.projectName">
+			</label>
+		  	<label class="item item-input item-floating-label">
+			    <span class="input-label labels">Landmark</span>
+			    <input type="text" placeholder="Landmark" ng-model="project.projectDetails.address.landmark">
+		  	</label>
+			<div class="builder-name">
+                <label class="item item-input item-floating-label" id="bname">
+				    <span class="input-label labels">Builder</span>
+				    <input type="text" placeholder="Builder" ng-model="buildername.query" ng-click="showBuilders()">
+			  	</label>
+			  	<ion-list ng-hide="hideBuilders">
+					<ion-item ng-repeat="item in allBuilders | filter:buildername.query" ng-click="selectBuilder(item)">
+						<p>{{item.name}}</p>
+					</ion-item>
+				</ion-list>
+		  	</div>
+		</div>
+		<div class="addProjectButton">
+			<button class="button button-large button-dark addProject" ng-click="addNewProject()">Add New Project</button>
+		</div>
+	</ion-content>
+</ion-view>

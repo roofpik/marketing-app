@@ -1,0 +1,51 @@
+<ion-view class="units">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">Units</h1>
+		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="configurations">
+				<div class="item heading">
+					Configurations
+				</div>
+				<label class="item item-input item-floating-label" ng-repeat="config in configurations1">
+					<span class="input-label labels">{{config.name}}</span>
+					<input type="text" placeholder="{{config.name}}" ng-model = "units.configurations[config.id]">
+				</label>
+				<label class="item item-input item-floating-label" ng-repeat="config in configurations2">
+					<span class="input-label labels">{{config.name}}</span>
+					<input type="number" placeholder="{{config.name}}" ng-model = "units.configurations[config.id]">
+				</label>
+				<div class="item item-divider">
+					Extras
+				</div>
+				<div class="row" ng-repeat = "config in configurations3" ng-click="selectConfig(config.id)">
+					<div class="col col-90">
+						<p>{{config.name}}</p>
+					</div>
+					<div class="col col-10">
+						<i class="icon ion-checkmark-circled" ng-show="units.configurations.{{config.id}}"></i>
+					</div>
+				</div>
+			</div>
+			<div class="specifications">
+				<div class="item heading">
+					Specifications
+				</div>
+				<div class="row" ng-repeat = "specification in specifications" ng-click="selectSpecification(specification.id)">
+					<div class="col col-90">
+						<p>{{specification.name}}</p>
+					</div>
+					<div class="col col-10">
+						<i class="icon ion-checkmark-circled" ng-show="units.specifications.{{specification.id}}"></i>
+					</div>
+				</div>
+			</div>
+			<div class="addUnit">
+				<button class="button button-block button-dark" ng-click="addThisUnit()">Add Unit</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>
