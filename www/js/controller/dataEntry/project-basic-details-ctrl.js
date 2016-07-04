@@ -7,6 +7,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 	$scope.editable="";
 	$scope.projectDetails={};
 	$scope.editableVersion = '';
+	$scope.projectDetails = {};
 
 	function getProjectEditable() {
 		console.log($scope.projectId);
@@ -15,44 +16,49 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 	    newData.on('value', function(data) {
 	    	console.log(data.val().version);
 	    	$scope.editableVersion = data.val().version;
+	    	getProjectDetails();
 	    });
-		getProjectDetails();
     };
 
     function getProjectDetails(){
-	
-        firebase.database().ref('/protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion).once('value', function(snapshot) {
-            $scope.project = snapshot.val();
-            angular.forEach(snapshot.val(), function(value, key){
-            	$scope.project = value;
-            })   
-            console.log($scope.project);
-            window.localStorage['project'] = JSON.stringify($scope.project);
-			$scope.projectDetails = {
-				builderName: $scope.project.projectDetails.builderName,
-				builderId: $scope.project.projectDetails.builderId,
-				projectName: $scope.project.projectDetails.projectName,
-				address: {
-					landmark: $scope.project.projectDetails.address.landmark,
-					cityName: $scope.project.projectDetails.address.cityName,
-					cityId: $scope.project.projectDetails.address.cityId,
-					zoneName: $scope.project.projectDetails.address.zoneName,
-					zoneId: $scope.project.projectDetails.address.zoneId,
-				},
-				partners: {
-				},
-				approvedBankLoans: {
-				},
-				projectType : {
-				},
-				floors: {
-				},
-				lifts: {
-				}
-			};  
-          
-        getLocations();   
-        });
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion).once('value', function(snapshot) {
+            console.log(snapshot.val());
+            $timeout(function(){
+            	$scope.project = snapshot.val();
+	            console.log($scope.project);
+	            window.localStorage['project'] = JSON.stringify($scope.project);
+				$scope.projectDetails = {
+					builderName: $scope.project.projectDetails.builderName,
+					builderId: $scope.project.projectDetails.builderId,
+					projectName: $scope.project.projectDetails.projectName,
+					address: {
+						landmark: $scope.project.projectDetails.address.landmark,
+						cityName: $scope.project.projectDetails.address.cityName,
+						cityId: $scope.project.projectDetails.address.cityId,
+						zoneName: $scope.project.projectDetails.address.zoneName,
+						zoneId: $scope.project.projectDetails.address.zoneId,
+					},
+					partners: {
+					},
+					approvedBankLoans: {
+					},
+					projectType : {
+					},
+					floors: {
+					},
+					lifts: {
+					}
+				};  
+	          
+	        	getLocations();
+            },1000);
+            
+            // angular.forEach(snapshot.val(), function(value, key){
+            // 	$scope.project = value;
+            // })      
+         });
     };
 
 	 getProjectEditable();
