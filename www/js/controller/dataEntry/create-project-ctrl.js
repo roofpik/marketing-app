@@ -186,7 +186,11 @@ app.controller('CreateProjectCtrl', ['$scope', '$timeout', '$ionicPopup', '$stat
 		$scope.selectedBuilder = {};
 		$scope.selectedZone = {};
 		$scope.selectedCity = {};
-		$state.go('project-basic-details');
+		$timeout(function(){
+			window.localStorage['project'] = JSON.stringify($scope.project);
+			$state.go('project-basic-details');
+		},0);
+		
 	}
 
 	$scope.viewOtherForms = function(page){
