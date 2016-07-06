@@ -83,8 +83,9 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', fu
 
 	$scope.addThisUnit = function(){
 		var addProjectDetails = {};
-		$scope.units[newkey] = $scope.units;
+		//$scope.units[newkey] = $scope.units;
 		var newkey = db.ref("protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/").push().key;
+      	console.log(newkey);
       	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/"+ newkey] = $scope.units;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
