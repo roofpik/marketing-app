@@ -4,14 +4,13 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
     var userid =  localStorage.getItem('uid');
     console.log(userid);
     console.log(new Date());
-
+    localStorage.removeItem('projectRequiredDetail');
     $scope.activity = {};
 
     $scope.date=new Date();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
 
-    function getActivitydetails() {
-       
+    function getActivitydetails() {  
         firebase.database().ref('/activity/' + userid + '/'+dates+'/' + $scope.activityId).on('value', function(snapshot) {
             $scope.actDetails = snapshot.val();
             console.log($scope.actDetails);
@@ -33,21 +32,39 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
             console.log($scope.actDetails.planning.active);
             $scope.toggle = "Start Activity";
            
-        } else {     
-            if ($scope.actDetails.summary.status == "started")
-                $scope.toggle = "End Activity";
-            else if ($scope.actDetails.summary.status == "completed")
-                $scope.toggle = "Completed";
-            else if ($scope.actDetails.summary.status == "cancelled")
-                $scope.toggle = "Cancelled";
+        } else {
+            console.log("not correct");   
+            // if ($scope.actDetails.summary.status == "started")
+            //     $scope.toggle = "End Activity";
+            // else if ($scope.actDetails.summary.status == "completed")
+            //     $scope.toggle = "Completed";
+            // else if ($scope.actDetails.summary.status == "cancelled")
+            //     $scope.toggle = "Cancelled";
         }
     };
 
     $scope.data_entry=function(){
-        console.log($scope.planningDetails.cityId);
-       localStorage.setItem("cityid",$scope.planningDetails.cityId);
-         localStorage.setItem("projectid",$scope.planningDetails.projectId);
-        $state.go('project-basic-details');
+        console.log();
+        $state.go('all-forms', {projectId:$scope.planningDetails.projectId , cityId: $scope.planningDetails.cityId})
+        // $state.go('project-basic-details');
+    };
+
+    function getProjectEditable(cityId, projectId) {
+        console.log(cityId, projectId);
+        var version;
+        // console.log('protectedResidentialVersions/'+$scope.cityId+'/projects/'+$scope.projectId);
+        var newData = firebase.database().ref('protectedResidentialVersions/'+cityId+'/projects/'+projectId+'/editable');
+        newData.on('value', function(data) {
+            console.log(data.val().version);
+            version = data.val().version;
+            var projectRequiredDetail = {};
+            projectRequiredDetail.version = version;
+            projectRequiredDetail.projectId = projectId;
+            projectRequiredDetail.cityId = cityId;
+            window.localStorage['projectRequiredDetail'] = JSON.stringify(projectRequiredDetail);
+            console.log(window.localStorage['projectRequiredDetail']);
+            $state.go('project-basic-details');
+        });
     };
 
     $scope.startActivity = function() {

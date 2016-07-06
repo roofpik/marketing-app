@@ -185,7 +185,58 @@ a:active{
 /* Empty. Add your own CSS if you like */
 
 /*project-basic-details*/
-.ion-chevron-left {
+
+.project-basic-details #map {
+    width: 100%;
+    height: 100%;
+}
+
+.project-basic-details .latlng {
+  height:400px;
+}
+.project-basic-details .controls {
+    border-bottom: 2px solid #ccc;
+    border-top: 2px solid #CCC !important;
+    background-color: #efe7e7;
+    border-radius: 2px 0 0 2px;
+    box-sizing: border-box;
+    position: absolute;
+    line-height: 19px;
+    margin-top: 0px;
+}
+
+.project-basic-details #pac-input {
+    background-color: #efe7e7;
+    font-family: Roboto;
+    font-size: 15px;
+    font-weight: 300;
+    padding: 0 11px 0 13px;
+    text-overflow: ellipsis;
+    width: 92%;
+    margin-bottom: 0;
+    line-height: 15px;
+    font-weight: bold;
+    margin-left: 8%;
+    border-top: 2px solid #ccc;
+    border-bottom: 2px solid #ccc;
+}
+
+.project-basic-details .pac-container {
+    font-family: Roboto;
+}
+
+.project-basic-details #type-selector {
+    color: #fff;
+    background-color: #4d90fe;
+    padding: 5px 11px 0px 11px;
+}
+
+.project-basic-details #type-selector label {
+    font-family: Roboto;
+    font-size: 13px;
+    font-weight: 300;
+}
+.project-basic-details .ion-chevron-left {
   color:#fff;
 }
 
@@ -193,64 +244,64 @@ a:active{
   color:#003300;
 }
 
-.latlng .lat {
+.project-basic-details .latlng .lat {
   width:49%;
   float:left;
   border-right:1px solid #999999;
 }
 
-.latlng .lng {
+.project-basic-details .latlng .lng {
   width:49%;
   float:right;
 }
 
-.parking-vastu {
+.project-basic-details .parking-vastu {
   border-top:1px solid #999999;
 }
 
-.parking-vastu i{
+.project-basic-details .parking-vastu i{
   font-size:1.5em;
 }
 
-.parking-vastu p{
+.project-basic-details .parking-vastu p{
   margin-top:5px;
   font-size:0.8em;
 }
 
-.parking-vastu .col{ 
+.project-basic-details .parking-vastu .col{ 
   padding-top: 15px;
     padding-bottom: 0px;
     border: 1px solid #ccc;
 }
 
-.lifts .min, .floors .min {
+.project-basic-details .lifts .min, .floors .min {
   width:49%;
   float:left;
   border-right:1px solid #999999;
 }
 
-.lifts .max, .floors .max {
+.project-basic-details .lifts .max, .floors .max {
   width:49%;
   float:right;
 }
 
-.project-type{
+.project-basic-details .project-type{
   /*margin-bottom:-20px;*/
 }
 
-.project-type i{
+.project-basic-details .project-type i{
   font-size:1.5em;
 }
 
-.project-type p{
+.project-basic-details .project-type p{
   font-size:0.8em;
 }
 
-.row2{
+.project-basic-details .row2{
   margin:0px auto;
   width:67%;
 }
-.row1 .col, .row2 .col, .parking-vastu .col, .bank-loans .col{
+.project-basic-details .row1 .col, .row2 .col, .parking-vastu .col, .bank-loans .col{
   text-align:center;
   color:#666666;
   border:1px solid #b3b3b3;
@@ -269,17 +320,17 @@ a:active{
   color:#000;
 }
 
-#locationSelect {
+.project-basic-details #locationSelect {
   height: 40px;
+  min-height:40px;
 }
 
-.location{
-    margin-top: 72px;
-    border: 1px solid #ccc;
-    background-color:#e6e6e6;
+.project-basic-details .location{
+    border: 1px solid #a6a6a6;
+    background-color: #ccc;
 }
 
-.location p{
+.project-basic-details .location p{
   font-size: 1.2em;
     line-height: 30px;
     margin-left: 15px;
@@ -287,7 +338,7 @@ a:active{
     font-weight: 500;
 }
 
-.location .ion-checkmark-circled{
+.project-basic-details .location .ion-checkmark-circled{
   font-size:1.7em;
   color:#00b300;
 }
@@ -503,5 +554,21 @@ div.radio-content {
 
  .buy .priceRangeHeading h5{
   margin-top:0px;
+ }
+
+
+ /*All Projects*/
+
+ .all-projects .selectThisCity{
+    background-color:#bfbfbf;
+ }
+
+ .all-projects .details {
+    float: right;
+    font-size: 0.9em;
+    background-color: #ccc;
+    padding: 5px;
+    border: 1px solid #808080;
+    border-radius: 3px;
  }
 

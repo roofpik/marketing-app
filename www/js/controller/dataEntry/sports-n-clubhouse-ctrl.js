@@ -1,5 +1,9 @@
 app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPopover', function($scope,$timeout, $state, $ionicPopover){
-	$scope.project=JSON.parse(window.localStorage['project']);
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+
 	$scope.formName = 'sports-n-clubhouse';
 	$scope.sportsActivities = {};
 	$scope.clubHouse = {
@@ -11,9 +15,32 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 			}
 		}
 	};
+	getProjectDetails();
 
-	$scope.city="Gurgaon";
-	$scope.location= "MG Road";
+    function getProjectDetails(){
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/sportsActivities').once('value', function(snapshot) {
+            //console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.sportsActivities = snapshot.val();
+            	console.log($scope.sportsActivities);
+            }  
+         });
+
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
+            //console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.clubHouse = snapshot.val();
+            	console.log($scope.clubHouse);
+            	angular.forEach(snapshot.val().operatingTimes.holiday, function(value, key){
+            		console.log(value, key);
+            		if(value == true){
+            			$scope.day[key] = true;
+            		}
+            	})
+            }  
+         });
+    };
+
 	$scope.selectSports = function(val){
 		console.log(val);
 		if($scope.sportsActivities[val] == undefined) {
@@ -41,44 +68,25 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 	}
 
 	$scope.day = {};
+	$scope.days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 	$scope.save = function(){
-		//console.log($scope.day);
-		if($scope.day.monday == true){
-			$scope.clubHouse.operatingTimes.holiday.monday = true;
-		}
-		if($scope.day.tuesday == true){
-			$scope.clubHouse.operatingTimes.holiday.tuesday = true;
-		}
-		if($scope.day.wednesday == true){
-			$scope.clubHouse.operatingTimes.holiday.wednesday = true;
-		}
-		if($scope.day.thursday == true){
-			$scope.clubHouse.operatingTimes.holiday.thursday = true;
-		}
-		if($scope.day.friday == true){
-			$scope.clubHouse.operatingTimes.holiday.friday = true;
-		}
-		if($scope.day.saturday == true){
-			$scope.clubHouse.operatingTimes.holiday.saturday = true;
-		}
-		if($scope.day.sunday == true){
-			$scope.clubHouse.operatingTimes.holiday.sunday = true;
-		}
+		console.log($scope.day);
+		angular.forEach($scope.days, function(value, key){
+			if($scope.day[value] == true){
+				console.log(value, $scope.day[value]);
+				$scope.clubHouse.operatingTimes.holiday[value] = true;
+			} else {
+				delete $scope.clubHouse.operatingTimes.holiday[value];
+			}
+		})
+		 console.log($scope.clubHouse.operatingTimes.holiday);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/sportsActivities"] = $scope.sportsActivities;
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/clubHouse"] = $scope.clubHouse;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/sportsActivities"] = $scope.sportsActivities;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/clubHouse"] = $scope.clubHouse;
 
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$scope.project.sportsActivities = $scope.sportsActivities;
-      	$scope.project.clubHouse = $scope.clubHouse;
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('rwa-details');
-      	},2000);
-		//console.log($scope.clubHouse.operatingTimes.holiday);
-		
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

@@ -1,0 +1,25 @@
+<ion-view class="all-projects" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left"></button>
+		<h1 class="title">All Projects</h1>
+	</ion-header-bar>
+	<ion-content class="has-header">
+		<label class="item item-input item-select selectThisCity">
+				    <div class="input-label">
+				        Select City
+				    </div>
+				    <select ng-change="selectCity()" ng-model="selected.selectedCity" class="selectThisCity">
+				        <option 
+				            ng-repeat="city in cities" 
+				            value="{{city}}">
+				                {{city.cityName}}
+				        </option>
+				    </select>
+				</label>
+		<ion-list>
+			<ion-item ng-repeat="project in projects" ng-click="getProjectDetails(project)">
+				<p>{{project.projectName}}<span class="details">Show Details</span></p>
+			</ion-item>
+		</ion-list>
+	</ion-content>
+</ion-view>

@@ -1,8 +1,27 @@
-app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover',function($scope, $timeout, $state,$ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
+app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup',function($scope, $timeout, $state,$ionicPopover,$ionicPopup){
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+
 	$scope.formName ='other-details';
-	console.log($scope.project);
+
 	$scope.other = {};
+
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/other').once('value', function(snapshot) {
+            if(snapshot.val() != null){
+            	$scope.other = snapshot.val();
+            	console.log($scope.other);
+            }  
+         });
+    };
+
+
 	$scope.parameters = [
 		{id:'powerBackup', name:'Power Backup'},
 		{id:'maintenance', name:'Maintenance'},
@@ -42,16 +61,15 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
 	$scope.save = function(){
 		console.log($scope.other);
-		$scope.project.other = $scope.other;
-		window.localStorage['project'] = JSON.stringify($scope.project);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/other"] = $scope.other;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('costing-details');
-      	},2000);
+      	$ionicPopup.alert({
+			title: 'Successful',
+			template: 'Project Details updates successfully'
+		})
+		$scope.other = {};
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

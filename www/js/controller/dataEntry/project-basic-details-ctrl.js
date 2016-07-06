@@ -1,149 +1,144 @@
 app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup', '$state', '$timeout', '$ionicPopover', function($scope, $stateParams, $ionicPopup, $state,$timeout, $ionicPopover){
 
-	$scope.projectId=localStorage.getItem("projectid");
-	$scope.cityId=localStorage.getItem("cityid");
-	console.log($scope.projectId);
-	console.log($scope.cityId);
-	$scope.editable="";
-	$scope.projectDetails={};
-	$scope.editableVersion = '';
-	$scope.projectDetails = {};
+    console.log(window.localStorage['projectRequiredDetail']);
+    var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+    $scope.projectId = projectRequiredDetail.projectId;
+    $scope.cityId = projectRequiredDetail.cityId;
+    $scope.editableVersion = projectRequiredDetail.version;
+    console.log($scope.projectId);
+    console.log($scope.cityId);
+    console.log($scope.editableVersion);
+    $scope.formName = 'project-basic-details';
 
-	function getProjectEditable() {
-		console.log($scope.projectId);
-		console.log('protectedResidentialVersions/'+$scope.cityId+'/projects/'+$scope.projectId);
-		var newData = firebase.database().ref('protectedResidentialVersions/'+$scope.cityId+'/projects/'+$scope.projectId+'/editable');
-	    newData.on('value', function(data) {
-	    	console.log(data.val().version);
-	    	$scope.editableVersion = data.val().version;
-	    	getProjectDetails();
-	    });
+    $scope.projectDetails={
+        projectType: {},
+        approvedBankLoans: {},
+        floors: {},
+        lifts: {},
+        partners: {}
     };
+
+	//console.log(window.localStorage['project']);
+     $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
+        $timeout(function(){
+            console.log("changed");
+            if(mapInitialize == 0){
+                initialize();
+            }
+            getProjectDetails();
+          //window.location.reload(true);
+        },2000);
+      });
 
     function getProjectDetails(){
     	console.log('called');
     	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion).once('value', function(snapshot) {
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails').once('value', function(snapshot) {
             console.log(snapshot.val());
             $timeout(function(){
-            	$scope.project = snapshot.val();
-	            console.log($scope.project);
-	            window.localStorage['project'] = JSON.stringify($scope.project);
-				$scope.projectDetails = {
-					builderName: $scope.project.projectDetails.builderName,
-					builderId: $scope.project.projectDetails.builderId,
-					projectName: $scope.project.projectDetails.projectName,
-					address: {
-						landmark: $scope.project.projectDetails.address.landmark,
-						cityName: $scope.project.projectDetails.address.cityName,
-						cityId: $scope.project.projectDetails.address.cityId,
-						zoneName: $scope.project.projectDetails.address.zoneName,
-						zoneId: $scope.project.projectDetails.address.zoneId,
-					},
-					partners: {
-					},
-					approvedBankLoans: {
-					},
-					projectType : {
-					},
-					floors: {
-					},
-					lifts: {
-					}
-				};  
-	          
-	        	getLocations();
-            },1000);
-            
-            // angular.forEach(snapshot.val(), function(value, key){
-            // 	$scope.project = value;
-            // })      
+            	var details = snapshot.val();
+            	$scope.projectDetails.address = details.address;
+                $scope.projectDetails.builderName = details.builderName;
+                $scope.projectDetails.builderId = details.builderId;
+                $scope.projectDetails.projectName = details.projectName;
+            	console.log($scope.projectDetails);
+	         	getLocations();
+            },1000);    
          });
     };
 
-	 getProjectEditable();
+    $scope.types1 = [
+    	{id:'apartment', name: 'Apartment'},
+    	{id: 'villa', name: 'Villa'},
+    	{id: 'rowHouse', name: 'Row House'}
+    ];
+
+    $scope.types2 = [
+    	{id: 'studio', name: 'Studio'},
+    	{id: 'servicedApartment', name: 'Serviced Apartment'}
+    ];
+
+    $scope.selectType = function(val){
+    	console.log(val);
+    	if($scope.projectDetails.projectType[val] == undefined) {
+			$scope.projectDetails.projectType[val] = true;
+		} else {
+			$scope.projectDetails.projectType[val] = !$scope.projectDetails.projectType[val];
+			if($scope.projectDetails.projectType[val] == false){
+				delete $scope.projectDetails.projectType[val];
+			}
+		}
+		console.log($scope.projectDetails.projectType);
+    }
+
+    $scope.extras = [
+    	{id: 'carParking', name: 'Car Parking', icon: 'icon ion-android-car'},
+    	{id: 'visitorCarParking', name: 'Visitor Car Parking', icon: 'icon ion-model-s'},
+    	{id: 'vastuCompliant', name: 'Vastu Compliant', icon: 'icon ion-android-compass'}
+    ];
+
+    $scope.selectExtras = function(val){
+    	console.log(val);
+    	if($scope.projectDetails[val] == undefined) {
+			$scope.projectDetails[val] = true;
+		} else {
+			$scope.projectDetails[val] = !$scope.projectDetails[val];
+			if($scope.projectDetails[val] == false){
+				delete $scope.projectDetails[val];
+			}
+		}
+		console.log($scope.projectDetails);
+    }
+
+    $scope.banks1 = [
+    	{id:'HDFC', name: 'HDFC'},
+    	{id:'SBI', name: 'SBI'},
+    	{id:'AXIS', name: 'AXIS'}
+    ];
+
+    $scope.banks2 = [
+    	{id:'ICICI', name: 'ICICI'},
+    	{id:'KOTAK', name: 'KOTAK'},
+    	{id:'HSBC', name: 'HSBC'}
+    ];
 
 
-	// $scope.project = JSON.parse(window.localStorage['project'] || {});
-	 $scope.formName = 'project-basic-details';
-	// console.log($scope.project);
-	// $scope.projectId = $scope.project.projectId;
+    $scope.selectBank = function(val){
+    	console.log(val);
+    	if($scope.projectDetails.approvedBankLoans[val] == undefined) {
+			$scope.projectDetails.approvedBankLoans[val] = true;
+		} else {
+			$scope.projectDetails.approvedBankLoans[val] = !$scope.projectDetails.approvedBankLoans[val];
+			if($scope.projectDetails.approvedBankLoans[val] == false){
+				delete $scope.projectDetails.approvedBankLoans[val];
+			}
+		}
+		console.log($scope.projectDetails.approvedBankLoans);
+    }
+
 	$scope.locations = [];
 	$scope.wantLocations = false;
 
-	// getLocations();
+	// // getLocations();
 
 	function getLocations(){
-		console.log('location/'+$scope.project.projectDetails.address.cityId, $scope.project.projectDetails.address.zoneId);
-		var locationData = firebase.database().ref('location/'+$scope.project.projectDetails.address.cityId).orderByChild('zoneId').equalTo($scope.project.projectDetails.address.zoneId);
+		console.log('location/'+$scope.projectDetails.address.cityId, $scope.projectDetails.address.zoneId);
+		var locationData = firebase.database().ref('location/'+$scope.projectDetails.address.cityId).orderByChild('zoneId').equalTo($scope.projectDetails.address.zoneId);
 		console.log(locationData);
 	     locationData.on('value', function(data) {
 	        console.log(data.val());
 	        $timeout(function(){
 	        	angular.forEach(data.val(), function(value, key){
+	        		angular.forEach($scope.projectDetails.address.locations, function(value1, key1){
+		         		if(value.locationId == value1.locationId){
+		         			value.checked = true;
+		         		}
+		         	})
 		         	$scope.locations.push(value);
-		         	//$timeout(function(){console.log($scope.zones);},50);
 		         })
 		        console.log($scope.locations);	
 	        },50);   
 		});
-	}
-
-	// $scope.projectDetails = {
-	// 	builderName: $scope.project.projectDetails.builderName,
-	// 	builderId: $scope.project.projectDetails.builderId,
-	// 	projectName: $scope.project.projectDetails.projectName,
-	// 	address: {
-	// 		landmark: $scope.project.projectDetails.address.landmark,
-	// 		cityName: $scope.project.projectDetails.address.cityName,
-	// 		cityId: $scope.project.projectDetails.address.cityId,
-	// 		zoneName: $scope.project.projectDetails.address.zoneName,
-	// 		zoneId: $scope.project.projectDetails.address.zoneId,
-	// 	},
-	// 	partners: {
-	// 	},
-	// 	approvedBankLoans: {
-	// 	},
-	// 	projectType : {
-	// 	},
-	// 	floors: {
-	// 	},
-	// 	lifts: {
-	// 	}
-	// }
-
-	$scope.type = [false, false, false, false, false];
-
-	$scope.selectType = function(val){
-		console.log(val);
-		for(var i = 0; i < 5; i++){
-			if(val == i){
-				$scope.type[i] = !$scope.type[i];
-			}
-		}
-	}
-
-	$scope.extra = [false, false, false];
-
-	$scope.selectExtras = function(val){
-		for(var i = 0; i < 3; i++){
-			//console.log(i, val-1);
-			if(val == i){
-				$scope.extra[i] = !$scope.extra[i];
-				//console.log($scope.extra[i]);
-			}
-		}
-	}
-
-	$scope.banks = [false, false, false, false, false, false];
-
-	$scope.selectBank = function(val){
-		console.log(val);
-		for(var i = 0; i < 6; i++){
-			if(val == i){
-				$scope.banks[i] = !$scope.banks[i];
-			}
-		}
 	}
 
 	$scope.displayLocation = function(){
@@ -156,9 +151,6 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 			value.checked = true;
 		} else {
 			value.checked = !value.checked;
-			// if(value.checked == false){
-			// 	delete $scope.other[val];
-			// }
 		}
 		console.log($scope.locations);
 	}
@@ -170,63 +162,17 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 	}
 
 	$scope.save = function(){
-		//console.log($scope.banks);
-		if($scope.type[0] == true){
-			$scope.projectDetails.projectType.apartment = true;
-		}
-		if($scope.type[1] == true){
-			$scope.projectDetails.projectType.villa = true;
-		}
-		if($scope.type[2] == true){
-			$scope.projectDetails.projectType.rowHouse = true;
-		}
-		if($scope.type[3] == true){
-			$scope.projectDetails.projectType.studio = true;
-		}
-		if($scope.type[4] == true){
-			$scope.projectDetails.projectType.servicedApartment = true;
-		}
-
-		if($scope.extra[0] == true){
-			$scope.projectDetails.carParking = true;
-		}
-		if($scope.extra[1]==true){
-			$scope.projectDetails.visitorParking = true;
-		}
-		if($scope.extra[2] == true){
-			$scope.projectDetails.vastuCompliant = true;
-		}
-
-		if($scope.banks[0] == true){
-			$scope.projectDetails.approvedBankLoans.HDFC = true;
-		}
-		if($scope.banks[1] == true){
-			$scope.projectDetails.approvedBankLoans.SBI = true;
-		}
-		if($scope.banks[2] == true){
-			$scope.projectDetails.approvedBankLoans.AXIS = true;
-		}
-		if($scope.banks[3] == true){
-			$scope.projectDetails.approvedBankLoans.ICICI = true;
-		}
-		if($scope.banks[4] == true){
-			$scope.projectDetails.approvedBankLoans.KOTAK = true;
-		}
-		if($scope.banks[5] == true){
-			$scope.projectDetails.approvedBankLoans.HSBC = true;
-		}
-
 		var addProjectDetails = {};
 
 		console.log($scope.projectDetails);
 
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId +'/'+$scope.project.version+"/projectDetails"] = $scope.projectDetails;
+      	addProjectDetails["protectedResidential/"+$scope.projectDetails.address.cityId+"/projects/" + $scope.projectId +'/'+$scope.editableVersion+"/projectDetails"] = $scope.projectDetails;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$scope.projectInfo = {
-      		projectId: $scope.project.projectId,
-      		projectName: $scope.project.projectDetails.projectName,
-      		version: $scope.project.version
+      		projectId: $scope.projectId,
+      		projectName: $scope.projectDetails.projectName,
+      		version: $scope.editableVersion
       	}
 
        	var locationsData = {};
@@ -235,9 +181,9 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 			if(value.checked){
 				$scope.lala.locationName = value.locationName;
 				$scope.lala.locationId = value.locationId;
-				console.log('protectedResidential/'+$scope.project.projectDetails.address.cityId+'/projects/'+$scope.project.projectId+'/'+$scope.project.version+'/projectDetails/address/locations/'+value.locationId);
-				locationsData['protectedResidential/'+$scope.project.projectDetails.address.cityId+'/projects/'+$scope.project.projectId+'/'+$scope.project.version+'/projectDetails/address/locations/'+value.locationId] =$scope.lala;
-				locationsData['location/'+$scope.project.projectDetails.address.cityId+'/'+$scope.lala.locationId+'/projects/'+$scope.project.projectId] = $scope.projectInfo;
+				console.log('protectedResidential/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId);
+				locationsData['protectedResidential/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId] =$scope.lala;
+				locationsData['location/'+$scope.projectDetails.address.cityId+'/'+$scope.lala.locationId+'/projects/'+$scope.projectId] = $scope.projectInfo;
 			}
 		});
 		 console.log(locationsData);
@@ -245,11 +191,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 
       	$ionicPopup.alert({
 			title: 'Successful',
-			template: 'Project created successfully'
-		}).then(function(response){
-			$scope.project.projectDetails = $scope.projectDetails;
-			window.localStorage['project'] = JSON.stringify($scope.project);
-			$state.go('sports-n-clubhouse');
+			template: 'Project Details updates successfully'
 		})
 	}
 
@@ -270,5 +212,77 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 			$state.go(page);
 		}
 	}
+
+    var mapInitialize = 0;
+
+	function initialize() {
+        mapInitialize = 1;
+            var mapOptions = {
+                center: { lat: 28.613939, lng: 77.209021 },
+                zoom: 13,
+                disableDefaultUI: true,// DISABLE MAP TYPE
+                scrollwheel: false
+            };
+            var map = new google.maps.Map(document.getElementById('map'),
+                mapOptions);
+
+            var input = /** @type {HTMLInputElement} */ (
+                document.getElementById('pac-input'));
+
+            // Create the autocomplete helper, and associate it with
+            // an HTML text input box.
+            var autocomplete = new google.maps.places.Autocomplete(input);
+            autocomplete.bindTo('bounds', map);
+
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            var infowindow = new google.maps.InfoWindow();
+            var marker = new google.maps.Marker({
+                map: map
+            });
+            google.maps.event.addListener(marker, 'click', function() {
+                infowindow.open(map, marker);
+            });
+
+            // Get the full place details when the user selects a place from the
+            // list of suggestions.
+            google.maps.event.addListener(autocomplete, 'place_changed', function() {
+                infowindow.close();
+                var place = autocomplete.getPlace();
+                if (!place.geometry) {
+                    return;
+                }
+
+                if (place.geometry.viewport) {
+                    map.fitBounds(place.geometry.viewport);
+                } else {
+                    map.setCenter(place.geometry.location);
+                    map.setZoom(17);
+                }
+
+                // Set the position of the marker using the place ID and location.
+                marker.setPlace( /** @type {!google.maps.Place} */ ({
+                    placeId: place.place_id,
+                    location: place.geometry.location
+                }));
+                $scope.projectDetails.address.placeId = '';
+                $scope.projectDetails.address.lat = '';
+                $scope.projectDetails.address.lng = '';
+                $scope.projectDetails.address.placeId = place.place_id;
+                $scope.projectDetails.address.lat = place.geometry.location.lat();
+                $scope.projectDetails.address.lng = place.geometry.location.lng();
+                console.log($scope.projectDetails.address);
+
+             	marker.setVisible(true);
+
+                infowindow.setContent('<div><strong>' + place.name + '</strong><br>' +
+                    'Place ID: ' + place.place_id + '<br>' +
+                    place.formatted_address + '</div>');
+                infowindow.open(map, marker);
+            });
+        }
+
+        // Run the initialize function when the window has finished loading.
+        google.maps.event.addDomListener(window, 'load', initialize);
 	
 }]);

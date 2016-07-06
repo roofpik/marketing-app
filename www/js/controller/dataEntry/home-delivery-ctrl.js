@@ -1,6 +1,10 @@
 app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', function($scope,$ionicPopover,$timeout, $state){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
-	console.log($scope.project);
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+
+	$scope.formName = 'home-delivery';
 	$scope.homeDelivery = {
 		restaurant: [],
 		grocery: [],
@@ -19,6 +23,29 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 	$scope.vendorsCount = 0;
 	$scope.vendorType = '';
 
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/homeDelivery').once('value', function(snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	angular.forEach(snapshot.val(), function(value, key){
+            		console.log(value, key);
+            		var hdoption = {};
+            		angular.forEach(value, function(value1, key1){
+            			hdoption.type = key;
+            			hdoption.name = value1.name;
+            			hdoption.contact = value1.contact;
+            			$scope.vendors.push(hdoption);
+            			$scope.vendorsCount++;
+            		})
+            	})
+            }  
+         });
+    };
+
 	$scope.selectShop = function(value){
 		$scope.vendorType = value;
 		console.log($scope.vendorType);
@@ -28,8 +55,8 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 		var addProjectDetails = {};
 		console.log($scope.homeDeliveryDetails);
 		if($scope.homeDeliveryDetails.name != undefined && $scope.homeDeliveryDetails.name != '' && $scope.homeDeliveryDetails.contact != undefined && $scope.homeDeliveryDetails.contact != '' && $scope.vendorType != ''){
-			var newKey = db.ref("protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/"+$scope.project.projectId+'/'+$scope.project.version+"/homeDelivery/"+$scope.vendorType).push().key;
-			addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/"+$scope.project.projectId+'/'+$scope.project.version+"/homeDelivery/"+$scope.vendorType+'/'+newKey] = $scope.homeDeliveryDetails;
+			var newKey = db.ref("protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/homeDelivery/"+$scope.vendorType).push().key;
+			addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/homeDelivery/"+$scope.vendorType+'/'+newKey] = $scope.homeDeliveryDetails;
 	 		db.ref().update(addProjectDetails);
 	 		console.log(addProjectDetails);
 	 		$scope.homeDeliveryDetails.type = $scope.vendorType;

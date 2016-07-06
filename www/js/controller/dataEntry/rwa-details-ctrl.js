@@ -1,20 +1,32 @@
-app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
+app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover, $ionicPopup){
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
 	$scope.formName = 'rwa-details';
-	console.log($scope.project);
 	$scope.rwa = {};
+
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/rwa').once('value', function(snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.rwa = snapshot.val();
+            	console.log($scope.rwa);
+            }  
+         });
+    };
+
 	$scope.save = function(){
-		//console.log($scope.rwa);
-		$scope.project.rwa = $scope.rwa;
-		window.localStorage['project'] = JSON.stringify($scope.project);
+		
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/rwa"] = $scope.rwa;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/rwa"] = $scope.rwa;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('security-details');
-      	},2000);
+      	
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

@@ -177,20 +177,23 @@ app.controller('CreateProjectCtrl', ['$scope', '$timeout', '$ionicPopup', '$stat
 			template: 'Project created successfully'
 		});
 
-		$scope.newKey = newProjectKey
-		window.localStorage['project'] = JSON.stringify($scope.project);
-		localStorage.setItem("cityid",$scope.project.projectDetails.address.cityId);
-        localStorage.setItem("projectid",newProjectKey);
-		//console.log(window.localStorage['project'] );
+		var projectRequiredDetail = {};
+		projectRequiredDetail.version = $scope.project.version;
+		projectRequiredDetail.projectId = newProjectKey;
+		projectRequiredDetail.cityId = $scope.project.projectDetails.address.cityId;
+		window.localStorage['projectRequiredDetail'] = JSON.stringify(projectRequiredDetail);
+		console.log(window.localStorage['projectRequiredDetail']);
 		$scope.project = {};
 		$scope.selectedBuilder = {};
 		$scope.selectedZone = {};
 		$scope.selectedCity = {};
-		$timeout(function(){
-			window.localStorage['project'] = JSON.stringify($scope.project);
+		$ionicPopup.alert({
+			title: 'Successful',
+			template: 'Project Details updates successfully'
+		}).then(function(){
+			console.log(window.localStorage['projectRequiredDetail']);
 			$state.go('project-basic-details');
-		},0);
-		
+		})
 	}
 
 	$scope.viewOtherForms = function(page){

@@ -119,6 +119,17 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'RankingRatingCtrl'
   });
 
+  $stateProvider.state('all-projects', {
+    url: '/all-projects',
+    templateUrl: 'templates/dataEntry/all-projects.html',
+    controller: 'AllProjectsCtrl'
+  });
+  $stateProvider.state('all-forms', {
+    url: '/all-forms/:projectId/:cityId',
+    templateUrl: 'templates/dataEntry/all-forms.html',
+    controller: 'AllFormsCtrl'
+  });
+
    $stateProvider.state("home", {
       url: '/home',
       templateUrl: 'templates/home/home.html',

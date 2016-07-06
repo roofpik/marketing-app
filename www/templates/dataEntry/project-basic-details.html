@@ -1,4 +1,5 @@
-<ion-view class="project-basic-details">
+<ion-view class="project-basic-details" cache-view="false">
+  
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left"></button>
 		<h1 class="title">Project Details</h1>
@@ -22,14 +23,11 @@
 		    	<input type="number" placeholder="Pincode" ng-model = "projectDetails.address.pincode">
 			</label>
 		  	<div class="latlng">
-				<label class="item item-input item-floating-label lat">
-					<span class="input-label labels">Latitude</span>
-			    	<input type="number" placeholder="Latitude" ng-model = "projectDetails.address.lat">
-				</label>
-				<label class="item item-input item-floating-label lng">
-			    	<span class="input-label labels">Longitude</span>
-			    	<input type="number" placeholder="Longitude" ng-model = "projectDetails.address.lng">
-				</label>
+				 <div class="item item-input controls">
+	                <i class="icon ion-search placeholder-icon"></i>
+	                <input id="pac-input" type="text" placeholder="Search Location" data-tap-disabled="true" ng-model="search">
+	            </div>
+	            <div id="map" data-tap-disabled="true"></div>
 			</div>
 			<div class="location">
 				<div class="list" id="locationSelect" ng-click="displayLocation()">
@@ -92,46 +90,26 @@
 					Type
 				</div>
 				<div class="row row1">
-					<div class="col" ng-click="selectType(0)" ng-class="type[0]?'selected': 'notSelected'">
+					<div class="col" ng-click="selectType(type.id)" ng-class="projectDetails.projectType[type.id]?'selected': 'notSelected'" ng-repeat="type in types1">
 						<i class="icon ion-ios-home"></i>
-						<p>Apartment</p>
-					</div>
-					<div class="col" ng-click="selectType(1)" ng-class="type[1]?'selected': 'notSelected'">
-						<i class="icon ion-ios-home"></i>
-						<p>Villa</p>
-					</div>
-					<div class="col" ng-click="selectType(2)" ng-class="type[2]?'selected': 'notSelected'">
-						<i class="icon ion-ios-home"></i>
-						<p>Row House</p>
+						<p>{{type.name}}</p>
 					</div>
 				</div>
 				<div class="row row2">
-					<div class="col" ng-click="selectType(3)" ng-class="type[3]?'selected': 'notSelected'">
+					<div class="col" ng-click="selectType(type.id)" ng-class="projectDetails.projectType[type.id]?'selected': 'notSelected'" ng-repeat="type in types2">
 						<i class="icon ion-ios-home"></i>
-						<p>Studio</p>
+						<p>{{type.name}}</p>
 					</div>
-					<div class="col" ng-click="selectType(4)" ng-class="type[4]?'selected': 'notSelected'">
-						<i class="icon ion-ios-home"></i>
-						<p>Serviced Apartments</p>
-					</div>
-				</div>
+				</div> 
 			</div>
 			<div class="parking-vastu">
 				<div class="item item-divider">
 					Extra
 				</div>
 				<div class="row">
-					<div class="col" ng-click="selectExtras(0)" ng-class="extra[0]?'selected': 'notSelected'"> 
-						<i class="icon ion-android-car"></i>
-						<p>Car Parking</p>
-					</div>
-					<div class="col" ng-click="selectExtras(1)" ng-class="extra[1]?'selected': 'notSelected'">
-						<i class="icon ion-model-s"></i>
-						<p>Visitor Car Parking</p>
-					</div>
-					<div class="col" ng-click="selectExtras(2)" ng-class="extra[2]?'selected': 'notSelected'">
-						<i class="icon ion-android-compass"></i>
-						<p>Vastu Compliant</p>
+					<div class="col" ng-click="selectExtras(extra.id)" ng-class="projectDetails[extra.id]?'selected': 'notSelected'" ng-repeat="extra in extras"> 
+						<i class={{extra.icon}}></i>
+						<p>{{extra.name}}</p>
 					</div>
 				</div>
 			</div>
@@ -140,25 +118,13 @@
 					Approved Bank Loans
 				</div>
 				<div class="row">
-					<div class="col" ng-click="selectBank(0)" ng-class="banks[0]?'selected': 'notSelected'"> 
-						<p>HDFC</p>
-					</div>
-					<div class="col" ng-click="selectBank(1)" ng-class="banks[1]?'selected': 'notSelected'">
-						<p>SBI</p>
-					</div>
-					<div class="col" ng-click="selectBank(2)" ng-class="banks[2]?'selected': 'notSelected'">
-						<p>AXIS</p>
+					<div class="col" ng-click="selectBank(bank.id)" ng-class="projectDetails.approvedBankLoans[bank.id]?'selected': 'notSelected'" ng-repeat="bank in banks1"> 
+						<p>{{bank.name}}</p>
 					</div>
 				</div>
 				<div class="row">
-					<div class="col" ng-click="selectBank(3)" ng-class="banks[3]?'selected': 'notSelected'"> 
-						<p>ICICI</p>
-					</div>
-					<div class="col" ng-click="selectBank(4)" ng-class="banks[4]?'selected': 'notSelected'">
-						<p>KOTAK</p>
-					</div>
-					<div class="col" ng-click="selectBank(5)" ng-class="banks[5]?'selected': 'notSelected'">
-						<p>HSBC</p>
+					<div class="col" ng-click="selectBank(bank.id)" ng-class="projectDetails.approvedBankLoans[bank.id]?'selected': 'notSelected'" ng-repeat="bank in banks2"> 
+						<p>{{bank.name}}</p>
 					</div>
 				</div>
 			</div>

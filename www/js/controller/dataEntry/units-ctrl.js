@@ -1,7 +1,8 @@
 app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
-	$scope.formName = 'units-ctrl';
-	console.log($scope.project);
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
 
 	$scope.unitDetails = [];
 
@@ -81,23 +82,16 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', fu
 	}
 
 	$scope.addThisUnit = function(){
-		console.log($scope.units);
-		$scope.project.units = $scope.units;
-		window.localStorage['project'] = JSON.stringify($scope.project);
 		var addProjectDetails = {};
-		var newkey = db.ref("protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/"+$scope.project.projectId+'/'+$scope.project.version+"/units/").push().key;
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/units/"+ newkey] = $scope.units;
+		$scope.units[newkey] = $scope.units;
+		var newkey = db.ref("protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/").push().key;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/"+ newkey] = $scope.units;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$scope.unitDetails.push($scope.units);
       	console.log($scope.unitDetails);
       	$scope.units = {};
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		console.log($scope.project);
-      		//$state.go('costing-details');
-      	},2000);
-
+      	
 	}
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
 	    scope: $scope,

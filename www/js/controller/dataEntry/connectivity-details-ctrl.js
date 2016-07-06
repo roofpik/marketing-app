@@ -1,7 +1,10 @@
-app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
+app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover','$ionicPopup', function($scope, $timeout, $state, $ionicPopover, $ionicPopup){
 	$scope.formName = 'connectivity-details';
-	console.log($scope.project);
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+
 	$scope.connectivity = {
 		airport: {},
 		cabStand: {},
@@ -10,6 +13,20 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 		railwayStation: {},
 		busStand: {}
 	};
+
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/connectivity').once('value', function(snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.connectivity = snapshot.val();
+            	console.log($scope.connectivity);
+            }  
+         });
+    };
 
 	$scope.connectivity1 = [
 		{name:'Airport', id:'airport'},
@@ -59,15 +76,14 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 
 	$scope.save = function(){
 		console.log($scope.connectivity);
-		$scope.project.connectivity = $scope.connectivity;
-		window.localStorage['project'] = JSON.stringify($scope.project);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/"+ $scope.project.projectId+'/'+$scope.project.version+ "/connectivity"] = $scope.connectivity;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('society-shops');
-      	},2000);
+      	$ionicPopup.alert({
+			title: 'Successful',
+			template: 'Project Details updates successfully'
+		})
+		$scope.connectivity = {};
 	}
 }]);

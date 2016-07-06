@@ -1,7 +1,9 @@
-app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
-	$scope.formName = 'society-shops';
-	console.log($scope.project);
+app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover,$ionicPopup){
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.formName = 'security';
 	$scope.security = {
 		mainGate: {
 
@@ -10,6 +12,19 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
 
 		}
 	}
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/security').once('value', function(snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.security = snapshot.val();
+            	console.log($scope.security);
+            }  
+         });
+    };
 
 	$scope.selectMainGateSecurity = function(val){
 		console.log(val);
@@ -52,16 +67,15 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
 
 	$scope.save = function(){
 		console.log($scope.security);
-		$scope.project.security = $scope.security;
-		window.localStorage['project'] = JSON.stringify($scope.project);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/security"] = $scope.security;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/security"] = $scope.security;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('costing-details');
-      	},2000);
+      	$ionicPopup.alert({
+			title: 'Successful',
+			template: 'Project Details updates successfully'
+		})
+		$scope.security = {};
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

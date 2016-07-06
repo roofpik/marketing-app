@@ -1,8 +1,24 @@
-app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	$scope.project = JSON.parse(window.localStorage['project'] || {});
+app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover,$ionicPopup){
+	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$scope.projectId = projectRequiredDetail.projectId;
+	$scope.cityId = projectRequiredDetail.cityId;
+	$scope.editableVersion = projectRequiredDetail.version;
+
 	$scope.formName = 'costing-details';
-	console.log($scope.project);
 	$scope.costing = {};
+	getProjectDetails();
+
+    function getProjectDetails(){
+    	console.log('called');
+    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/costing').once('value', function(snapshot) {
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+            	$scope.costing = snapshot.val();
+            	console.log($scope.costing);
+            }  
+         });
+    };
 	$scope.parameters = [
 		{id:'powerBackupCharges', name:'Power Backup Charges'},
 		{id:'maintenanceChargesFixed', name:'Maintenance Charges Fixed'},
@@ -20,16 +36,15 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
 	$scope.save = function(){
 		console.log($scope.costing);
-		$scope.project.costing = $scope.costing;
-		window.localStorage['project'] = JSON.stringify($scope.project);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + $scope.project.projectId+'/'+$scope.project.version+ "/costing"] = $scope.costing;
+      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/costing"] = $scope.costing;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
-      	$timeout(function(){
-      		window.localStorage['project'] = JSON.stringify($scope.project);
-      		$state.go('connectivity-details');
-      	},2000);
+      	$ionicPopup.alert({
+			title: 'Successful',
+			template: 'Project Details updates successfully'
+		})
+		$scope.costing = {};
 	}
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
 	    scope: $scope,
