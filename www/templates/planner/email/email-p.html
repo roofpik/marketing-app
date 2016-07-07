@@ -1,0 +1,98 @@
+<ion-view view-title="Email" >
+
+     <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/email-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/email/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/email-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content >      
+        <form name="myForm" novalidate>
+            <div class="list card">
+                <label class="item item-icon-left " >
+                   <div  > Start Details</div>
+                   </br>
+                   <p>Start time: {{planningDetails.start.time}}</p>
+                </label>  
+                <label class="item item-icon-left " >
+                   <div  > Project Id</div>
+                   </br>
+                   <p> {{planningDetails.project_id}}</p>
+                </label> 
+                <label class="item item-icon-left " >
+                   <div  > Project Name</div>
+                   </br>
+                   <p> {{planningDetails.projectName}}</p>
+                </label> 
+                  
+                 <label class="item item-icon-left " >
+                   <div  > Subject</div>
+                   </br>
+                   <p> {{planningDetails.subject}}</p>
+                </label>   
+                 <label class="item item-icon-left " >
+                   <div  > Details</div>
+                   </br>
+                   <p> {{planningDetails.details}}</p>
+                </label> 
+                 <label class="item item-icon-left " >
+                   <div  > Purpose</div>
+                   </br>
+                   <p> {{planningDetails.purpose}}</p>
+                </label> 
+                <label class="item item-icon-left " >
+                   <div  > Remarks</div>
+                   </br>
+                   <p> {{planningDetails.comments}}</p>
+                </label>
+
+                <label class="item item-icon-left " >
+                   <div class="list" > To Email</div>
+                   <div class="item" ng-repeat="to in todetails">
+                        <p> Email: {{to.email}}</p>
+                        <p> Contact: {{to.contact}}</p>
+                        <p> Department: {{to.department}}</p>
+                        <p> Designation: {{to.designation}}</p>
+                        <divider></divider>
+                   </div>
+                 </label>
+
+                <label class="item item-icon-left " >
+                   <div  class="list"> CC Email</div>
+                   </br>
+                   <div class="item" ng-repeat="cc in ccdetails">
+                        <p> Email: {{cc.email}}</p>
+                         <p> Contact: {{cc.contact}}</p>
+                           <p> Department: {{cc.department}}</p>
+                             <p> Designation: {{cc.designation}}</p>
+                             <divider></divider>
+                   </div>
+                  
+                </label>
+
+                <label class="item item-icon-left " >
+                   <div  class="list"> Attachment links</div>
+                   </br>
+                   <div class="item" ng-repeat="attachment in attachments">
+                        <p> {{attachment}}</p>
+                        
+                             <divider></divider>
+                   </div>
+                  
+                </label>        
+
+                 <label class="item item-icon-left ">
+                       <div  > End Details</div>
+                        </br>
+                    
+                        <p>End time: {{planningDetails.end.time}}</p>
+                </label>
+
+            </div>
+            </br>
+            </br>
+        </form>
+    </ion-content>
+</ion-view>

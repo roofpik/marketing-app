@@ -1,0 +1,45 @@
+<ion-view view-title="Travel Local">
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/travel-local-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/travel-local/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/travel-local-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content>
+        <div class="list card">
+            <label class="item item-icon-left ">
+                   <div class="ion-location" > Start my travel</div>
+                   <p>Latitude:{{planningDetails.start.lat}}</p>
+                   <p>Longitude:{{planningDetails.start.lng}}</p>
+                   <p>Time:{{planningDetails.start.time}}</p>
+                   <p>Location:{{planningDetails.start.location}}</p>
+             </label>
+        
+       
+            <label class="item item-icon-left ">
+                   <div class="ion-location" > End my travel</div>
+                    <p>Latitude:{{planningDetails.end.lat}}</p>
+                    <p>Longitude:{{planningDetails.end.lat}}</p>
+                    <p>Time:{{planningDetails.end.time}}</p>
+                    <p>Location:{{planningDetails.end.location}}</p>
+            </label>
+       
+            <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > Mode: {{planningDetails.mode}}
+                    </div>
+            </label>
+       
+            <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > Project_id: {{planningDetails.project_id}}
+                    </div>
+            </label>
+       
+            <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > Purpose: {{planningDetails.purpose}}
+                    </div>
+            </label>
+        </div>
+    </ion-content>
+</ion-view>

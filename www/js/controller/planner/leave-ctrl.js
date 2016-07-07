@@ -1,14 +1,14 @@
-app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cordovaGeolocation, $ionicPopup, $timeout,$stateParams,$ionicLoading) {
-   $scope.activityId = $stateParams.activityId;
-        console.log($scope.activityId);
-       var userid =  localStorage.getItem("uid");
-        console.log(userid);
+app.controller("leaveCtrl", function($scope, $state, $timeout,$filter, $cordovaGeolocation, $ionicPopup,$ionicLoading) {
+   $scope.activityId = $state.params.activityId; 
+    console.log( $scope.activityId);
+    var userid =  localStorage.getItem("uid");
+    console.log(userid);
 
     $scope.date=new Date();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
 
-    function getActivitydetails() {
-          $ionicLoading.show({
+     function getActivitydetails() {
+            $ionicLoading.show({
       template: 'Loading...'
     }); 
        
@@ -16,7 +16,7 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
             $scope.actDetails = snapshot.val();
             console.log($scope.actDetails);
              $scope.planningDetails = $scope.actDetails.planning;
-             console.log($scope.planningDetails.city_id);
+             console.log( $scope.planningDetails );
              $scope.comments=$scope.actDetails.comments;
             
         });
@@ -29,8 +29,7 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
 
     function checkIfActivityStarted() { 
         console.log("check");
-           $ionicLoading.hide();
-        
+         $ionicLoading.hide();
         if($scope.actDetails.planning.active == true) {
             $scope.toggle = "Start Activity";
            
@@ -45,15 +44,8 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
         }
     };
 
-    $scope.data_entry=function(){
-        console.log($scope.planningDetails.cityId);
-       localStorage.setItem("cityid",$scope.planningDetails.cityId);
-         localStorage.setItem("projectid",$scope.planningDetails.projectId);
-        $state.go('project-basic-details');
-    };
-
     $scope.startActivity = function(foo) {
-        console.log(foo);
+
         console.log("clicked");
        
          if ($scope.actDetails.planning.active ==true) {
@@ -62,7 +54,6 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
            
             upd['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/planning/active'] = "false";
             console.log("saved as false");
-        
             firebase.database().ref().update(upd);
         }
 
@@ -117,7 +108,6 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
                     console.log(foo);
                     console.log(executionComp);
                     $scope.endTime = $scope.time;
-                    //console.log(foo.mode);
                     updates = {};
                     updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/end'] = executionComp;
                     updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/status'] = "completed";
@@ -160,7 +150,7 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
         up = {};
         console.log(com);
         com.userid = userid;
-        com.name = localStorage.getItem("username");
+        com.name = localStorage.getItem("name");
         com.time = new Date();
         var newkey=firebase.database().ref('/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/comments').push().key;
         up['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/comments/' + newkey] = com;

@@ -1,0 +1,43 @@
+<ion-view view-title="Leave">
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/leave-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/leave/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/leave-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content>
+        <div class="list card">
+            <label class="item item-icon-left ">
+                   <div  > Start Time</div>    
+                   <p>{{planningDetails.start.time}}</p>
+             </label>
+             <label class="item item-icon-left ">
+                   <div > Urgent</div>    
+                   <p>{{planningDetails.urgent}}</p>
+             </label>
+              <label class="item item-icon-left ">
+                   <div >Leave Type</div>    
+                   <p>{{planningDetails.leaveSelect}}</p>
+             </label>
+              <label class="item item-icon-left ">
+                   <div > Status</div>    
+                   <p> {{planningDetails.status}}</p>
+             </label>
+              <label class="item item-icon-left ">
+                   <div > Purpose</div>    
+                   <p> {{planningDetails.purpose}}</p>
+             </label>
+           
+            <label class="item item-icon-left ">
+                   <div > Remark</div>    
+                   <p> {{planningDetails.remark}}</p>
+             </label>
+              <label class="item item-icon-left ">
+                   <div > End Time</div>    
+                   <p> {{planningDetails.end.time}}</p>
+             </label>
+        </div>
+    </ion-content>
+</ion-view>

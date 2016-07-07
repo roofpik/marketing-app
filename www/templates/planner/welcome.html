@@ -1,6 +1,23 @@
- <ion-view view-title="WELCOME">
-	 <ion-content ng-controller="welCtrl">
-	      <ion-button class="button button-positive " ng-click="goToTasks()">Go to tasks</ion-button>
-	      khdas
-	 </ion-content>
- </ion-view>
+<ion-view    >
+<ion-content >
+
+      <div class="card" style="text-align: center;">
+		  <div class="item item-text-wrap" >
+		   <h2 >Hello {{name}} !!</h2>
+		   <h2 >Today is {{date| date:"mediumDate"}}</h2>
+		   <h2 >Tave a good day :)</h2>
+		  </div>
+	  </div>
+		     
+     <div class="padding">
+     <button type="button" class="button button-block button-positive" ng-click="goToTasks()">GoToTasks</button>
+     </div>
+     <div class="padding">
+     <button type="button" class="button button-block button-positive" ng-click="add_project()">Add new project</button>
+     </div>
+     <div class="padding">
+     <button type="button" class="button button-block button-positive" ng-click="add_activity()">Add new activity</button>
+     </div>
+
+</ion-content>
+</ion-view>

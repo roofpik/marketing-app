@@ -1,0 +1,32 @@
+<ion-view view-title="Travel Outstation">
+
+ <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/travel-outstation-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/travel-outstation/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/travel-outstation-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content>
+        <ion-list>
+             <ion-item ng-repeat="comment in comments">
+                <p>Message: {{comment.message}}</p>
+                <p>Time: {{comment.time}}</p>
+                <p>Userid: {{comment.userid}}</p>
+                <p>Name: {{comment.name}}</p>
+             </ion-item>
+        </ion-list>
+
+        <label class="item item-input item-stacked-label icon-item-left">
+            <span class="input-label ion-android-chat"> Message</span>
+            <textarea rows="5"  ng-model="com.message" ng-init="mesage=null"></textarea>
+        </label>
+
+        
+        <ion-button class="button fab fab-center button-block" ng-click="add_comment(com)">Add comment</ion-button>
+       
+    </ion-content>
+</ion-view>
+
+

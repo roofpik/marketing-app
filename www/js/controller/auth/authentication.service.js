@@ -14,7 +14,7 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
                 window.localStorage.setItem("uid", user.uid);
 
                 $timeout(function() {
-                    $location.path('/home');
+                    $location.path('/welcome/'+user.uid);
                 }, 0);
             });
 

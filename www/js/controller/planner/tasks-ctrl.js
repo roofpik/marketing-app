@@ -1,23 +1,46 @@
-app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout) {
+app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout,$ionicLoading,$timeout) {
 
-    $scope.adminId = $state.params.adminId;
-    console.log($scope.adminId);
+    $scope.userid = localStorage.getItem("uid");
+    console.log($scope.userid);
     $scope.date = new Date();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
+    console.log("fhdfh");
 
     $scope.activities = [];
 
     function getActivities() {
-        var ref = firebase.database().ref('/activity/' + $scope.adminId + '/' + dates);
+          $ionicLoading.show({
+              template: 'Loading...'
+            }).then(function(){
+               console.log("The loading indicator is now displayed");
+            });
+        var ref = firebase.database().ref('/activity/' + $scope.userid + '/' + dates);
         ref.on('value', function(snapshot){
-            console.log(snapshot.val());
+            $ionicLoading.hide();
+            $timeout(function() {
+                 console.log(snapshot.val());
             angular.forEach(snapshot.val(), function(value,key){
                 value.id = key;
                 $scope.activities.push(value);
+                console.log(value);
+              
+                if(value.planning.active=="false"||value.planning.active==false)
+                {
+                    if(value.summary.status=="completed")
+                    {
+                         var updates = {};
+                         console.log('/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked');
+                        updates['/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked'] =true ;
+
+                        firebase.database().ref().update(updates);
+                    }
+                }
             });
-            $timeout(function(){
-                console.log($scope.activities);
-            }, 50);
+
+
+            }, 10);
+           
+            
         });
     };
 
@@ -28,32 +51,34 @@ app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout) 
         //y is activity's id
         console.log(x);
         console.log(y);
-
+      
         if (x == "appoitment")
             $state.go('appointment', {
                 activityId: y
             });
         else if (x == "localTravel")
-            $state.go('travel_local', {
+            $state.go('travel-local', {
                 activityId: y
             });
 
         else if (x == "OutstationTravel")
-            $state.go('travel_outstation', {
+            $state.go('travel-outstation', {
                 activityId: y
             });
         else if (x == "phoneCalls")
-            $state.go('phone_calls', {
+            $state.go('phone-calls', {
                 activityId: y
             });
         else if (x == 'Email')
-            $state.go('email', {
+            $state.go('email-p', {
                 activityId: y
             });
+        
         else if (x == "onlineResearch")
-            $state.go('online_research', {
+              $state.go('online-research', {
                 activityId: y
             });
+        
         else if (x == "leave")
             $state.go('leave', {
                 activityId: y
@@ -85,6 +110,8 @@ app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout) 
         else if (x == 14) //end day
             $state.go('timeline1', {
             activityId: y
-        });
+            });
+        else
+            console.log("Default");
     };
 });

@@ -1,25 +1,27 @@
-app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cordovaGeolocation, $ionicPopup, $timeout,$stateParams,$ionicLoading) {
-   $scope.activityId = $stateParams.activityId;
-        console.log($scope.activityId);
-       var userid =  localStorage.getItem("uid");
-        console.log(userid);
-
+app.controller("travelLocalCtrl", function($scope, $state, $timeout,$filter, $cordovaGeolocation, $ionicPopup,$ionicLoading) {
+    $scope.activityId = $state.params.activityId; 
+    console.log( $scope.activityId);
+    var userid = localStorage.getItem("uid");
+    console.log(userid);
+   
     $scope.date=new Date();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
 
     function getActivitydetails() {
-          $ionicLoading.show({
+     $ionicLoading.show({
       template: 'Loading...'
-    }); 
-       
+    });       
         firebase.database().ref('/activity/' + userid + '/'+dates+'/' + $scope.activityId).on('value', function(snapshot) {
+           
             $scope.actDetails = snapshot.val();
             console.log($scope.actDetails);
-             $scope.planningDetails = $scope.actDetails.planning;
-             console.log($scope.planningDetails.city_id);
-             $scope.comments=$scope.actDetails.comments;
-            
+            $scope.planningDetails = $scope.actDetails.planning;
+            $scope.comments=$scope.actDetails.comments;
+
+
+           
         });
+       
     };
      $timeout(function(){
                 checkIfActivityStarted();
@@ -29,10 +31,11 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
 
     function checkIfActivityStarted() { 
         console.log("check");
-           $ionicLoading.hide();
-        
+        //in execution
+         $ionicLoading.hide();
         if($scope.actDetails.planning.active == true) {
             $scope.toggle = "Start Activity";
+
            
         } else {
              
@@ -45,21 +48,12 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
         }
     };
 
-    $scope.data_entry=function(){
-        console.log($scope.planningDetails.cityId);
-       localStorage.setItem("cityid",$scope.planningDetails.cityId);
-         localStorage.setItem("projectid",$scope.planningDetails.projectId);
-        $state.go('project-basic-details');
-    };
-
     $scope.startActivity = function(foo) {
-        console.log(foo);
+
         console.log("clicked");
        
          if ($scope.actDetails.planning.active ==true) {
-            
             upd = {};
-           
             upd['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/planning/active'] = "false";
             console.log("saved as false");
         
@@ -95,6 +89,8 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
                  });
 
                     //send lat ,lang n time
+                    $scope.startLatitude = $scope.latitude;
+                    $scope.startLongitude = $scope.longitude;
                     $scope.startTime = $scope.time;
 
                     console.log(executionComp);
@@ -116,11 +112,14 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
                     //send lat,long and time
                     console.log(foo);
                     console.log(executionComp);
+                    $scope.endLatitude = $scope.latitude;
+                    $scope.endLongitude = $scope.longitude;
                     $scope.endTime = $scope.time;
-                    //console.log(foo.mode);
+                    console.log(foo.mode);
                     updates = {};
                     updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/end'] = executionComp;
                     updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/status'] = "completed";
+                    updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/mode'] = foo.mode;
                     updates['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/remark'] = foo.remark;
                     firebase.database().ref().update(updates);
                     $scope.toggle = "Completed";
@@ -144,7 +143,7 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
     $scope.cancel = function() {
         if($scope.actDetails.summary.status=="")
         {
-            upd = {};
+             upd = {};
             upd['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/summary/status'] = "cancelled";
             firebase.database().ref().update(upd);
             alert(" cancelled !!");
@@ -160,7 +159,7 @@ app.controller("DataEntryCtrl", function($scope, $state, $timeout,$filter, $cord
         up = {};
         console.log(com);
         com.userid = userid;
-        com.name = localStorage.getItem("username");
+        com.name = localStorage.getItem("name");
         com.time = new Date();
         var newkey=firebase.database().ref('/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/comments').push().key;
         up['/activity/' + userid + '/'+dates+'/' + $scope.activityId + '/comments/' + newkey] = com;

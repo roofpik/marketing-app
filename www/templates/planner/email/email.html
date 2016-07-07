@@ -1,0 +1,79 @@
+<ion-view view-title="Email" >
+
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/email-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/email/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/email-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content >
+        <div class="row">
+            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity(activity)">
+            {{toggle}}
+            </ion-button>
+            <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">
+            Cancel
+            </ion-button>
+        </div>
+
+        <form name="myForm" novalidate>
+            <div class="list card">
+                <label class="item " >
+                   <div> Start Details</div>
+                   </br>
+                   <p>Start time: {{startTime}}</p>
+                </label>
+
+                 <label class="item " >
+                   <div> Project ID</div>
+                   </br>
+                   <p>{{activity.project_id}}</p>
+                </label>
+
+                 <label class="item " >
+                   <div> Project name</div>
+                   </br>
+                   <p>{{activity.project_name}}</p>
+                </label> 
+
+                 <label class="item " >
+                   <div> Subject</div>
+                   </br>
+                   <p>{{activity.subject}}</p>
+                </label> 
+
+                 <label class="item " >
+                   <div > Details</div>
+                   </br>
+                   <p>{{activity.details}}</p>
+                </label> 
+<!-- 
+                 <label class="item " >
+                  <div  > To email</div>
+                  <ion-list>
+                  <ion-checkbox ng-model="isChecked" ng-repeat="to in todetails" ng-change="">{{to.value}}</ion-checkbox>
+                 
+                  </ion-list>
+                </label>  -->
+
+                <label class="item item-input item-stacked-label">
+                      <span class="input-label ion-android-chat"> Remarks</span>
+                      <textarea rows="5"  ng-model="activity.remark" ng-init="remark=null">
+                      </textarea>
+                </label>              
+
+                 <label class="item item-icon-left ">
+                       <div  > End Time</div>
+                        </br>
+                    
+                        <p>End time: {{endTime}}</p>
+                </label>
+
+            </div>
+            </br>
+            </br>
+        </form>
+    </ion-content>
+</ion-view>

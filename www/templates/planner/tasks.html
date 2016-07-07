@@ -11,12 +11,13 @@
         </div>
 
         <div class="row" ng-repeat="(key, task) in activities ">
+        
             <div class="col col-25 border-r-b " style="padding:50px 10px; margin-right: 2px">
                 <ion-checkbox class="checkbox-balanced" style="border-style:none;" ng-click="onClick($index)" ng-model="task.checked" ng-checked="task.checked">
                 </ion-checkbox>
             </div>
 
-            <div ng-click="goToActivityDetails(task.type,task.id)" class="col border-l-b" style="padding: 20px 30px; "> ActivityType--{{task.type}} </br> Start Time--{{task.planning.start.time}} </br>End Time--{{task.planning.end.time}}
+            <div ng-click="goToActivityDetails(task.type, task.id)" class="col border-l-b" style="padding: 20px 30px; "> ActivityType--{{task.type}} </br> Start Time--{{task.planning.start.time}} </br>End Time--{{task.planning.end.time}}
             </div>
         </div>
         

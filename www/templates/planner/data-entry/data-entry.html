@@ -3,14 +3,14 @@
     <div class="tabs-striped tabs-balanced ">
         <div class="tabs">
             <a href="#/data-entry-p/{{activityId}}" class="tab-item">Planned </a>
-            <a href="#/data-entry/{{activityId}}" class="tab-item">Summary</a>
-            <a href="#/data-entry-comments/{{activityId}}" class="tab-item">Comments</a>
+            <a href="#/data_entry/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/data_entry_comments/{{activityId}}" class="tab-item">Comments</a>
         </div>
     </div>
 
     <ion-content >
         <div class="row">
-            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity()">
+            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity(activity)">
             {{toggle}}
             </ion-button>
             <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">

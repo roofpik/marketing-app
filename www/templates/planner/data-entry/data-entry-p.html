@@ -13,15 +13,32 @@
                    <div class="ion-location" > Start time</div>    
                    <p>Time:{{planningDetails.start.time}}</p>
              </label>
-       
+
             <label class="item item-stacked-label ">
-                    <div class="ion-ios-minus" > Project Name: {{planningDetails.projectName}}
+                    <div class="ion-ios-minus" > Project id: {{planningDetails.project_id}}
                     </div>
             </label>
+       
+            <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > Project Name: {{planningDetails.project_name}}
+                    </div>
+            </label>
+
+             <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > City id: {{planningDetails.city_id}}
+                    </div>
+            </label>
+       
+            <label class="item item-stacked-label ">
+                    <div class="ion-ios-minus" > City Name: {{planningDetails.city_name}}
+                    </div>
+            </label>
+
             <label class="item item-stacked-label ">
                     <div class="ion-ios-minus" > Purpose: {{planningDetails.purpose}}
                     </div>
             </label>
+
              <label class="item item-icon-left ">
                    <div class="ion-location" > End Time</div>        
                     <p>Time:{{planningDetails.end.time}}</p>

@@ -1,0 +1,58 @@
+<ion-view view-title="Online Research " >
+
+     <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/online-research-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/online-research/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/online-research-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content >      
+        <form name="myForm" novalidate>
+            <div class="list card">
+                <label class="item item-icon-left " >
+                   <div> Start Details</div>
+                   </br>
+                   <p>Start time: {{planningDetails.start.time}}</p>
+                    <p>Start latitude: {{planningDetails.start.lat}}</p>
+                     <p>Start longitude: {{planningDetails.start.lng}}</p>
+                      <p>Start location: {{planningDetails.start.location}}</p>
+                </label>  
+               
+                 <label class="item item-icon-left " >
+                   <div  > Purpose</div>
+                   </br>
+                   <p> {{planningDetails.purpose}}</p>
+                </label> 
+               
+
+                <label class="item item-icon-left " >
+                   <div class="list" > Projects</div>
+                   <div class="item" ng-repeat="project in projects">
+                        <p>Project ID: {{project.project_id}}</p>
+                        <p>Project Name: {{project.project_name}}</p>
+                        <p>Project City: {{project.project_city}}</p>
+
+                   </div>
+
+                  
+                </label>
+
+                    
+
+                 <label class="item item-icon-left ">
+                       <div  > End Details</div>
+                        </br>
+                    <p>End time: {{planningDetails.end.time}}</p>
+                    <p>End latitude: {{planningDetails.end.lat}}</p>
+                     <p>End longitude: {{planningDetails.end.lng}}</p>
+                      <p>End location: {{planningDetails.end.location}}</p>
+                </label>
+
+            </div>
+            </br>
+            </br>
+        </form>
+    </ion-content>
+</ion-view>

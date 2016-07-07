@@ -29,19 +29,19 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
    $stateProvider.state('data-entry', {
       url: '/data-entry/:activityId',
-      templateUrl: 'templates/planner/data-entry.html',
+      templateUrl: 'templates/planner/data-entry/data-entry.html',
       controller:'DataEntryCtrl'
     })
 
    $stateProvider.state('data-entry-p', {
       url: '/data-entry-p/:activityId',
-      templateUrl: 'templates/planner/data-entry-p.html',
+      templateUrl: 'templates/planner/data-entry/data-entry-p.html',
       controller:'DataEntryCtrl'
     })
 
    $stateProvider.state('data-entry-comments', {
       url: '/data-entry-comments/:activityId',
-      templateUrl: 'templates/planner/data-entry-comments.html',
+      templateUrl: 'templates/planner/data-entry/data-entry-comments.html',
       controller:'DataEntryCtrl'
     })
 

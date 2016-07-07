@@ -1,0 +1,93 @@
+    <ion-view view-title="Phone calls" >
+         <div class="tabs-striped tabs-balanced ">
+            <div class="tabs">
+                <a href="#/phone-calls-p/{{activityId}}" class="tab-item">Planned </a>
+                <a href="#/phone-calls/{{activityId}}" class="tab-item">Summary</a>
+                <a href="#/phone-calls-comments/{{activityId}}" class="tab-item">Comments</a>
+            </div>
+        </div>
+
+        <ion-content >
+            <div class="row">
+                <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity(activity)">{{toggle}}</ion-button>
+                <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">Cancel</ion-button>
+            </div>
+
+
+            <form name="myForm" novalidate>
+                <div class="list card">
+                    <label class="item item-icon-left " >
+                       <div class="ion-location" > Start my travel</div>
+                       </br>
+                       <p>Start time: {{startTime}}</p>
+
+                    </label>
+
+                     <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-iphone ">  Project ID</span>
+                      <input type="text" placeholder="" ng-model="activity.project_id" ng-change="change()">
+                    </label>
+                     <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-iphone ">  Project name</span>
+                      <input type="text" placeholder="" ng-model="activity.project_name" ng-change="change()">
+                    </label>
+
+                     <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-iphone ">  Phone number</span>
+                      <input type="text" placeholder="" ng-model="activity.phone_no" ng-change="change()">
+                    </label>
+
+                    <label class="item item-input item-stacked-label icon-item-left">
+    			      <span class="input-label  ">  Contact person</span>
+    			      <input type="text" placeholder="" ng-model="activity.contact_person" ng-change="change()">
+    			    </label>
+
+                    <label class="item item-input item-stacked-label icon-item-left">
+    			      <span class="input-label ion-at">  Designation</span>
+    			      <input type="text" placeholder="" ng-model="activity.designation" ng-change="change()">
+    			    </label>
+
+                    <label class="item item-input item-stacked-label icon-item-left">
+    			      <span class="input-label ion-laptop ">  Department</span>
+    			      <input type="text" placeholder="" ng-model="activity.department" ng-change="change()">
+    			    </label>
+
+                    <label class="item item-input item-stacked-label icon-item-left">
+    			      <span class="input-label ion-lightbulb">  Details</span>
+    			      <input type="text" placeholder="" ng-model="activity.details" ng-change="change()">
+    			    </label>
+
+                     <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-iphone ">  Call status</span>
+                      <input type="text" placeholder="" ng-model="activity.call_status" ng-change="change()">
+                    </label>
+
+                    <label class="item item-input item-stacked-label icon-item-left">
+    			      <span class="input-label ion-android-chat">  Purpose</span>
+    			       <textarea rows="5"  ng-model="activity.purpose" ng-change="change()"></textarea>
+    			    </label>
+
+                     <label class="item item-input item-stacked-label icon-item-left">
+                      <span class="input-label ion-android-chat">  Remark</span>
+                       <textarea rows="5"  ng-model="activity.remark" ng-change="change()"></textarea>
+                    </label>
+
+                    <label class="item item-icon-left ">
+                        <div class="ion-location" > End my travel</div>
+                        </br>
+                        <p>End time: {{endTime}}</p>
+                    </label>
+                </div>
+
+
+              
+            </form>
+            </br>
+            </br>
+               
+
+               
+        </ion-content>
+    </ion-view>
+
+

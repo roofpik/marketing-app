@@ -78,5 +78,3 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	 };
 
 }]);
-
-

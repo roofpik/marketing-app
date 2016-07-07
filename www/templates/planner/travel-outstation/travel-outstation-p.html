@@ -1,0 +1,40 @@
+<ion-view view-title="Travel Outstation">
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/travel-outstation-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/travel-outstation/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/travel-outstation-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content>
+        <div class="list card">
+            <label class="item item-icon-left " >
+                <div class="ion-location" > Start my travel</div>
+                </br>
+                <span class="input-label  ">Latitude:{{planningDetails.start.lat}}</span>
+                <span class="input-label  ">Longitude:{{planningDetails.start.lng}}</span>
+                <span class="input-label  ">  Date: {{planningDetails.start.time}}</span>
+                <span class="input-label ">  City name: {{planningDetails.end.location}}</span>
+
+            </label>
+            <label class="item item-icon-left " >
+                <div class="ion-location"> End my travel</div>
+                </br>
+                 <span class="input-label  ">Latitude:{{planningDetails.end.lat}}</span>
+                 <span class="input-label  ">Longitude:{{planningDetails.end.lng}}</span>
+                <span class="input-label ion-calendar ">  Date: {{planningDetails.end.time}}</span>
+                <span class="input-label ion-calendar ">  City name: {{planningDetails.end.location}}</span>
+            </label>
+
+            <label class="item item-input item-stacked-label ">
+               <div class="ion-ios-minus" > Mode: {{planningDetails.mode}}</div>
+            </label>
+
+            <label class="item item-input item-stacked-label icon-item-left">
+              <span class="input-label ion-android-chat">  Comments: {{planningDetails.comments}}</span>
+            </label>
+
+        </div>
+    </ion-content>
+</ion-view>

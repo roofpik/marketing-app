@@ -1,0 +1,87 @@
+<ion-view view-title="Travel Outstation">
+
+    <div class="tabs-striped tabs-balanced ">
+        <div class="tabs">
+            <a href="#/travel-outstation-p/{{activityId}}" class="tab-item">Planned </a>
+            <a href="#/travel-outstation/{{activityId}}" class="tab-item">Summary</a>
+            <a href="#/travel-outstation-comments/{{activityId}}" class="tab-item">Comments</a>
+        </div>
+    </div>
+
+    <ion-content>
+        <div class="row">
+            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity(activity)">{{toggle}}</ion-button>
+            <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">Cancel</ion-button>
+        </div>
+
+        <form name="myForm" novalidate>
+            <div class="list card">
+                <label class="item item-icon-left " >
+                   <div class="ion-location" > Start my travel</div>
+                   </br>
+                   <p>Latitude: {{startLatitude}}</p>
+                   <p>Longitude: {{startLongitude}}</p>
+                   <p>Start time: {{startTime}}</p>
+                  
+                </label>    
+                 <p><input type="text" placeholder="Enter start city name" ng-model="activity.start_city_name" ></p> 
+
+                 <p><input type="text" placeholder="Enter end city name" ng-model="activity.end_city_name" ></p>
+
+                <label class="item item-input item-stacked-label ">
+                    <div class="ion-ios-minus row" > Mode</div>
+                        <div class="row">
+                            <div class="col" >
+                            <ion-radio  ng-model="activity.mode" ng-init="mode=null" ng-value="'Bus'">
+                            <i class="ion-android-bus"></i>  Bus</ion-radio>
+                            </div>
+
+                            <div class="col">
+                            <ion-radio  ng-model="activity.mode" ng-value="'Auto'">
+                            <i class="ion-android-bicycle"></i> Auto</ion-radio>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col" >
+                            <ion-radio  ng-model="activity.mode" ng-value="'Metro'" ng-change="test()">
+                            <i class="ion-android-train"></i> Metro</ion-radio>
+                            </div>
+
+                            <div class="col"><ion-radio  ng-model="activity.mode" ng-init="mode=null" ng-value="'Cab/Car'">
+                            <i class="ion-model-s"></i> Cab/Car</ion-radio>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                           <div class="col" >
+                           <ion-radio  >  Others <i class="ion-ios-arrow-right"></i></ion-radio>
+                           </div>
+                           <div class="col" >
+                              <input type="text" ng-model="activity.mode" ng-init="mode=null" placeholder="plz specify">
+                        </div>
+                         </br></br>
+                    </div>
+                </label>
+
+                <label class="item item-input item-stacked-label icon-item-left">
+                  <span class="input-label ion-android-chat"> Remarks</span>
+                  <textarea rows="5" ng-change="change()" ng-model="activity.remark" ng-init="remark=null"></textarea>
+                </label>
+
+                <label class="item item-icon-left ">
+                   <div class="ion-location" > End my travel</div>
+                    </br>
+                    <p>Latitude:{{endLatitude}}</p>
+                    <p>Longitude:{{endLongitude}}</p>
+                    <p>End time: {{endTime}}</p>
+                   
+                    </label>
+             </div>
+        </form>
+        </br>
+        </br>
+    </ion-content>
+</ion-view>
+
+
