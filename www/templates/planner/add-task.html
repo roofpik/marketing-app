@@ -1,10 +1,12 @@
 <ion-view class="add-task">
 	<ion-header-bar class="bar-balanced" align-title="center">
-		<button class="icon ion-chevron-left"></button>
+		<button class="icon ion-chevron-left" ng-click="myGoBack()"></button>
 		<h1 class="title">Add Task</h1>
 		<!-- <button class="button button-balanced" ng-click="addThisTask()">Add</button> -->
 	</ion-header-bar>
 	<ion-content>
+	<form name="myForm">
+		
 		<div class = "card">
 			<label class="item item-input item-select">
 				    <div class="input-label">
@@ -51,5 +53,6 @@
 		</div>
 
 		<ion-button class="button button-block button-positive" ng-click="addTask()">Add Data Entry Task</ion-button>
+		</form>
 	</ion-content>
 </ion-view>

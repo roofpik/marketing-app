@@ -1,6 +1,9 @@
-app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', '$filter', function($scope, $timeout,$ionicPopup, $state, $ionicPopover,$filter){
+app.controller('AddTaskCtrl', ['$ionicHistory', '$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', '$filter', 
+	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover,$filter){
 
-	$scope.myId = window.localStorage.uid;
+	$scope.myId = localStorage.getItem("uid");
+
+	console.log($scope.myId);
 	$scope.projects=[];
 	$scope.cities = [];
 
@@ -39,6 +42,8 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 
 	function getProjects(){
 		console.log('called');
+		console.log($scope.myId);
+		console.log($scope.data.cityId);
 		var newData = firebase.database().ref('admins/'+$scope.myId+'/projectAccess/'+$scope.data.cityId+'/projects');
 	    newData.on('value', function(data) {
 	    	console.log(data.val());
@@ -65,6 +70,7 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	console.log(dates);
 
 	 $scope.addTask=function(){
+
 	 	console.log($scope.data);
 	 	var newPostKey = firebase.database().ref('/activity/'+$scope.myId).child(dates).push().key;
 	 	var updates = {};
@@ -73,8 +79,12 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
         updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/planning'] = $scope.data;
 	    console.log($scope.data);
 
-	    return firebase.database().ref().update(updates);
+	    firebase.database().ref().update(updates);
 	  
 	 };
+
+	 $scope.myGoBack = function() {
+	    $ionicHistory.goBack();
+	  };
 
 }]);

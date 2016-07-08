@@ -1,10 +1,9 @@
-app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout,$ionicLoading,$timeout) {
+app.controller("tasksCtrl", function($ionicHistory, $scope, $state, $http,  $filter, $timeout,$ionicLoading,$timeout) {
 
     $scope.userid = localStorage.getItem("uid");
     console.log($scope.userid);
     $scope.date = new Date();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
-    console.log("fhdfh");
 
     $scope.activities = [];
 
@@ -114,4 +113,8 @@ app.controller("tasksCtrl", function($scope, $state, $http,  $filter, $timeout,$
         else
             console.log("Default");
     };
+
+    $scope.myGoBack = function() {
+        $ionicHistory.goBack();
+      };
 });

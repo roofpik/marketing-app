@@ -13,6 +13,8 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
                 window.localStorage.setItem("email", email);
                 window.localStorage.setItem("uid", user.uid);
 
+                console.log(localStorage.getItem("uid"));
+
                 $timeout(function() {
                     $location.path('/welcome/'+user.uid);
                 }, 0);

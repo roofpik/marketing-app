@@ -1,4 +1,5 @@
-app.controller('CreateProjectCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', function($scope, $timeout,$ionicPopup, $state, $ionicPopover){
+app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', 
+	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover){
 
 	getCities();
 
@@ -208,6 +209,10 @@ app.controller('CreateProjectCtrl', ['$scope', '$timeout', '$ionicPopup', '$stat
 
 	 $scope.closePopover = function() {
 	    $scope.popover.hide();
+	  };
+
+	   $scope.myGoBack = function() {
+	    $ionicHistory.goBack();
 	  };
 
 }]);
