@@ -1,13 +1,30 @@
-app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup', '$state', '$timeout', '$ionicPopover', function($scope, $stateParams, $ionicPopup, $state,$timeout, $ionicPopover){
+app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$stateParams','$ionicPopup', '$state', '$timeout', '$ionicPopover', 
+    function($ionicHistory, $scope, $stateParams, $ionicPopup, $state,$timeout, $ionicPopover){
 
-    console.log(window.localStorage['projectRequiredDetail']);
-    var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
-    $scope.projectId = projectRequiredDetail.projectId;
-    $scope.cityId = projectRequiredDetail.cityId;
-    $scope.editableVersion = projectRequiredDetail.version;
+    // console.log(window.localStorage['projectRequiredDetail']);
+    // var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+
+    $scope.projectId = localStorage.getItem("projectid");
+    $scope.cityId = localStorage.getItem("cityid");
+    //$scope.editableVersion = projectRequiredDetail.version;
     console.log($scope.projectId);
     console.log($scope.cityId);
-    console.log($scope.editableVersion);
+    //console.log($scope.editableVersion);
+    
+
+    firebase.database()
+    .ref('protectedResidentialVersions/'+ $scope.cityId + '/projects/'+$scope.projectId+'/editable/version')
+    .once('value', function(versionSnapshot){
+        $timeout(function(){
+           $scope.editableVersion = versionSnapshot.val();
+            getProjectDetails();
+        },50);
+    });
+    
+    
+
+
+
     $scope.formName = 'project-basic-details';
 
     $scope.projectDetails={
@@ -25,7 +42,6 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
             if(mapInitialize == 0){
                 initialize();
             }
-            getProjectDetails();
           //window.location.reload(true);
         },2000);
       });
@@ -284,5 +300,10 @@ app.controller('ProjectBasicDetailsCtrl', ['$scope', '$stateParams','$ionicPopup
 
         // Run the initialize function when the window has finished loading.
         google.maps.event.addDomListener(window, 'load', initialize);
+
+
+         $scope.myGoBack = function() {
+        $ionicHistory.goBack();
+      };
 	
 }]);
