@@ -17,7 +17,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
 
 // Aditi's views
    $stateProvider.state('welcome', {
-      url: '/welcome/:adminId',
+      url: '/welcome',
       templateUrl: 'templates/planner/welcome.html',
       controller:'welCtrl'
     })

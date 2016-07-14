@@ -1,43 +1,29 @@
 <ion-view cache-view="false">
-    <!-- <ion-header-bar align-title="center" class="bar-positive">
-
-   <i class=""></i>
-
-  <h1 class="title">Login!</h1>
-    
-</ion-header-bar> -->
     <ion-header-bar class="bar-dark">
         <h1 class="title">Roofpik Marketing</h1>
-        <div class="buttons">
-            <a class="button button-icon ion-log-in"></a>
-        </div>
     </ion-header-bar>
-    <ion-content id="loginform">
-        <div class="card">
-            <div class="item item-text-wrap">
-                <h2>Login</h2>
-                <p>{{today}}</p>
-            </div>
-        </div>
+    <ion-content>
         <div class="list card">
-            <div class="item item-body">
-                <div class="list">
-                    <label class="item item-input item-stacked-label">
-                        <span class="input-label">Email</span>
-                        <input type="email" ng-model="newUser.userEmail" name="userEmail" required placeholder="abc@roofpik.com">
-                    </label>
-                    <label class="item item-input item-stacked-label">
-                        <span class="input-label">Password</span>
-                        <input type="password" ng-model="newUser.userPassword" name="userPassword" required placeholder="********">
-                    </label>
+            <form name="loginform">
+                <div class="item item-body">
+                    <div class="list">
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Email</span>
+                            <input type="email" ng-model="user.email" name="userEmail" required placeholder="abc@roofpik.com">
+                        </label>
+                        <label class="item item-input item-stacked-label">
+                            <span class="input-label">Password</span>
+                            <input type="password" ng-model="user.password" name="userPassword" required placeholder="********">
+                        </label>
+                    </div>
                 </div>
-            </div>
-            <div class="item">
-                <button class="button button-block button-dark button-outline" ng-click="Login(loginForm)">
-                    Sign in
-                </button>
-                <p ng-click="resetPassword()">Reset Password</p>
-            </div>
+                <div class="item">
+                    <button class="button button-block button-dark button-outline" ng-disabled="loginform.$invalid" ng-click="Login(user)">
+                        Sign in
+                    </button>
+                    <p ng-click="resetPassword()">Reset Password</p>
+                </div>
+            </form>
         </div>
     </ion-content>
 </ion-view>

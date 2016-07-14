@@ -108,78 +108,60 @@ blockquote p:before{
 }
 
 
+/*Welcome screen*/
 
-
-
-
-
- /*Aditi's View*/
- .border-l-b{
-border-left: rgba(255,0,0,0.4);
-border-bottom:  rgba(0,0,128,0.2);
-border-style: groove;
-border-width: 0.5px;
-padding: 20px;
+#welcome-screen .task {
+  background-color: #494949;
+  margin: 5px;
+  text-align: center;
+  padding: 10px;
+  color: #FFFFFF;
+  border-radius: 5px;
 }
-.border-r-b{
-border-right: rgba(255,0,0,0.4);
-border-bottom:  rgba(0,0,128,0.2);
-border-style: groove;
-border-width: 0.5px;
-padding: 10px;
+#welcome-screen .logo {
+  height:100px;
+  background-image: url('../img/roofpik.png');
+  background-size: auto 100%;
+  background-repeat: no-repeat;
+  background-position: center;
 }
-.border-r-bb{
-border-right:  rgba(255,0,0,0.4);
-border-bottom:  rgba(0,0,128,0.2);
-border-style: groove;
-border-width: 0.5px;
-border-top: #FA8072;
+#welcome-screen .date {
+  text-align: right;
+  color: #1AB0D3;
 }
-.border-l-bb{
-border-left:   rgba(255,0,0,0.4);
-border-bottom:  rgba(0,0,128,0.2);
-border-style: groove;
-border-top: #FA8072;
-border-width: 0.5px;
+#welcome-screen .greetings {
+  padding: 10px;
 }
-a:link{
-  text-decoration: none;
-  line-height: 2;
-  letter-spacing: 0.8px;
-  word-spacing: 1px;
-  color : blue;
-  font-family: "Times of india";
-  font-size: 20px;
-}
-a:visited{
-  text-decoration: underline;
-  line-height: 2px;
-  letter-spacing: 0.8px;
-  word-spacing: 1px;
-  color : red;
-  font-family: "Times of india";
-  font-size: 20px;
-}
-a:hover{
-  text-decoration: underline;
-  line-height: 2;
-  letter-spacing: 0.8px;
-  word-spacing: 1px;
-  color : green;
-  font-family:"Times of india";
-  font-size: 20px;
-}
-a:active{
-  text-decoration: none;
-  line-height: 2;
-  letter-spacing: 0.8px;
-  word-spacing: 1px;
-  color : red;
-  font-family:"Times of india";
-  font-size: 20px;
+#welcome-screen .greetings p {
+  color: #1AB0D3;
 }
 
+/*Day Planner*/
+#day-planner .checkbox-status {
+  border-right: 1px solid red;
+  border-color: rgba(255,0,0,0.2);
+  text-align: center;
+  padding-top: 25px;
+  background-color: transparent;
 
+}
+#day-planner .content-view {
+    margin-left: 1px;
+  border-left: 1px solid red;
+  border-color: rgba(255,0,0,0.2);
+  padding: 10px;
+}
+#day-planner .full-row {
+    border-bottom: 1px solid red;
+    border-color: rgba(255,0,0,0.2);
+    margin: 0px;
+    padding: 0px;
+}
+
+#day-planner .checkbox-status i{
+    font-size: 2em;
+    color: #1AB0D3;
+}
 
 /*Anu's code*/
 /* Empty. Add your own CSS if you like */

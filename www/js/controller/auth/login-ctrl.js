@@ -1,34 +1,39 @@
-app.controller("LoginCtrl", function($scope, $state, $http, AuthenticationService) {
+app.controller("LoginCtrl", function($scope, $state, $http, AuthenticationService, $ionicPopup, $ionicLoading, $location) {
     
-    $scope.newUser = {
-        userEmail: '',
-        userPassword: ''
-    };
+    // If user already login previously
+    firebase.auth().onAuthStateChanged(function(user) {
+      if (user) {
+          // User is signed in.
+          $state.go('welcome');
+        } else {
+          // No user is signed in.
+          console.log("not login");
+        }
 
+    });
 
-    var m_names = new Array("Jan", "Feb", "Mar",
-        "Apr", "May", "Jun", "Jul", "Aug", "Sep",
-        "Oct", "Nov", "Dec");
+    // @param (form object)
+    $scope.Login = function(user) {
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
 
-    var d = new Date();
-    var curr_date = d.getDate();
-    var curr_month = d.getMonth();
-    var curr_year = d.getFullYear();
-    $scope.today = curr_date + "-" + m_names[curr_month] + "-" + curr_year;
+        AuthenticationService.LoginEmail(user.email, user.password)
+        .then(function(user){ // returns current user
 
-    $scope.Login = function(form) {
+            console.log(user.uid);
+            console.log(user.email);
+            console.log(user.displayName);
 
-        //   console.log($scope.newUser.userEmail, $scope.newUser.userPassword);
-        AuthenticationService.LoginEmail($scope.newUser.userEmail, $scope.newUser.userPassword, function(result) {
-            // console.log(result);
-            if (result === true) {
-                //  console.log(result);
-                // $location.path("/dashboard");
-                $scope.newUser.userPassword = '';
-                $state.go('dashboard');
-            } else {
-                //  console.log("result = false, error in login");
-            }
+            $ionicLoading.hide();
+            $state.go('welcome');
+        }, function(error){
+            console.log(error);
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+                title: 'Login failed!',
+                template: error.message
+            })
         });
     }
 
@@ -36,5 +41,4 @@ app.controller("LoginCtrl", function($scope, $state, $http, AuthenticationServic
 
         $state.go('resetPassword');
     }
-    AuthenticationService.Logout();
 });

@@ -14,27 +14,27 @@ app.controller("tasksCtrl", function($ionicHistory, $scope, $state, $http,  $fil
                console.log("The loading indicator is now displayed");
             });
         var ref = firebase.database().ref('/activity/' + $scope.userid + '/' + dates);
-        ref.on('value', function(snapshot){
+        ref.once('value', function(snapshot){
             $ionicLoading.hide();
             $timeout(function() {
-                 console.log(snapshot.val());
-            angular.forEach(snapshot.val(), function(value,key){
-                value.id = key;
-                $scope.activities.push(value);
-                console.log(value);
-              
-                if(value.planning.active=="false"||value.planning.active==false)
-                {
-                    if(value.summary.status=="completed")
+                console.log(snapshot.val());
+                angular.forEach(snapshot.val(), function(value,key){
+                    value.id = key;
+                    $scope.activities.push(value);
+                    console.log(value);
+                  
+                    if(value.planning.active=="false"||value.planning.active==false)
                     {
-                         var updates = {};
-                         console.log('/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked');
-                        updates['/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked'] =true ;
+                        if(value.summary.status=="completed")
+                        {
+                             var updates = {};
+                             // console.log('/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked');
+                            updates['/activity/' + $scope.userid  + '/' + dates + '/' +key+'/checked'] =true ;
 
-                        firebase.database().ref().update(updates);
+                            firebase.database().ref().update(updates);
+                        }
                     }
-                }
-            });
+                });
 
 
             }, 10);
