@@ -1,5 +1,12 @@
-app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', function($scope, $timeout, $state, $ionicPopover){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+
+	$timeout(function(){
+		$ionicLoading.hide();
+	},1000);
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -111,5 +118,10 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', fu
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

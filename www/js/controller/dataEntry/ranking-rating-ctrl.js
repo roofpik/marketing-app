@@ -1,5 +1,8 @@
-app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopover', function($scope, $state, $timeout, $ionicPopover){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopover', '$ionicLoading', function($scope, $state, $timeout, $ionicPopover, $ionicLoading){
+	$ionicLoading.show({
+      template: 'Loading...'
+    });
+  var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -45,6 +48,9 @@ app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopo
             	console.log($scope.areas);
             }  
          });
+        $timeout(function() {
+          $ionicLoading.hide();
+        }, 1000);
     };
 
 	$scope.save = function(){
@@ -80,5 +86,10 @@ app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopo
 			$state.go(page);
 		}
 	}
+
+  $scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

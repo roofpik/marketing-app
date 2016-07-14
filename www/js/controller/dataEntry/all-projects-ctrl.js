@@ -1,9 +1,12 @@
-app.controller('AllProjectsCtrl', ['$scope','$state', '$timeout', function($scope, $state, $timeout){
+app.controller('AllProjectsCtrl', ['$scope','$state', '$timeout', '$ionicLoading', function($scope, $state, $timeout, $ionicLoading){
 	$scope.myId = window.localStorage.getItem('uid');
 	$scope.projects = [];
 	$scope.cities = [];
 	$scope.selected = {};
 	$scope.city ={};
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  }); 
 
 	getCities();
 
@@ -16,6 +19,7 @@ app.controller('AllProjectsCtrl', ['$scope','$state', '$timeout', function($scop
 	        		$scope.cities.push(value);
 	        	//$timeout(function(){console.log($scope.cities);},50);
 	        	})
+	        	$ionicLoading.hide();
 	        }, 50);   
 		});
 	}
@@ -23,6 +27,9 @@ app.controller('AllProjectsCtrl', ['$scope','$state', '$timeout', function($scop
 	$scope.selectCity = function(){
 		console.log(JSON.parse($scope.selected.selectedCity));
 		$scope.city = JSON.parse($scope.selected.selectedCity);
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  }); 
 		$scope.getAllProjects();
 	}
 
@@ -34,6 +41,7 @@ app.controller('AllProjectsCtrl', ['$scope','$state', '$timeout', function($scop
 					$scope.projects.push(val);
 				});
 				console.log($scope.projects);
+				$ionicLoading.hide();
 			},0);
 			
 		});

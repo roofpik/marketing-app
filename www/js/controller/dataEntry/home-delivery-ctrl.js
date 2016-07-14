@@ -1,5 +1,8 @@
-app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', function($scope,$ionicPopover,$timeout, $state){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '$ionicLoading', function($scope,$ionicPopover,$timeout, $state, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -42,7 +45,8 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
             			$scope.vendorsCount++;
             		})
             	})
-            }  
+            }
+            $ionicLoading.hide();  
          });
     };
 
@@ -53,6 +57,9 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 
 	$scope.addShop = function(){
 		var addProjectDetails = {};
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  });
 		console.log($scope.homeDeliveryDetails);
 		if($scope.homeDeliveryDetails.name != undefined && $scope.homeDeliveryDetails.name != '' && $scope.homeDeliveryDetails.contact != undefined && $scope.homeDeliveryDetails.contact != '' && $scope.vendorType != ''){
 			var newKey = db.ref("protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/homeDelivery/"+$scope.vendorType).push().key;
@@ -63,6 +70,9 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 	 		$scope.vendors.push($scope.homeDeliveryDetails);
 	 		$scope.vendorsCount++;
 	 		$scope.homeDeliveryDetails = {};
+	 		$ionicLoading.hide();
+		} else {
+			$ionicLoading.hide();
 		}
 	}
 
@@ -92,6 +102,9 @@ app.controller('HomeDeliveryCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 			$state.go(page);
 		}
 	}
-
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

@@ -51,59 +51,57 @@ app.controller("tasksCtrl", function($ionicHistory, $scope, $state, $http,  $fil
         console.log(x);
         console.log(y);
       
-        if (x == "appoitment")
+        if (x == "Appoitment")
             $state.go('appointment', {
                 activityId: y
             });
-        else if (x == "localTravel")
+        else if (x == "Local Travel")
             $state.go('travel-local', {
                 activityId: y
             });
 
-        else if (x == "OutstationTravel")
+        else if (x == "Outstation Travel")
             $state.go('travel-outstation', {
                 activityId: y
             });
-        else if (x == "phoneCalls")
+        else if (x == "Phone Calls")
             $state.go('phone-calls', {
                 activityId: y
             });
         else if (x == 'Email')
-            $state.go('email-p', {
+            $state.go('email-p', { 
                 activityId: y
             });
         
-        else if (x == "onlineResearch")
+        else if (x == "Online Research")
               $state.go('online-research', {
                 activityId: y
             });
         
-        else if (x == "leave")
+        else if (x == "Leave")
             $state.go('leave', {
                 activityId: y
             });
-        else if (x == 'DataEntry')
-            $state.go('data-entry', {
-                activityId: y
-            });
+        else if (x == 'Data Entry')
+            $state.go('data-entry', {activityId: y});
         else if (x == 9)
-            $state.go('meeting', {
+            $state.go('Meeting', {
                 activityId: y
             });
         else if (x == 10)
-            $state.go('training', {
+            $state.go('Training', {
                 activityId: y
             });
         else if (x == 11)
-            $state.go('planning', {
+            $state.go('Planning', {
                 activityId: y
             });
         else if (x == 12)
-            $state.go('break', {
+            $state.go('Break', {
                 activityId: y
             });
         else if (x == 13)
-            $state.go('others', {
+            $state.go('Others', {
                 activityId: y
             });
         else if (x == 14) //end day

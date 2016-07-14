@@ -1,5 +1,8 @@
-app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover, $ionicPopup){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup','$ionicLoading', function($scope, $timeout, $state, $ionicPopover, $ionicPopup, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -16,7 +19,8 @@ app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover'
             if(snapshot.val() != null){
             	$scope.rwa = snapshot.val();
             	console.log($scope.rwa);
-            }  
+            } 
+            $ionicLoading.hide(); 
          });
     };
 
@@ -46,5 +50,10 @@ app.controller('RwaDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover'
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

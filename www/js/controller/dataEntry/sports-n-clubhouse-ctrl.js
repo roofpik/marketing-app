@@ -1,5 +1,8 @@
-app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPopover', function($scope,$timeout, $state, $ionicPopover){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPopover', '$ionicLoading', function($scope,$timeout, $state, $ionicPopover, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -39,6 +42,9 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
             	})
             }  
          });
+        $timeout(function(){
+        	$ionicLoading.hide();
+        }, 1000);
     };
 
 	$scope.selectSports = function(val){
@@ -71,6 +77,9 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 	$scope.days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
 
 	$scope.save = function(){
+		$ionicLoading.show({
+	    template: 'Loading...'
+	  });
 		console.log($scope.day);
 		angular.forEach($scope.days, function(value, key){
 			if($scope.day[value] == true){
@@ -86,7 +95,9 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
       	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/clubHouse"] = $scope.clubHouse;
 
       	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails);
+      	db.ref().update(addProjectDetails).then(function(){
+      		$ionicLoading.hide();
+      	});
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
@@ -106,5 +117,10 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

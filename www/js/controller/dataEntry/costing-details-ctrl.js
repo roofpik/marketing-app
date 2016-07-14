@@ -1,5 +1,9 @@
-app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover,$ionicPopup){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover,$ionicPopup, $ionicLoading){
+	
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  }); 
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -16,7 +20,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
             if(snapshot.val() != null){
             	$scope.costing = snapshot.val();
             	console.log($scope.costing);
-            }  
+            }
+            $ionicLoading.hide();
          });
     };
 	$scope.parameters = [
@@ -36,6 +41,9 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
 	$scope.save = function(){
 		console.log($scope.costing);
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  }); 
 		var addProjectDetails = {};
       	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/costing"] = $scope.costing;
       	console.log(addProjectDetails);
@@ -43,6 +51,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
       	$ionicPopup.alert({
 			title: 'Successful',
 			template: 'Project Details updates successfully'
+		}).then(function(){
+			$ionicLoading.hide();
 		})
 		$scope.costing = {};
 	}
@@ -63,5 +73,10 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

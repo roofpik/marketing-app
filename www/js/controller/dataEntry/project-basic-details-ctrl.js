@@ -1,30 +1,19 @@
-app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$stateParams','$ionicPopup', '$state', '$timeout', '$ionicPopover', 
-    function($ionicHistory, $scope, $stateParams, $ionicPopup, $state,$timeout, $ionicPopover){
+app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$stateParams','$ionicPopup', '$state', '$timeout', '$ionicPopover', '$ionicLoading', 
+    function($ionicHistory, $scope, $stateParams, $ionicPopup, $state,$timeout, $ionicPopover, $ionicLoading){
 
-    // console.log(window.localStorage['projectRequiredDetail']);
-    // var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+    $ionicLoading.show({
+        template: 'Loading...'
+      });
+    var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 
-    $scope.projectId = localStorage.getItem("projectid");
-    $scope.cityId = localStorage.getItem("cityid");
-    //$scope.editableVersion = projectRequiredDetail.version;
+    $scope.projectId = projectRequiredDetail.projectId;
+    $scope.cityId = projectRequiredDetail.cityId;
+    $scope.editableVersion = projectRequiredDetail.version;
     console.log($scope.projectId);
     console.log($scope.cityId);
-    //console.log($scope.editableVersion);
+    console.log($scope.editableVersion);
+    getProjectDetails();
     
-
-    firebase.database()
-    .ref('protectedResidentialVersions/'+ $scope.cityId + '/projects/'+$scope.projectId+'/editable/version')
-    .once('value', function(versionSnapshot){
-        $timeout(function(){
-           $scope.editableVersion = versionSnapshot.val();
-            getProjectDetails();
-        },50);
-    });
-    
-    
-
-
-
     $scope.formName = 'project-basic-details';
 
     $scope.projectDetails={
@@ -52,11 +41,47 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
         firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails').once('value', function(snapshot) {
             console.log(snapshot.val());
             $timeout(function(){
+                // $scope.projectDetails = snapshot.val();
             	var details = snapshot.val();
             	$scope.projectDetails.address = details.address;
-                $scope.projectDetails.builderName = details.builderName;
-                $scope.projectDetails.builderId = details.builderId;
+                if(details.builderName != undefined){
+                    $scope.projectDetails.builderName = details.builderName;   
+                }
+                if(details.builderId != undefined){
+                  $scope.projectDetails.builderId = details.builderId;  
+                }
                 $scope.projectDetails.projectName = details.projectName;
+                if(details.projectType != undefined){
+                    $scope.projectDetails.projectType = details.projectType;
+                } else {
+                    $scope.projectDetails.projectType = {
+                    };
+                }
+                if(details.approvedBankLoans != undefined){
+                    $scope.projectDetails.approvedBankLoans = details.approvedBankLoans;
+                }else{
+                    $scope.projectDetails.approvedBankLoans = {
+
+                    };
+                }
+                if(details.floors != undefined){
+                    $scope.projectDetails.floors = details.floors;
+                } else {
+                    $scope.projectDetails.floors = {
+
+                    };
+                }
+                if(details.lifts != undefined){
+                    $scope.projectDetails.lifts = details.lifts;
+                } else {
+                    $scope.projectDetails.lifts = {
+                    };
+                }
+                if(details.partners != undefined){
+                    $scope.projectDetails.partners = details.partners;
+                } else {
+                    $scope.projectDetails.partners = {};
+                }
             	console.log($scope.projectDetails);
 	         	getLocations();
             },1000);    
@@ -76,7 +101,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
     $scope.selectType = function(val){
     	console.log(val);
-    	if($scope.projectDetails.projectType[val] == undefined) {
+    	if($scope.projectDetails.projectType[val] == false) {
 			$scope.projectDetails.projectType[val] = true;
 		} else {
 			$scope.projectDetails.projectType[val] = !$scope.projectDetails.projectType[val];
@@ -84,6 +109,10 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 				delete $scope.projectDetails.projectType[val];
 			}
 		}
+        // $scope.projectDetails.projectType[val] = !$scope.projectDetails.projectType[val];
+        // if($scope.projectDetails.projectType[val] == false){
+        //     delete $scope.projectDetails.projectType[val];
+        //  }
 		console.log($scope.projectDetails.projectType);
     }
 
@@ -153,6 +182,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 		         	$scope.locations.push(value);
 		         })
 		        console.log($scope.locations);	
+                $ionicLoading.hide();
 	        },50);   
 		});
 	}
@@ -179,6 +209,9 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
 	$scope.save = function(){
 		var addProjectDetails = {};
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
 
 		console.log($scope.projectDetails);
 
@@ -208,8 +241,15 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
       	$ionicPopup.alert({
 			title: 'Successful',
 			template: 'Project Details updates successfully'
-		})
+		}).then(function(){
+            $ionicLoading.hide();
+        })
 	}
+
+    $scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
 	    scope: $scope,
@@ -300,10 +340,5 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
         // Run the initialize function when the window has finished loading.
         google.maps.event.addDomListener(window, 'load', initialize);
-
-
-         $scope.myGoBack = function() {
-        $ionicHistory.goBack();
-      };
 	
 }]);

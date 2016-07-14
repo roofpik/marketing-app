@@ -1,5 +1,8 @@
-app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup',function($scope, $timeout, $state,$ionicPopover,$ionicPopup){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', '$ionicLoading',function($scope, $timeout, $state,$ionicPopover,$ionicPopup, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -17,7 +20,8 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
             if(snapshot.val() != null){
             	$scope.other = snapshot.val();
             	console.log($scope.other);
-            }  
+            }
+            $ionicLoading.hide(); 
          });
     };
 
@@ -61,6 +65,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
 	$scope.save = function(){
 		console.log($scope.other);
+		$ionicLoading.show({
+	    template: 'Loading...'
+	  });
 		var addProjectDetails = {};
       	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
       	console.log(addProjectDetails);
@@ -68,6 +75,8 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
       	$ionicPopup.alert({
 			title: 'Successful',
 			template: 'Project Details updates successfully'
+		}).then(function(){
+			$ionicLoading.hide();
 		})
 		$scope.other = {};
 	}
@@ -89,4 +98,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 }]);

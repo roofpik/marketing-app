@@ -33,18 +33,6 @@ app.config(function($stateProvider, $urlRouterProvider) {
       controller:'DataEntryCtrl'
     })
 
-   $stateProvider.state('data-entry-p', {
-      url: '/data-entry-p/:activityId',
-      templateUrl: 'templates/planner/data-entry/data-entry-p.html',
-      controller:'DataEntryCtrl'
-    })
-
-   $stateProvider.state('data-entry-comments', {
-      url: '/data-entry-comments/:activityId',
-      templateUrl: 'templates/planner/data-entry/data-entry-comments.html',
-      controller:'DataEntryCtrl'
-    })
-
    $stateProvider.state('add-task', {
       url: '/add-task',
       templateUrl: 'templates/planner/add-task.html',
@@ -125,7 +113,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'AllProjectsCtrl'
   });
   $stateProvider.state('all-forms', {
-    url: '/all-forms/:projectId/:cityId',
+    url: '/all-forms',
     templateUrl: 'templates/dataEntry/all-forms.html',
     controller: 'AllFormsCtrl'
   });

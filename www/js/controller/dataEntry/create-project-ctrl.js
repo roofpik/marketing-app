@@ -1,12 +1,14 @@
-app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', 
-	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover){
-
+app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', '$ionicLoading', 
+	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  }); 
 	getCities();
 
 	//$scope.myId = window.localStorage.uid;
-	$scope.myId = window.localStorage.getItem('uid');
+	$scope.myId = localStorage.getItem('uid');
 	//$scope.myName = window.localStorage.name;
-	$scope.myName = window.localStorage.getItem('name');
+	$scope.myName = localStorage.getItem('name');
 	console.log($scope.myId);
 
 	$scope.cities = [];
@@ -19,17 +21,11 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	$scope.zoneDetails = {};
 
 	$scope.project = {
-		projectId: '',
-		projectStatus: '',
 		version: '1-1',
-		versionCreatedDate: '',
 		versionCreatedBy: $scope.myId,
 		buy: true,
 		status: 'editable',
 		projectDetails: {
-			projectName: '',
-			builderName: '',
-			builderId: '',
 			address: {
 			}
 		}
@@ -43,7 +39,8 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	        	angular.forEach(data.val(), function(value, key){
 	        	$scope.cities.push(value);
 	        	//$timeout(function(){console.log($scope.cities);},50);
-	        })
+	        	})
+	        	$ionicLoading.hide();
 	        }, 50);
 	        
 		});
@@ -52,6 +49,9 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	$scope.getZones = function(){
 		console.log(JSON.parse($scope.address.selectedCity));
 		if(!$scope.hasCity){
+			$ionicLoading.show({
+			    template: 'Loading...'
+			  }); 
 			$scope.cityDetails =JSON.parse($scope.address.selectedCity);
 			$scope.hasCity = true;
 			$scope.project.projectDetails.address.cityName = $scope.cityDetails.cityName;
@@ -65,6 +65,7 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 			         	$scope.zones.push(value);
 			         	//$timeout(function(){console.log($scope.zones);},50);
 			         })
+		        	$ionicLoading.hide();
 			        //console.log($scope.zones);
 		        }, 50);   
 			});
@@ -127,7 +128,9 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 
 	$scope.addNewProject = function(){
 		
-
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  }); 
 		$scope.project.versionCreatedDate = new Date().getTime();
 		console.log($scope.project);
 
@@ -154,8 +157,10 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
       	var addProjectAccess = {};
       	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
       	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
-      	addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] =$scope.project.projectDetails.address.cityId;
-      	addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] =$scope.project.projectDetails.address.cityName;
+      	if($scope.selectedBuilder != undefined){
+      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] =$scope.project.projectDetails.address.cityId;
+      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] =$scope.project.projectDetails.address.cityName;
+      	}
       	addProjectAccess['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
       	addProjectAccess['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
       	//console.log(addProjectAccess);
@@ -163,7 +168,9 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 
       	var addProjectInfo = {};
       	addProjectInfo['admins/'+$scope.myId+ '/projectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey]  = $scope.projectInfo;
-      	addProjectInfo['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey]  = $scope.projectInfo;
+      	if($scope.selectedBuilder != undefined){
+      		addProjectInfo['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey]  = $scope.projectInfo;
+      	}
       	addProjectInfo['city/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey] = $scope.projectInfo;
       	addProjectInfo['zone/'+$scope.project.projectDetails.address.cityId+'/'+$scope.project.projectDetails.address.zoneId+'/projects/'+newProjectKey] = $scope.projectInfo;
       	addProjectInfo['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/editable'] = $scope.projectInfo;
@@ -171,30 +178,26 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
       	addProjectInfo['adminProjectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/'+$scope.myId+'/adminName'] = $scope.myName;
 
       	console.log(addProjectInfo);
-      	db.ref().update(addProjectInfo);
+      	db.ref().update(addProjectInfo).then(function(){
+      		$ionicPopup.alert({
+				title: 'Successful',
+				template: 'Project created successfully'
+			}).then(function(){
+				var projectRequiredDetail = {};
+				projectRequiredDetail.version = $scope.project.version;
+				projectRequiredDetail.projectId = newProjectKey;
+				projectRequiredDetail.cityId = $scope.project.projectDetails.address.cityId;
+				localStorage.setItem('projectRequiredDetail',projectRequiredDetail);
+				console.log(localStorage.getItem('projectRequiredDetail'));
+				$scope.project = {};
+				$scope.selectedBuilder = {};
+				$scope.selectedZone = {};
+				$scope.selectedCity = {};
+				$ionicLoading.hide();
+				$state.go('welcome', {adminId: $scope.myId});
+			});	
+      	});
 
-      	$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project created successfully'
-		});
-
-		var projectRequiredDetail = {};
-		projectRequiredDetail.version = $scope.project.version;
-		projectRequiredDetail.projectId = newProjectKey;
-		projectRequiredDetail.cityId = $scope.project.projectDetails.address.cityId;
-		window.localStorage['projectRequiredDetail'] = JSON.stringify(projectRequiredDetail);
-		console.log(window.localStorage['projectRequiredDetail']);
-		$scope.project = {};
-		$scope.selectedBuilder = {};
-		$scope.selectedZone = {};
-		$scope.selectedCity = {};
-		$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project Details updates successfully'
-		}).then(function(){
-			console.log(window.localStorage['projectRequiredDetail']);
-			$state.go('project-basic-details');
-		})
 	}
 
 	$scope.viewOtherForms = function(page){

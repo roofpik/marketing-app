@@ -1,7 +1,9 @@
-app.controller('SocietyShopsCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '$ionicPopup', function($scope,$ionicPopover,$timeout, $state, $ionicPopup){
+app.controller('SocietyShopsCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '$ionicPopup', '$ionicLoading', function($scope,$ionicPopover,$timeout, $state, $ionicPopup, $ionicLoading){
 	$scope.formName = 'society-shops';
-
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -37,7 +39,8 @@ app.controller('SocietyShopsCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 	 					$scope.shopsCount++;
             		})
             	})
-            }  
+            }
+            $ionicLoading.hide();
          });
     };
 
@@ -87,5 +90,10 @@ app.controller('SocietyShopsCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
       		$state.go('home-delivery');
       	},2000);
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);

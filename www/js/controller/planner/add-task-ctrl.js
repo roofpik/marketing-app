@@ -1,6 +1,8 @@
-app.controller('AddTaskCtrl', ['$ionicHistory', '$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', '$filter', 
-	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover,$filter){
-
+app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$ionicPopover', '$filter', '$ionicLoading', 
+	function($scope, $timeout,$ionicPopup, $state, $ionicPopover,$filter, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
 	$scope.myId = localStorage.getItem("uid");
 
 	console.log($scope.myId);
@@ -25,12 +27,15 @@ app.controller('AddTaskCtrl', ['$ionicHistory', '$scope', '$timeout', '$ionicPop
 	        	$scope.cities.push(value);
 	        	//$timeout(function(){console.log($scope.cities);},50);
 	        	})
+	        	$ionicLoading.hide();
 	        }, 50);
 		});
 	};
 
 	$scope.selectCity=function(cityDetails){
-
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  });
 		$scope.citySelected = true;
 	 	console.log(cityDetails);
 	 	cityDetails=JSON.parse(cityDetails);	
@@ -52,6 +57,7 @@ app.controller('AddTaskCtrl', ['$ionicHistory', '$scope', '$timeout', '$ionicPop
 	        		$scope.projects.push(value);
 	        	});
 	        	console.log($scope.projects);
+	        	$ionicLoading.hide();
 	        }, 50);
 	    	//$scope.editableVersion = data.val().version;
 	    });
@@ -74,17 +80,20 @@ app.controller('AddTaskCtrl', ['$ionicHistory', '$scope', '$timeout', '$ionicPop
 	 	console.log($scope.data);
 	 	var newPostKey = firebase.database().ref('/activity/'+$scope.myId).child(dates).push().key;
 	 	var updates = {};
-	    updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/type'] = "DataEntry";
+	    updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/type'] = "Data Entry";
 	    $scope.data.active=true;
         updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/planning'] = $scope.data;
 	    console.log($scope.data);
 
-	    firebase.database().ref().update(updates);
+	    firebase.database().ref().update(updates).then(function(){
+	    	$state.go('tasks', {adminId:$scope.myId});
+	    });
 	  
 	 };
 
-	 $scope.myGoBack = function() {
-	    $ionicHistory.goBack();
+	 $scope.goBack = function() {
+	 	console.log('called');
+	    $state.go('welcome', {adminId: $scope.myId});
 	  };
 
 }]);

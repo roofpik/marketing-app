@@ -1,6 +1,9 @@
-app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover','$ionicPopup', function($scope, $timeout, $state, $ionicPopover, $ionicPopup){
+app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover','$ionicPopup', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover, $ionicPopup, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  }); 
 	$scope.formName = 'connectivity-details';
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -24,7 +27,8 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
             if(snapshot.val() != null){
             	$scope.connectivity = snapshot.val();
             	console.log($scope.connectivity);
-            }  
+            }
+            $ionicLoading.hide(); 
          });
     };
 
@@ -74,8 +78,16 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 		}
 	}
 
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
+
 	$scope.save = function(){
 		console.log($scope.connectivity);
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  }); 
 		var addProjectDetails = {};
       	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
       	console.log(addProjectDetails);
@@ -83,7 +95,13 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
       	$ionicPopup.alert({
 			title: 'Successful',
 			template: 'Project Details updates successfully'
+		}).then(function(){
+			$ionicLoading.hide();
 		})
 		$scope.connectivity = {};
+	}
+
+	$scope.goToActivity = function(){
+		
 	}
 }]);

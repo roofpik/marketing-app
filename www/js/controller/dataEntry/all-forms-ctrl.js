@@ -1,10 +1,4 @@
 app.controller('AllFormsCtrl', ['$scope', '$state', '$stateParams', '$timeout', function($scope, $state, $stateParams, $timeout){
-	console.log('working');
-	console.log($stateParams);
-	$scope.projectId = $stateParams.projectId;
-	$scope.cityId = $stateParams.cityId;
-	$scope.project = {};
-	$scope.editableVersion = '';
 	$scope.forms = [
 		{id: 'project-basic-details', name: 'Project Basic Details'},
 		{id: 'sports-n-clubhouse', name: 'Sports And Clubhouse Details'},
@@ -19,26 +13,14 @@ app.controller('AllFormsCtrl', ['$scope', '$state', '$stateParams', '$timeout', 
 		{id: 'ranking-rating', name: 'Ranking Rating And Area'}
 	];
 
-	getProjectEditable();
-
-	function getProjectEditable() {
-		console.log($scope.projectId);
-		console.log('protectedResidentialVersions/'+$scope.cityId+'/projects/'+$scope.projectId);
-		var newData = firebase.database().ref('protectedResidentialVersions/'+$scope.cityId+'/projects/'+$scope.projectId+'/editable');
-	    newData.on('value', function(data) {
-	    	console.log(data.val().version);
-	    	$scope.editableVersion = data.val().version;
-	    });
-    };
-
-
 	$scope.goToForm = function(val){
-		var projectRequiredDetail = {};
-		projectRequiredDetail.version = $scope.editableVersion;
-		projectRequiredDetail.projectId = $scope.projectId;
-		projectRequiredDetail.cityId = $scope.cityId;
-		window.localStorage['projectRequiredDetail'] = JSON.stringify(projectRequiredDetail);
-		console.log(window.localStorage['projectRequiredDetail']);
 		$state.go(val);
+	}
+
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
+	console.log(projectRequiredDetail);
+
+	$scope.goToActivity = function(){
+		$state.go('data-entry', {activityId:projectRequiredDetail.activityId});
 	}
 }]);

@@ -1,48 +1,112 @@
-<ion-view view-title="Data Entry" >
-
-    <div class="tabs-striped tabs-balanced ">
-        <div class="tabs">
-            <a href="#/data-entry-p/{{activityId}}" class="tab-item">Planned </a>
-            <a href="#/data-entry/{{activityId}}" class="tab-item">Summary</a>
-            <a href="#/data-entry-comments/{{activityId}}" class="tab-item">Comments</a>
-        </div>
-    </div>
-
-    <ion-content >
-        <div class="row">
-            <ion-button class="button button-short col" style="background-color:#C0C0C0;" ng-click="startActivity(activity)">
-            {{toggle}}
-            </ion-button>
-            <ion-button class="button col" style="background-color:#C0C0C0;" ng-click="cancel()">
-            Cancel
-            </ion-button>
-        </div>
-
-
-        <form name="myForm" novalidate>
+<ion-view class="data-entry" cache-view="false">
+    <ion-header-bar class="bar-balanced" align-title="center">
+        <button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+        <h1 class="title">Data Entry</h1>
+    </ion-header-bar>
+    <ion-content>
+        <div class="planned" ng-show="type[0].value">
             <div class="list card">
-                <label class="item item-icon-left " >
-                   <div class="ion-location" > Start Time</div>
-                   </br>
-                   <p>Start time: {{startTime}}</p>
-                </label>
-
-                <label class="item item-input item-stacked-label icon-item-left">
-                      <span class="input-label ion-android-chat"> Remarks</span>
-                      <textarea rows="5" ng-change="change()" ng-model="activity.remark" ng-init="remark=null"></textarea>
-                </label>
-                <ion-button class="button button-block button-stable" ng-click="data_entry()">Data Entry</ion-button>
-
-                <label class="item item-icon-left ">
-                       <div class="ion-location" > End Time</div>
-                        </br>
-                    
-                        <p>End time: {{endTime}}</p>
-                </label>
-
+                <div class="item row planned-details">
+                    <div class="col col-40">
+                        <p><b>Project Name</b></p>
+                    </div>
+                    <div class="col col-60">
+                        <p>{{activityDetails.planning.projectName}}</p>
+                    </div>
+                </div>
+                <div class="item row planned-details">
+                    <div class="col col-40">
+                        <p><b>City Name</b></p>
+                    </div>
+                    <div class="col col-60">
+                       <p>{{activityDetails.planning.cityName}}</p>
+                    </div>
+                </div>
+                <div class="item row planned-details">
+                    <div class="col col-40">
+                        <p><b>Purpose</b></p>
+                    </div>
+                    <div class="col col-60">
+                        <p>{{activityDetails.planning.purpose}}</p>
+                    </div>
+                </div>
+                <div class="item row planned-details">
+                    <div class="col col-40">
+                        <p><b>Start Time</b></p>
+                    </div>
+                    <div class="col col-60">
+                        <p>{{activityDetails.planning.start.time}}</p>
+                    </div>
+                </div>
+                <div class="item row planned-details">
+                    <div class="col col-40">
+                        <p><b>End Time</b></p>
+                    </div>
+                    <div class="col col-60">
+                        <p>{{activityDetails.planning.end.time}}</p>
+                    </div>
+                </div>
             </div>
-            </br>
-            </br>
-        </form>
+            <div class="row" id="startNcancel">
+                <div class="start col" ng-show="activityDetails.planning.active">
+                    <div class="startBtn" ng-click="startActivity()">Start</div>
+                </div>
+                <div class="cancel col" ng-show="activityDetails.planning.active">
+                    <div class="cancelBtn" ng-click="cancelActivity()">Cancel</div>
+                </div>
+            </div>
+        </div>
+        <div class="summary card" ng-show="type[1].value">
+            <div class="cancellation" ng-show="activityDetails.summary.cancellationRemark">
+                <p><b>Cancellation Time: </b>{{activityDetails.summary.cancellationRemark.time}}</p>
+                <p><b>Comment: </b>{{activityDetails.summary.cancellationRemark.comment}}</p>
+            </div>
+            <div class="getSumary" ng-hide="dataEntryStarted ||(activityDetails.summary.status =='completed') || (activityDetails.summary.status =='cancelled')">
+                <button class="button button-dark" ng-click="startDataEntry()" ng-show="showDataEntryButton">Start Data Entry</button>
+            </div>
+            <div class="remark" ng-show="(activityDetails.summary.status =='started')">
+                <label class="item item-input item-stacked-label icon-item-left remarkbox" style="border: 1px solid #ccc;">
+                    <textarea rows="5" columns="10" placeholder="Remark" ng-model="endWithRemark.remark"></textarea>
+                </label>
+            </div>
+            <div class="activityCancelled" ng-show="activityDetails.summary.status =='cancelled'">
+                <h4>Data Entry Cancelled</h4>
+            </div>
+            <div class="activityCompleted" ng-show="activityDetails.summary.status =='completed'">
+                <h4>Data Entry Completed</h4>
+            </div>
+            <div class="previousRemark" ng-show="activityDetails.summary.remark">
+                <p>{{activityDetails.summary.remark}}</p>
+            </div>
+            <div class="row" id="endNcancel" ng-show="!activityDetails.planning.active && (activityDetails.summary.status =='started')">
+                <div class="end col">
+                    <div class="endBtn" ng-click="endActivity()">End</div>
+                </div>
+                <div class="cancel col">
+                    <div class="cancelBtn" ng-click="cancelActivity()">Cancel</div>
+                </div>
+            </div>
+        </div>
+        <div class="comments" ng-show="type[2].value">
+            <label class="item item-input item-stacked-label icon-item-left commentbox">
+                <textarea rows="5" columns="10" placeholder="Type your comment" ng-model="newComment.comment"></textarea>
+            </label>
+            <div class="addBtn">
+                <button class="button button-dark" ng-click="addComment()">Add Comment</button>
+            </div>
+            <div class="list" ng-hide="activityDetails.comments.length == 0">
+                <div class="item" ng-repeat="comment in activityDetails.comments">
+                    <h3>{{comment.name}}</h3>
+                    <p>{{comment.comment}}</p>
+                </div>
+            </div>
+        </div>
     </ion-content>
+    <ion-footer-bar align-title="center">
+      <div class="row">
+        <div class="col" ng-click="showDetails(0)" ng-class="type[0].value?'highlight':'notHighlight'">Planned</div>
+        <div class="col" ng-click="showDetails(1)" ng-class="type[1].value?'highlight':'notHighlight'">Summary</div>
+        <div class="col" ng-click="showDetails(2)" ng-class="type[2].value?'highlight':'notHighlight'">Comments</div>
+      </div>
+    </ion-footer-bar>
 </ion-view>

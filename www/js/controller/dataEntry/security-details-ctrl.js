@@ -1,5 +1,8 @@
-app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover,$ionicPopup){
-	var projectRequiredDetail = JSON.parse(window.localStorage['projectRequiredDetail']);
+app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicPopup', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover,$ionicPopup, $ionicLoading){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
+	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
@@ -22,7 +25,8 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
             if(snapshot.val() != null){
             	$scope.security = snapshot.val();
             	console.log($scope.security);
-            }  
+            } 
+            $ionicLoading.hide(); 
          });
     };
 
@@ -95,5 +99,10 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
 			$state.go(page);
 		}
 	}
+
+	$scope.goBack = function(){
+        console.log('called');
+        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
 
 }]);
