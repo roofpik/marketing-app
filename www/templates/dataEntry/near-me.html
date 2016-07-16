@@ -1,0 +1,50 @@
+<ion-view class="near-me" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+		<h1 class="title">Near Me</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="item-divider" id="vendorTypeSelect">
+				Select Type
+			</div>
+			<label class="item item-input item-select" id="vendorTypeSelectLabel">
+			    <select ng-change="selectType()" ng-model="selectedType.type">
+			        <option 
+			            ng-repeat="type in nearMeTypes" 
+			            value="{{type}}">
+			                {{type.name}}
+			        </option>
+			    </select>
+			</label>
+			<div class="near-me-options">
+				<div class="add">
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Name</span>
+					   	<input type="text" placeholder="Name" ng-model = "nearMeDetails.name">
+					</label>
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Contact Number</span>
+					   	<input type="number" placeholder="Contact Number" ng-model = "nearMeDetails.contact">
+					</label>
+					<div class="addBtn">
+						<button class="button button-dark" ng-click="addShop()">Add</button>
+					</div>
+				</div>
+				<div class="display" ng-show="vendorsCount">
+					<div class="row headings">
+						<div class="col">Name</div>
+						<div class="col">Contact</div>
+						<div class="col">Type</div>
+					</div>
+					<div class="row" ng-repeat="vendor in vendors">
+						<div class="col"><strong>{{vendor.name}}</strong></div>
+						<div class="col"><strong>{{vendor.contact}}</strong></div>
+						<div class="col"><strong>{{vendor.type}}</strong></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

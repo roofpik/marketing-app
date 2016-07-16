@@ -6,8 +6,19 @@
 	</ion-header-bar>
 	<ion-content>
 	<form name="myForm">
-		
 		<div class = "card">
+			<div class="row">
+				<div class="col" ng-click="selectProjectType('protectedResidential')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="data.projectType == 'protectedResidential'? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">Residential</span>
+				</div>
+				<div class="col" ng-click="selectProjectType('pg')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="data.projectType == 'pg'? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">PG</span>
+				</div>
+			</div>
 			<label class="item item-input item-select">
 				    <div class="input-label">
 				        Select City
@@ -33,26 +44,26 @@
 			        </option>
 			    </select>
 			</label>
-
-			<label class="item item-input item-floating-label">
-			    <span class="input-label labels">Start Time</span>
-			    <input type="text" placeholder="Start Time" ng-model="data.start.time" >
-		  	</label>
-		  	<label class="item item-input item-floating-label">
-			    <span class="input-label labels">End Time</span>
-			    <input type="text" placeholder="End Time" ng-model="data.end.time">
-		  	</label>
+		  	<ionic-timepicker input-obj="timePickerObject">
+		        <div class="row" id="startTime">
+		        	<div class="col"><span class="input-label time">Start Time</span></div>
+		        	<div class="col timeValue"><p>{{showTime}}</p></div>
+		    	</div>
+    		</ionic-timepicker>
+		  	<ionic-timepicker input-obj="timePickerObject1">
+		        <div class="row">
+		        	<div class="col"><span class="input-label time">End Time</span></div>
+		        	<div class="col timeValue"><p>{{showTime1}}</p></div>
+		    	</div>
+		    </ionic-timepicker>
 		  	<label class="item item-input item-floating-label">
 			    <span class="input-label labels">Purpose</span>
 			    <input type="text" placeholder="Purpose" ng-model="data.purpose" >
 		  	</label>
-		  	<label class="item item-input item-floating-label">
-			    <span class="input-label labels">Comments</span>
-			    <input type="text" placeholder="Comments" ng-model="data.comments" >
-		  	</label>
 		</div>
-
-		<ion-button class="button button-block button-positive" ng-click="addTask()">Add Data Entry Task</ion-button>
 		</form>
 	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-dark" ng-click="addTask()">
+    	<hw class="title">Add Data Entry Task</hw>
+    </ion-footer-bar>
 </ion-view>

@@ -6,8 +6,10 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.formName ='other-details';
+	$scope.parkSelected = false;
 
 	$scope.other = {};
 
@@ -15,10 +17,13 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
     function getProjectDetails(){
     	console.log('called');
-    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/other').once('value', function(snapshot) {
+    	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/other').once('value', function(snapshot) {
             if(snapshot.val() != null){
             	$scope.other = snapshot.val();
+            	if($scope.other.park != undefined){
+            		$scope.parkSelected = true;
+            	}
             	console.log($scope.other);
             }
             $ionicLoading.hide(); 
@@ -39,15 +44,11 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		{id:'grocery', name: 'Grocery'},
 		{id:'pharmacy', name: 'Pharmacy'},
 		{id:'parlour', name: 'Parlour'},
-		{id:'park', name: 'Park'},
 		{id:'laundry', name: 'Laundry'},
 		{id:'bank', name: 'Bank'},
-		{id: 'centralWifi', name: 'Central WiFi'},
-		{id: 'DTHCabling', name: 'DTH Cabling'},
-		{id: 'IPTVReady', name: 'IPTV Ready'},
-		{id: 'ultaHighSpeedBroadband', name: 'Ultra High Speed Broadband'},
-		{id: 'highSpeedElevators', name: 'High Speed Elevators'},
-		{id: 'gasPipelines', name: 'Gas Pipelines'}
+		{id:'centralWifi', name: 'Central WiFi'},
+		{id:'DTHCabling', name: 'DTH Cabling'},
+		{id:'gasPipelineProvisioned', name: 'Gas Pipeline Provisioned'}
 	];
 
 	$scope.selectOther = function(val){
@@ -63,13 +64,21 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		console.log($scope.other);
 	}
 
+	$scope.choosePark = function(){
+		$scope.parkSelected = !$scope.parkSelected;
+	}
+
+	$scope.selectSize = function(val){
+		$scope.other.park = val;
+	}
+
 	$scope.save = function(){
 		console.log($scope.other);
 		$ionicLoading.show({
 	    template: 'Loading...'
 	  });
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$ionicPopup.alert({

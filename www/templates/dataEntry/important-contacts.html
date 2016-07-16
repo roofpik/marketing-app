@@ -1,0 +1,51 @@
+<ion-view class="rwa-details" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+		<h1 class="title">Important Contacts</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="item item-divider">
+				RWA Details
+			</div>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Name</span>
+				<input type="text" placeholder="Contact Name" ng-model="importantContacts.rwa.contactName">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Email Address</span>
+				<input type="email" placeholder="Email Address" ng-model="importantContacts.rwa.emailAddress">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Number</span>
+				<input type="number" placeholder="Contact Number" ng-model="importantContacts.rwa.contactNumber">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Rules</span>
+				<textarea rows="4" cols="50"  placeholder="Rules" ng-model="importantContacts.rwa.rules"></textarea>
+			</label>
+			<div>
+				<button class="button button-block button-dark" ng-click="save('rwa')">Save</button>
+			</div>
+			<div class="item item-divider">
+				Maintenance Office
+			</div>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Name</span>
+				<input type="text" placeholder="Contact Name" ng-model="importantContacts.maintenanceOffice.contactName">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Email Address</span>
+				<input type="email" placeholder="Email Address" ng-model="importantContacts.maintenanceOffice.emailAddress">
+			</label>
+			<label class="item item-input item-floating-label">
+				<span class="input-label labels">Contact Number</span>
+				<input type="number" placeholder="Contact Number" ng-model="importantContacts.maintenanceOffice.contactNumber">
+			</label>
+			<div>
+				<button class="button button-block button-dark" ng-click="save('maintenanceOffice')">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

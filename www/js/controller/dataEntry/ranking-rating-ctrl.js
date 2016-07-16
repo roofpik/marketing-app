@@ -6,6 +6,7 @@ app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopo
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+  $scope.projectType = projectRequiredDetail.projectType;
 	$scope.formName ='ranking-rating';
 
 	$scope.ratings = {};
@@ -19,29 +20,29 @@ app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopo
 
     function getProjectDetails(){
     	console.log('called');
-    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/ratings').once('value', function(snapshot) {
+    	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/ratings').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.ratings = snapshot.val();
             	console.log($scope.ratings);
             }  
          });
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/ranking').once('value', function(snapshot) {
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/ranking').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.ranking = snapshot.val();
             	console.log($scope.ranking);
             }  
          });
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/priceRange').once('value', function(snapshot) {
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/priceRange').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.priceRange = snapshot.val();
             	console.log($scope.priceRange);
             }  
          });
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/areas').once('value', function(snapshot) {
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/areas').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.areas = snapshot.val();
@@ -55,10 +56,10 @@ app.controller('RankingRatingCtrl', ['$scope', '$state', '$timeout', '$ionicPopo
 
 	$scope.save = function(){
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/ratings"] = $scope.ratings;
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/ranking"] = $scope.ranking;
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/priceRange"] = $scope.priceRange;
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/areas"] = $scope.areas;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/ratings"] = $scope.ratings;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/ranking"] = $scope.ranking;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/priceRange"] = $scope.priceRange;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+"/"+$scope.editableVersion+ "/areas"] = $scope.areas;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$scope.ratings = {};

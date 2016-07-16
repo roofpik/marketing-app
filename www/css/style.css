@@ -216,7 +216,7 @@ a:active{
     margin-bottom: 0;
     line-height: 15px;
     font-weight: bold;
-    margin-left: 8%;
+    margin-left: 10%;
     border-top: 2px solid #ccc;
     border-bottom: 2px solid #ccc;
 }
@@ -307,6 +307,21 @@ a:active{
   border:1px solid #b3b3b3;
 }
 
+.project-basic-details .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
+}
+
+.project-basic-details .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
+}
+
+.project-basic-details .typeName {
+    padding: 0 10px;
+    line-height: 25px;
+}
+
 .selected {
   border:1px solid green !important;
   background-color:#e6ffe6;
@@ -357,6 +372,30 @@ div.radio-content {
   border:1px solid #ccc;
 }
 
+.create-project .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
+}
+
+.create-project .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
+}
+
+.create-project .typeName {
+    padding: 0 10px;
+    line-height: 25px;
+}
+
+.create-project #createProjectType {
+  margin-bottom:1px;
+  border-bottom:1px solid #f2f2f2;
+}
+
+.create-project #createProjectType .col{
+  text-align:center;
+}
+
 /*sports and clubhouse*/
 .sportsNclub {
   text-align: center;
@@ -400,6 +439,13 @@ div.radio-content {
     text-align:center;
 }
 
+.security-details .mainGateSecurityContact {
+  border:1px solid #ccc;
+  border-radius:5px;
+  margin-bottom:10px;
+}
+
+
 .other-security .ion-checkmark-circled {
   font-size:1.7em;
   color:#00b300;
@@ -441,6 +487,16 @@ div.radio-content {
 
 .other-details p{
   margin-top:10px;
+}
+
+.other-details .park{
+    border-top: 1px solid #ccc;
+    min-height: 40px;
+    padding-left:15px;
+}
+.other-details .size{
+  text-align:center;
+  border:1px solid #ccc;
 }
 
 /*Connectivity*/
@@ -487,17 +543,45 @@ div.radio-content {
   border:1px solid #999;
 }
 
-/*home-delivery*/
-.home-delivery-options {
+/*near-me*/
+.near-me-options {
   border:1px solid #ccc;
 }
 
-#homeDeliveryTypes {
+.near-me .item-select select{
+  max-width: 80%;
+  /*position: absolute;*/
+  top: 0;
+  bottom: 0;
+
+  /* right: 0; */
+  border: none;
+  background: #fff;
+  color: #333;
+  text-indent: .01px;
+  text-overflow: '';
+  white-space: nowrap;
+  font-size: 1em;
+  font-weight:500;
+  cursor: pointer;
+  direction: rtl;
+  /*text-align:center;*/
+}
+
+.near-me  #vendorTypeSelect {
+  padding-left:7px;
+}
+
+.near-me  #vendorTypeSelectLabel{
+  height: 50px;
+}
+
+#nearMeTypes {
   text-align:center;
   font-size:1em;
 }
 
-#homeDeliveryTypes .col{
+#nearMeTypes .col{
     border: 1px solid #b3b3b3;
     height: 60px;
     padding-top: 15px;
@@ -510,13 +594,95 @@ div.radio-content {
   color:#00b300;
 }
 
+.units .more{
+  font-size:1.5em;
+  color:#f2f2f2;
+}
+
+.units .less{
+  font-size:1.5em;
+  color:#f2f2f2;
+}
+
 .units .row{
-  border-top:1px solid #ccc;
-  min-height:50px;
+  border-top: 1px solid #ccc;
+  min-height: 50px;
+  padding: 2px;
+}
+
+.units .flooringName{
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    line-height: 40px;
+    text-align: center;
+    background-color: #d9d9d9;
 }
 
 .units .col-10{
   padding-top:15px;
+}
+
+.units .flooring .item-select select{
+  max-width: 80%;
+  /*position: absolute;*/
+  top: 0;
+  bottom: 0;
+  /* right: 0; */
+  padding: 0 48px 0 16px;
+  border: none;
+  background: #fff;
+  color: #333;
+  text-indent: .01px;
+  text-overflow: '';
+  white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+  direction: rtl;
+  /*text-align:center;*/
+}
+
+.units #chooseValue{
+  background-color:#f2f2f2;
+  text-align:center;
+  padding:0px;
+}
+
+.units #chooseValue .col{
+  line-height: 36px;
+  border:1px solid #ccc;
+}
+
+.units .flooring .item-divider {
+  padding-left:7px;
+}
+
+.units .flooring label{
+  height: 50px;
+}
+
+.units .flooring .input-label1{
+  font-size:0.9em;
+}
+
+.units .spec2 {
+  border-top:1px solid #ccc;
+}
+.units .specName{
+  height:50px;
+  padding-left: 10px;
+}
+
+.units .moreSelected{
+  color:#00b300;
+}
+
+.units .lessSelected {
+  color:red;
+}
+
+.units #specValue {
+  text-align:center;
+  border:1px solid #ccc;
 }
 
 .units p{
@@ -528,6 +694,18 @@ div.radio-content {
   text-align:center;
   font-size: 1.3em;
   font-weight:500;
+}
+
+/*Important Contacts*/
+
+.important-contacts .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
+}
+
+.important-contacts .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
 }
 
 
@@ -650,4 +828,87 @@ div.radio-content {
 
 .data-entry .activityCancelled, .data-entry .activityCompleted{
   padding:5px;
+}
+
+/*Add Task Css*/
+.add-task .input-label {
+ width:100%;
+}
+
+.add-task .time{
+  margin-left: 5px;
+}
+
+.add-task #startTime {
+  border-bottom:1px solid #ccc;
+}
+
+.add-task .timeValue {
+  text-align:right;
+  margin-right: 20px;
+}
+
+.add-task .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
+}
+
+.add-task .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
+}
+
+.add-task .typeName {
+    padding: 0 10px;
+    line-height: 25px;
+}
+
+/*Tags*/
+.tags .existingTags {
+    display: inline-block;
+    margin: 2px;
+}
+
+.tags #tagLabel {
+  background-color: #f2f2f2;
+  border:1px solid #ccc;
+  margin-bottom: 0px;
+}
+
+.tags .oldTag {
+  background-color: #f26551;
+  margin:3px 10px 3px 3px;
+  border-radius: 10px;
+  color:#fff;
+}
+
+.tags .oldTag .icon {
+  font-size:2em;
+}
+
+.tags .oldTag span{
+  line-height:10px;
+  font-weight:500;
+}
+
+.tags .tagList{
+  font-size: 1em;
+  padding: 3px;
+}
+
+.tags .addTagBtn{
+  background-color: #f26551;
+  padding: 5px;
+  border-radius: 5px;
+  float: right;
+  font-weight: 500;
+  color: #fff;
+  font-size:0.9em;
+}
+
+
+
+/*title font-size*/
+.title {
+  font-size:0.9em;
 }

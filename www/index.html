@@ -6,6 +6,7 @@
     <title></title>
 
     <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+     <!-- <link href="lib/ionic-material/dist/ionic.material.min.css" rel="stylesheet"> -->
     <link href="css/style.css" rel="stylesheet">
 
     <!-- IF using Sass (run gulp sass first), then uncomment below and remove the CSS includes above
@@ -17,6 +18,7 @@
 
     <!-- ionic/angularjs js -->
     <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <!-- <script src="lib/ionic-material/dist/ionic.material.min.js"></script> -->
 
     <!-- cordova script (this will be a 404 during development) -->
     <script src="lib/ngCordova/dist/ng-cordova.min.js"></script>
@@ -28,6 +30,7 @@
     <!-- firebase includes -->
     <script src="https://www.gstatic.com/firebasejs/live/3.0/firebase.js"></script>
     <script src="https://cdn.firebase.com/libs/angularfire/2.0.1/angularfire.min.js"></script>
+
     <script>
       // Initialize Firebase
       var config = {
@@ -38,6 +41,9 @@
       };
       firebase.initializeApp(config);
     </script>
+
+    <script src="js/others/time.js"></script>
+    <script src="lib/moment/moment.js"></script>
 
     <!-- app's js -->
     <script src="js/app.js"></script>
@@ -58,15 +64,16 @@
     <script src="js/controller/dataEntry/project-basic-details-ctrl.js"></script>
     <script src="js/controller/dataEntry/create-project-ctrl.js"></script>
     <script src="js/controller/dataEntry/sports-n-clubhouse-ctrl.js"></script>
-    <script src="js/controller/dataEntry/rwa-details-ctrl.js"></script>
+    <script src="js/controller/dataEntry/important-contacts-ctrl.js"></script>
     <script src="js/controller/dataEntry/security-details-ctrl.js"></script>
     <script src="js/controller/dataEntry/other-details-ctrl.js"></script>
     <script src="js/controller/dataEntry/costing-details-ctrl.js"></script>
     <script src="js/controller/dataEntry/connectivity-details-ctrl.js"></script>
     <script src="js/controller/dataEntry/society-shops-ctrl.js"></script>
-    <script src="js/controller/dataEntry/home-delivery-ctrl.js"></script>
+    <script src="js/controller/dataEntry/near-me-ctrl.js"></script>
     <script src="js/controller/dataEntry/units-ctrl.js"></script>
     <script src="js/controller/dataEntry/ranking-rating-ctrl.js"></script>
+    <script src="js/controller/dataEntry/tags-ctrl.js"></script>
     <script src="js/controller/dataEntry/all-projects-ctrl.js"></script>
     <script src="js/controller/dataEntry/all-forms-ctrl.js"></script>
    </head>
