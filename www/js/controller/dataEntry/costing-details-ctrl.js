@@ -7,6 +7,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.projectType = projectRequiredDetail.projectType;
+	console.log($scope.projectType);
 
 	$scope.formName = 'costing-details';
 	$scope.costing = {};
@@ -14,8 +16,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
     function getProjectDetails(){
     	console.log('called');
-    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/costing').once('value', function(snapshot) {
+    	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/costing').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.costing = snapshot.val();
@@ -25,7 +27,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
          });
     };
 	$scope.parameters = [
-		{id:'powerBackupCharges', name:'Power Backup Charges'},
+		{id:'powerBackupChargesFixed', name:'Power Backup Charges Fixed'},
+		{id:'powerBackupChargesVariable', name:'Power Backup Charges Variable'},
 		{id:'maintenanceChargesFixed', name:'Maintenance Charges Fixed'},
 		{id:'maintenanceChargesVariable', name:'Maintenance Charges Variable'},
 		{id:'moveInCharges', name: 'Move In Charges'},
@@ -36,7 +39,12 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		{id:'cleaningUtensilsTwoTime', name: 'Cleaning Utensils Two Time'},
 		{id:'maid12Hours', name: 'Maid 12 Hours'},
 		{id:'maid24Hours', name: 'Maid 24 Hours'},
-		{id:'carWashCharges', name: 'Car Wash Charges'}
+		{id:'carParkingCharges', name: 'Car Parking Charges'},
+		{id:'extraCarParkingCharges', name: 'Extra Car Parking Charges'},
+		{id: 'EDC-IDC', name: 'EDC/IDC'},
+		{id: 'IFMS', name: 'IFMS'},
+		{id: 'PLC', name: 'PLC'},
+		{id: 'clubHouse', name: 'ClubHouse'}
 	];
 
 	$scope.save = function(){
@@ -45,15 +53,15 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		    template: 'Loading...'
 		  }); 
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/costing"] = $scope.costing;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/costing"] = $scope.costing;
       	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails);
-      	$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project Details updates successfully'
-		}).then(function(){
-			$ionicLoading.hide();
-		})
+      	db.ref().update(addProjectDetails).then(function(){
+      		$ionicLoading.hide();
+      		$ionicPopup.alert({
+				title: 'Successful',
+				template: 'Project Details updates successfully'
+			})
+      	});
 		$scope.costing = {};
 	}
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

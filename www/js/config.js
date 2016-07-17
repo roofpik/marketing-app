@@ -57,10 +57,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/dataEntry/sports-n-clubhouse.html',
     controller: 'SportsNClubhouseCtrl'
   });
-  $stateProvider.state('rwa-details', {
-    url: '/rwa-details',
-    templateUrl: 'templates/dataEntry/rwa-details.html',
-    controller: 'RwaDetailsCtrl'
+  $stateProvider.state('important-contacts', {
+    url: '/important-contacts',
+    templateUrl: 'templates/dataEntry/important-contacts.html',
+    controller: 'ImportantContactsCtrl'
   });
 
   $stateProvider.state('security-details', {
@@ -91,10 +91,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/dataEntry/society-shops.html',
     controller: 'SocietyShopsCtrl'
   });
-  $stateProvider.state('home-delivery', {
-    url: '/home-delivery',
-    templateUrl: 'templates/dataEntry/home-delivery.html',
-    controller: 'HomeDeliveryCtrl'
+  $stateProvider.state('near-me', {
+    url: '/near-me',
+    templateUrl: 'templates/dataEntry/near-me.html',
+    controller: 'NearMeCtrl'
   });
   $stateProvider.state('units', {
     url: '/units',
@@ -105,6 +105,12 @@ app.config(function($stateProvider, $urlRouterProvider) {
     url: '/ranking-rating',
     templateUrl: 'templates/dataEntry/ranking-rating.html',
     controller: 'RankingRatingCtrl'
+  });
+
+  $stateProvider.state('tags', {
+    url: '/tags',
+    templateUrl: 'templates/dataEntry/tags.html',
+    controller: 'TagsCtrl'
   });
 
   $stateProvider.state('all-projects', {

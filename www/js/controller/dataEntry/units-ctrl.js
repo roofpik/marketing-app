@@ -10,22 +10,41 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.unitDetails = [];
 
-	$scope.configurations1 = [
-		{name: 'Property Type', id: 'propertyType'},
-		{name: 'Type', id: 'type'},
+	$scope.propertyTypes = [
+		{id: 'apartment', name: 'Apartment'},
+		{id: 'villa', name: 'Villa'},
+		{id: 'rowHouse', name: 'Row House'},
+		{id: 'studio', name: 'Studio'},
+		{id: 'servicedApartment', name: 'Serviced Apartment'}
 	];
 
+	$scope.units = {
+		configurations: {},
+		specifications: {}
+	}
+
+	$scope.project = {
+		type:''
+	}
+
+	$scope.selectProjectType = function(){
+		console.log(JSON.parse($scope.project.type));
+		$scope.units.configurations.propertyType = JSON.parse($scope.project.type).id;
+		console.log($scope.units.configurations.propertyType );
+	}
+
 	$scope.configurations2 = [
-		{name: 'Price', id: 'price'},
 		{name: 'Super Area', id: 'superArea'},
 		{name: 'Carpet Area', id: 'carpetArea'},
 		{name: 'Total Balconies', id: 'totalBalconies'},
 		{name: 'Total Halls', id: 'totalHalls'},
 		{name: 'Total Bedrooms', id: 'totalBedrooms'},
-		{name: 'Total Washrooms', id: 'totalWashrooms'}
+		{name: 'Total Washrooms', id: 'totalWashrooms'},
+		{name: 'Number of Parking Spaces', id: 'noOfParkingSpaces'}
 	];
 
 	$scope.configurations3 = [
@@ -37,31 +56,63 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$
 		{name: 'Store Room', id: 'storeRoom'}
 	];
 
-	$scope.specifications = [
-		{name: 'Shower Cubicle', id: 'showerCubicle'},
+	$scope.specifications1 = [
 		{name: 'Home Automation', id: 'homeAutomation'},
 		{name: 'VRV Air Conditioning', id: 'vrvAirConditioning'},
 		{name: 'Kitchen Appliances', id: 'kitchenAppliances'},
 		{name: 'Kitchen OTG', id: 'kitchenOTG'},
-		{name: 'Bathtub', id: 'bathTub'},
 		{name: 'Kitchen Modular', id: 'kitchenModular'},
 		{name: 'Kitchen Dishwasher', id: 'kitchenDishwasher'},
 		{name: 'Air Conditioning', id: 'airConditioning'},
-		{name: 'Flooring Master Bedroom', id: 'flooringMasterBedroom'},
 		{name: 'Kitchen Chimney', id: 'kitchenChimney'},
-		{name: 'Flooring Living Dining', id: 'flooringLivingDining'},
 		{name: 'Kitchen Microwave Oven', id: 'kitchenMicrowaveOven'},
-		{name: 'Jacuzzi', id: 'jacuzzi'},
 		{name: 'Kitchen Refrigerator', id: 'kitchenRefrigerator'},
-		{name: 'Flooring Other Bedrooms', id: 'flooringOtherBedrooms'},
 		{name: 'Kitchen Hob', id: 'kitchenHob'},
 		{name: 'Fully Furnished', id: 'fullyFurnished'},
-		{name: 'Wardrobes', id: 'wardrobes'}
+		{name: 'Wardrobes', id: 'wardrobes'},
 	];
 
-	$scope.units = {
-		configurations: {},
-		specifications: {}
+	$scope.specifications2 = [
+		{name: 'Shower Cubicle', id: 'showerCubicle'},
+		{name: 'Jacuzzi', id: 'jacuzzi'},
+		{name: 'Bathtub', id: 'bathTub'}
+	];
+
+	$scope.specifications3 = [
+		{name: 'Master Bedroom', id: 'flooringMasterBedroom'},
+		{name: 'Living Dining', id: 'flooringLivingDining'},
+		{name: 'Other Bedrooms', id: 'flooringOtherBedrooms'}
+	];
+	$scope.flooring = {
+	}
+
+	$scope.flooringTypes = [
+		{id: 'italianMarble', name: 'Italian Marble'},
+		{id: 'importedMarble', name: 'Imported Marble'},
+		{id: 'vitrifiedTiles', name: 'Vitrified Tiles'},
+		{id: 'laminatedWoodenFlooring', name: 'Laminated Wooden Flooring'},
+		{id: 'hardwoodFlooring', name: 'Hardwood Flooring'},
+		{id: 'marbleFlooring', name: 'Marble Flooring'},
+		{id: 'other', name: 'Other'}
+	];
+
+	$scope.selectSpec = function(specification){
+		specification.selected = !specification.selected;
+		if(!specification.selected){
+			delete $scope.units.specifications[specification.id];
+		}
+	}
+
+	$scope.chooseSpecValue = function(specification, value){
+		$scope.units.specifications[specification.id] = value;
+		console.log($scope.units.specifications[specification.id].type);
+	}
+
+	$scope.selectFlooring = function(value){
+		//console.log(value);
+		//console.log($scope.flooring[value.id].type);
+		$scope.units.specifications[value.id] = JSON.parse($scope.flooring[value.id].type).id;
+		console.log($scope.units.specifications[value.id]);
 	}
 
 	$scope.selectConfig = function(val){
@@ -89,11 +140,13 @@ app.controller('UnitsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$
 	}
 
 	$scope.addThisUnit = function(){
+		console.log($scope.units);
+		
 		var addProjectDetails = {};
 		//$scope.units[newkey] = $scope.units;
-		var newkey = db.ref("protectedResidential/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/").push().key;
+		var newkey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/").push().key;
       	console.log(newkey);
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/"+ newkey] = $scope.units;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/"+ newkey] = $scope.units;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$scope.unitDetails.push($scope.units);

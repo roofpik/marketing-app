@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
 		<h1 class="title">Security Details</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
@@ -17,6 +17,12 @@
 				<div class="row">
 					<div class="col" ng-click="selectMainGateSecurity('intercom')" ng-class="security.mainGate.intercom? 'selected': 'notSelected'">Intercom</div>
 					<div class="col" ng-click="selectMainGateSecurity('cctv')" ng-class="security.mainGate.cctv? 'selected': 'notSelected'">CCTV</div>
+				</div>
+				<div class="mainGateSecurityContact">
+					<label class="item item-input item-floating-label">
+						<span class="input-label labels">Main Gate Security Contact</span>
+						<input type="number" placeholder="Main Gate Security Contact" ng-model="security.mainGateSecurityContact">
+					</label>	
 				</div>
 			</div>
 			<div class="tower">
@@ -77,22 +83,6 @@
 					</div>
 					<div class="col col-10">
 						<i class="icon ion-checkmark-circled" ng-show="security.workerPass"></i>
-					</div>
-				</div>
-				<div class="row" ng-click="selectOtherSecurity('fireFightingSystem')">
-					<div class="col col-90">
-						<p>Fire Fighting System</p>
-					</div>
-					<div class="col col-10">
-						<i class="icon ion-checkmark-circled" ng-show="security.fireFightingSystem"></i>
-					</div>
-				</div>
-				<div class="row" ng-click="selectOtherSecurity('seismicZone')">
-					<div class="col col-90">
-						<p>Seismic Zone</p>
-					</div>
-					<div class="col col-10">
-						<i class="icon ion-checkmark-circled" ng-show="security.seismicZone"></i>
 					</div>
 				</div>
 			</div>

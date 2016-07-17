@@ -2,10 +2,22 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button ng-click="myGoBack()" class="icon ion-chevron-left button button-balanced"></button>
 		<h1 class="title">Create Project</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<!-- <button class="button button-balanced" ng-click="popover.show($event)">View Forms</button> -->
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
+			<div class="row" id="createProjectType">
+				<div class="col" ng-click="selectProjectType('protectedResidential')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="projectType == 'protectedResidential'? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">Residential</span>
+				</div>
+				<div class="col" ng-click="selectProjectType('pg')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="projectType == 'pg'? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">PG</span>
+				</div>
+			</div>
             <div class="placeSelection">
             	<label class="item item-input item-select">
 				    <div class="input-label">
@@ -41,7 +53,7 @@
 			</div>
 			<label class="item item-input item-floating-label">
 				<span class="input-label labels">Project Name</span>
-				<input type="text" placeholder="Project Name" ng-model="project.projectDetails.projectName">
+				<input type="text" placeholder="Project Name" ng-model="project.projectName">
 			</label>
 		  	<label class="item item-input item-floating-label">
 			    <span class="input-label labels">Landmark</span>

@@ -10,7 +10,8 @@ app.controller('AllFormsCtrl', ['$scope', '$state', '$stateParams', '$timeout', 
 		{id: 'connectivity-details', name: 'Connectivity Details'},
 		{id: 'units', name: 'Units'},
 		{id: 'other-details', name: 'Other Details'},
-		{id: 'ranking-rating', name: 'Ranking Rating And Area'}
+		{id: 'ranking-rating', name: 'Ranking Rating And Area'},
+		{id: 'tags', name: 'Tags'}
 	];
 
 	$scope.goToForm = function(val){

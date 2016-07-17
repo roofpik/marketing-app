@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
 		<h1 class="title">Other Details</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
@@ -13,6 +13,14 @@
 				<div class="col col-10">
 					<i class="icon ion-checkmark-circled" ng-show="other.{{item.id}}"></i>
 				</div>
+			</div>
+			<div class="park" ng-click="choosePark()">
+				<p>Park</p>
+			</div>
+			<div class="row" ng-show="parkSelected">
+				<div class="col size" ng-click="selectSize('small')" ng-class="other.park=='small'?'selected': 'notSelected'">Small</div>
+				<div class="col size" ng-click="selectSize('medium')" ng-class="other.park=='medium'?'selected': 'notSelected'">Medium</div>
+				<div class="col size" ng-click="selectSize('large')" ng-class="other.park=='large'?'selected': 'notSelected'">Large</div>
 			</div>
 			<div>
 				<button class="button button-block button-dark" ng-click="save()">Save</button>

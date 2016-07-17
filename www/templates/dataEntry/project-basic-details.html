@@ -3,10 +3,28 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button ng-click="goBack()" class="icon ion-chevron-left"></button>
 		<h1 class="title">Project Details</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
+			<div class="row">
+				<div class="col" ng-click="selectBuyRent('buy')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="buy == true? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">Buy</span>
+				</div>
+				<div class="col" ng-click="selectBuyRent('rent')">
+					<i class="icon ion-checkmark-circled"
+					ng-class="rent == true? 'greenTick': 'greyTick'"></i>
+					<span class="typeName">Rent</span>
+				</div>
+			</div>
+			<div class="item item-divider">
+				Completion Date
+			</div>
+			<label class="item item-input">
+			    <input type="text" placeholder="Completion Date(dd/mm/yyyy)" ng-model = "projectDetails.completionDate">
+		  	</label>
 			<div class="item item-divider">
 				Address
 			</div>

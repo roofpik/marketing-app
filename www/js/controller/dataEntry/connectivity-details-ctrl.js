@@ -7,6 +7,7 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.connectivity = {
 		airport: {},
@@ -21,8 +22,8 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 
     function getProjectDetails(){
     	console.log('called');
-    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/connectivity').once('value', function(snapshot) {
+    	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/connectivity').once('value', function(snapshot) {
             console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.connectivity = snapshot.val();
@@ -89,7 +90,7 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 		    template: 'Loading...'
 		  }); 
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
+      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$ionicPopup.alert({

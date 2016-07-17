@@ -31,6 +31,13 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 		}
 	}
 
+	$scope.projectType = '';
+
+	$scope.selectProjectType = function(value){
+		$scope.projectType = value;
+		console.log($scope.projectType);
+	}
+
 	function getCities() {
 		var cityData = firebase.database().ref('city');
 	    cityData.on('value', function(data) {
@@ -127,77 +134,109 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	$scope.newKey = '';
 
 	$scope.addNewProject = function(){
-		
-		$ionicLoading.show({
-		    template: 'Loading...'
-		  }); 
-		$scope.project.versionCreatedDate = new Date().getTime();
-		console.log($scope.project);
+		if($scope.projectType == ''){
+			$ionicPopup.alert({
+				title:'Warning',
+				template: 'Project Type not selected'
+			})
+		} else {
+			if($scope.projectType == 'protectedResidential'){
+      			$scope.projectLogType = 'residential';
+      		} else if($scope.projectType == 'pg'){
+      			$scope.projectLogType = 'pg';
+      		}
+			$ionicLoading.show({
+			    template: 'Loading...'
+			  }); 
+			$scope.project.versionCreatedDate = new Date().getTime();
+			console.log($scope.project);
 
-		var newProjectKey = db.ref("protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects").push().key;
-		console.log(newProjectKey);
-		var addProject = {};
-		$scope.project.projectId = newProjectKey;
-      	addProject["protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + newProjectKey+'/'+$scope.project.version] = $scope.project;
-      	console.log("protectedResidential/"+$scope.project.projectDetails.address.cityId+"/projects/" + newProjectKey+'/'+$scope.project.version);
-      	console.log(addProject);
-      	db.ref().update(addProject);
+			var newProjectKey = db.ref($scope.projectType+"/"+$scope.project.projectDetails.address.cityId+"/projects").push().key;
+			console.log(newProjectKey);
+			var addProject = {};
+			$scope.project.projectId = newProjectKey;
+	      	addProject[$scope.projectType+"/"+$scope.project.projectDetails.address.cityId+"/projects/" + newProjectKey+'/'+$scope.project.version] = $scope.project;
+	      	console.log($scope.projectType+"/"+$scope.project.projectDetails.address.cityId+"/projects/" + newProjectKey+'/'+$scope.project.version);
+	      	console.log(addProject);
+	      	db.ref().update(addProject);
 
-      	$scope.projectAccess = {
-      		cityId: $scope.project.projectDetails.address.cityId,
-      		cityName: $scope.project.projectDetails.address.cityName
-      	}
+	      	$scope.projectAccess = {
+	      		cityId: $scope.project.projectDetails.address.cityId,
+	      		cityName: $scope.project.projectDetails.address.cityName
+	      	}
 
-      	$scope.projectInfo = {
-      		projectId: newProjectKey,
-      		projectName: $scope.project.projectDetails.projectName,
-      		version: $scope.project.version
-      	}
+	      	$scope.projectInfo = {
+	      		projectId: newProjectKey,
+	      		projectName: $scope.project.projectName,
+	      		version: $scope.project.version
+	      	}
 
-      	var addProjectAccess = {};
-      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
-      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
-      	if($scope.selectedBuilder != undefined){
-      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] =$scope.project.projectDetails.address.cityId;
-      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] =$scope.project.projectDetails.address.cityName;
-      	}
-      	addProjectAccess['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
-      	addProjectAccess['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
-      	//console.log(addProjectAccess);
-      	db.ref().update(addProjectAccess);
+	      	var addProjectAccess = {};
+	      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
+	      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
+	      	if($scope.selectedBuilder != undefined){
+	      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] =$scope.project.projectDetails.address.cityId;
+	      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] =$scope.project.projectDetails.address.cityName;
+	      	}
+	      	addProjectAccess[$scope.projectType+'Versions/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
+	      	addProjectAccess[$scope.projectType+'Versions/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
+	      	//console.log(addProjectAccess);
+	      	db.ref().update(addProjectAccess);
 
-      	var addProjectInfo = {};
-      	addProjectInfo['admins/'+$scope.myId+ '/projectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey]  = $scope.projectInfo;
-      	if($scope.selectedBuilder != undefined){
-      		addProjectInfo['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey]  = $scope.projectInfo;
-      	}
-      	addProjectInfo['city/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey] = $scope.projectInfo;
-      	addProjectInfo['zone/'+$scope.project.projectDetails.address.cityId+'/'+$scope.project.projectDetails.address.zoneId+'/projects/'+newProjectKey] = $scope.projectInfo;
-      	addProjectInfo['protectedResidentialVersions/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/editable'] = $scope.projectInfo;
-      	addProjectInfo['adminProjectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/'+$scope.myId+'/adminId'] = $scope.myId;
-      	addProjectInfo['adminProjectAccess/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/'+$scope.myId+'/adminName'] = $scope.myName;
+	      	var addProjectInfo = {};
+	      	addProjectInfo['admins/'+$scope.myId+ '/projectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey]  = $scope.projectInfo;
+	      	if($scope.selectedBuilder != undefined){
+	      		addProjectInfo['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey]  = $scope.projectInfo;
+	      	}
+	      	addProjectInfo['city/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey] = $scope.projectInfo;
+	      	addProjectInfo['zone/'+$scope.project.projectDetails.address.cityId+'/'+$scope.project.projectDetails.address.zoneId+'/'+$scope.projectLogType+'/'+newProjectKey] = $scope.projectInfo;
+	      	addProjectInfo[$scope.projectType+'Versions/'+$scope.project.projectDetails.address.cityId+'/projects/'+newProjectKey+'/editable'] = $scope.projectInfo;
+	      	addProjectInfo['adminProjectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/'+$scope.myId+'/adminId'] = $scope.myId;
+	      	addProjectInfo['adminProjectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/'+$scope.myId+'/adminName'] = $scope.myName;
 
-      	console.log(addProjectInfo);
-      	db.ref().update(addProjectInfo).then(function(){
-      		$ionicPopup.alert({
-				title: 'Successful',
-				template: 'Project created successfully'
-			}).then(function(){
-				var projectRequiredDetail = {};
-				projectRequiredDetail.version = $scope.project.version;
-				projectRequiredDetail.projectId = newProjectKey;
-				projectRequiredDetail.cityId = $scope.project.projectDetails.address.cityId;
-				localStorage.setItem('projectRequiredDetail',projectRequiredDetail);
-				console.log(localStorage.getItem('projectRequiredDetail'));
-				$scope.project = {};
-				$scope.selectedBuilder = {};
-				$scope.selectedZone = {};
-				$scope.selectedCity = {};
-				$ionicLoading.hide();
-				$state.go('welcome', {adminId: $scope.myId});
-			});	
-      	});
-
+	      	console.log(addProjectInfo);
+	      	db.ref().update(addProjectInfo).then(function(){
+	      		var projectLogDetails = {};
+	      		projectLogDetails['projectLog/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
+	      		projectLogDetails['projectLog/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
+	      		db.ref().update(projectLogDetails).then(function(){
+		      		var newKey = db.ref('projectLog/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/projectId').push().key;
+		      		console.log(newKey);
+		      		$scope.log = {
+		      			time: new Date().getTime(),
+		      			title:'Project Created',
+		      			details: $scope.myName+' created the project '+$scope.project.projectName,
+		      			adminId: $scope.myId,
+		      			adminName: $scope.myName,
+		      			logId: newKey
+		      		}
+		      		var projectLog = {};
+		      		projectLog['projectLog/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/projectId'] = newProjectKey; 		
+		      		projectLog['projectLog/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/projectName'] = $scope.project.projectName; 		
+		      		projectLog['projectLog/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey+'/log/'+newKey] = $scope.log; 		
+		      		console.log(projectLog);
+		      		db.ref().update(projectLog).then(function(){
+						$ionicPopup.alert({
+							title: 'Successful',
+							template: 'Project created successfully'
+						}).then(function(){
+							var projectRequiredDetail = {};
+							projectRequiredDetail.version = $scope.project.version;
+							projectRequiredDetail.projectId = newProjectKey;
+							projectRequiredDetail.cityId = $scope.project.projectDetails.address.cityId;
+							localStorage.setItem('projectRequiredDetail',JSON.stringify(projectRequiredDetail));
+							console.log(localStorage.getItem('projectRequiredDetail'));
+							$scope.project = {};
+							$scope.selectedBuilder = {};
+							$scope.selectedZone = {};
+							$scope.selectedCity = {};
+							$ionicLoading.hide();
+							$state.go('welcome', {adminId: $scope.myId});
+						});	
+		      		});
+	      		});
+	      	});
+	    }
 	}
 
 	$scope.viewOtherForms = function(page){

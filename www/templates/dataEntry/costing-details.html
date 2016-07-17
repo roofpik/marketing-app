@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
 		<h1 class="title">Costing Details</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
@@ -10,6 +10,14 @@
 			    <span class="input-label labels">{{item.name}}</span>
 			    <input type="number" placeholder="{{item.name}}" ng-model="costing[item.id]">
 		  	</label>
+			<label class="item item-input item-floating-label min">
+		    	<span class="input-label labels">Car Wash Charges Min</span>
+		    	<input type="number" placeholder="Car Wash Charges Min" ng-model = "costing.carWashCharges.min">
+			</label>
+			<label class="item item-input item-floating-label max">
+				<span class="input-label labels">Car Wash Charges Max</span>
+		    	<input type="number" placeholder="Car Wash Charges Max" ng-model = "costing.carWashCharges.max">
+			</label>
 		  	<div>
 				<button class="button button-block button-dark" ng-click="save()">Save</button>
 			</div>

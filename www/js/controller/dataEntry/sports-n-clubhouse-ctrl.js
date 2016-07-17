@@ -6,6 +6,7 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
+	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.formName = 'sports-n-clubhouse';
 	$scope.sportsActivities = {};
@@ -21,16 +22,16 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 	getProjectDetails();
 
     function getProjectDetails(){
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/sportsActivities').once('value', function(snapshot) {
-            //console.log(snapshot.val());
+        firebase.database().ref($scope.projectType +'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/sportsActivities').once('value', function(snapshot) {
+            console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.sportsActivities = snapshot.val();
             	console.log($scope.sportsActivities);
             }  
          });
 
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
-            //console.log(snapshot.val());
+        firebase.database().ref($scope.projectType +'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
+            console.log(snapshot.val());
             if(snapshot.val() != null){
             	$scope.clubHouse = snapshot.val();
             	console.log($scope.clubHouse);
@@ -91,8 +92,8 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 		})
 		 console.log($scope.clubHouse.operatingTimes.holiday);
 		var addProjectDetails = {};
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/sportsActivities"] = $scope.sportsActivities;
-      	addProjectDetails["protectedResidential/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/clubHouse"] = $scope.clubHouse;
+      	addProjectDetails[$scope.projectType +"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/sportsActivities"] = $scope.sportsActivities;
+      	addProjectDetails[$scope.projectType +"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/clubHouse"] = $scope.clubHouse;
 
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails).then(function(){
