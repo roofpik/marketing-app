@@ -38,6 +38,9 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
         $ionicLoading.hide();
     });
     }
+    else{
+      $ionicLoading.hide();
+    }
   }
 
   getActivityDetails  = function() {
