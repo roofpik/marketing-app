@@ -108,11 +108,18 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
 
   $scope.startActivity = function(){
     $scope.activityDetails.planning.active = false;
-    $scope.start = {
-      latitude: $scope.latitude,
-      longitude: $scope.longitude,
-      time: new Date().getTime()
+    if($scope.latitude != undefined){
+      $scope.start = {
+        latitude: $scope.latitude,
+        longitude: $scope.longitude,
+        time: new Date().getTime()
+      }
+    } else {
+      $scope.start = {
+        time: new Date().getTime()
+      }
     }
+    
     var startThisActivity = {};
     startThisActivity["activity/"+userId + '/'+date+'/' + $scope.activityId+'/planning/active'] = $scope.activityDetails.planning.active;
     startThisActivity["activity/"+userId + '/'+date+'/' + $scope.activityId+'/summary/status'] = 'started';

@@ -24,6 +24,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
             	if($scope.other.park != undefined){
             		$scope.parkSelected = true;
             	}
+            	// if($scope.other.powerBackup != undefined){
+
+            	// }
             	console.log($scope.other);
             }
             $ionicLoading.hide(); 
@@ -32,7 +35,6 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
 
 	$scope.parameters = [
-		{id:'powerBackup', name:'Power Backup'},
 		{id:'maintenance', name:'Maintenance'},
 		{id:'waitingLoungeInTower', name:'Waiting Lounge In Tower'},
 		{id:'airConditioningInWaitingLounge', name: 'Air Conditioning In Waiting Lounge'},
@@ -50,6 +52,17 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		{id:'DTHCabling', name: 'DTH Cabling'},
 		{id:'gasPipelineProvisioned', name: 'Gas Pipeline Provisioned'}
 	];
+
+	$scope.powerBackupSelected = '';
+
+	$scope.selectPowerBackup = function(){
+		$scope.powerBackupSelected = !$scope.powerBackupSelected;
+	}
+
+	$scope.chooseBackup = function(value){
+		$scope.other.powerBackup= value;
+		console.log($scope.other.powerBackup);
+	}
 
 	$scope.selectOther = function(val){
 		console.log(val);
@@ -75,8 +88,8 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 	$scope.save = function(){
 		console.log($scope.other);
 		$ionicLoading.show({
-	    template: 'Loading...'
-	  });
+		    template: 'Loading...'
+		  });
 		var addProjectDetails = {};
       	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
       	console.log(addProjectDetails);
