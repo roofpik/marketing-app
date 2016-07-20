@@ -1,30 +1,19 @@
-<ion-view view-title="Day Planner" name="Day-planner">
+<ion-view id="day-planner" cache-view="false">
     <ion-header-bar class="bar-balanced" align-title="center">
-        <button ng-click="myGoBack()" class="icon ion-chevron-left"></button>
-        
+        <button class="icon ion-chevron-left button button-balanced" ng-click="myGoBack()"></button>
+        <h1 class="title">Day Planner</h1>
     </ion-header-bar>
     <ion-content class="has-header">
-        <div class="row">
-            <div class="col col-25 border-r-bb" style="padding:23px 10px; margin-right: 2px">
+        <div class="row full-row" ng-repeat="(key, task) in activities" ng-click="goToActivityDetails(task.type, task.id)">
+            <div class="col col-25 checkbox-status">
+                <i ng-show="task.checked" class="icon ion-ios-checkmark"></i>
+                <i ng-show="!task.checked" class="icon ion-ios-circle-outline"></i>
             </div>
-            <div class="col border-l-bb"></div>
-        </div>
-
-        <div class="row" ng-repeat="(key, task) in activities ">
-        
-            <div class="col col-25 border-r-b " style="padding:50px 10px; margin-right: 2px">
-                <ion-checkbox class="checkbox-balanced" style="border-style:none;" ng-click="onClick($index)" ng-model="task.checked" ng-checked="task.checked">
-                </ion-checkbox>
+            <div class="col col-75 content-view">
+                Activity Type : {{task.type}}</br>
+                Start Time : {{task.planning.start.time | date:'H:m' }}</br>
+                End Time : {{task.planning.end.time | date:'H:m' }}
             </div>
-
-            <div ng-click="goToActivityDetails(task.type, task.id)" class="col border-l-b" style="padding: 20px 30px; "> ActivityType--{{task.type}} </br> Start Time--{{task.planning.start.time}} </br>End Time--{{task.planning.end.time}}
-            </div>
-        </div>
-        
-        <div class="row">
-            <div class="col col-25 border-r-bb" style="padding:23px 20px; margin-right: 2px">
-            </div>
-            <div class="col border-l-bb"></div>
         </div>
     </ion-content>
 </ion-view>

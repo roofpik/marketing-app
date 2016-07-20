@@ -9,10 +9,12 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
     $scope.projectId = projectRequiredDetail.projectId;
     $scope.cityId = projectRequiredDetail.cityId;
     $scope.editableVersion = projectRequiredDetail.version;
+    $scope.projectType = projectRequiredDetail.projectType;
     console.log($scope.projectId);
     console.log($scope.cityId);
     console.log($scope.editableVersion);
     getProjectDetails();
+    $scope.projectName = '';
     
     $scope.formName = 'project-basic-details';
 
@@ -23,6 +25,39 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
         lifts: {},
         partners: {}
     };
+    getBuyRent();
+
+    function getBuyRent(){
+        db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/buy').once('value', function(snapshot){
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+                $scope.buy = snapshot.val();
+            }
+        });
+        db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/rent').once('value', function(snapshot){
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+                $scope.rent = snapshot.val();
+            }
+        });
+        db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectName').once('value', function(snapshot){
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+                $scope.projectName  = snapshot.val();
+            }
+        });
+    }
+
+    $scope.selectBuyRent = function(val){
+        if($scope[val] == undefined){
+            $scope[val] = true;
+            db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/'+val).set(true);
+        } else {
+            $scope[val] = !$scope[val];
+            db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/'+val).remove();
+        }
+        console.log($scope[val]);
+    }
 
 	//console.log(window.localStorage['project']);
      $scope.$on('$stateChangeSuccess', function(event, toState, toParams, fromState, fromParams) {
@@ -37,8 +72,8 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
     function getProjectDetails(){
     	console.log('called');
-    	console.log('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
-        firebase.database().ref('protectedResidential/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails').once('value', function(snapshot) {
+    	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
+        firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails').once('value', function(snapshot) {
             console.log(snapshot.val());
             $timeout(function(){
                 // $scope.projectDetails = snapshot.val();
@@ -50,7 +85,9 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                 if(details.builderId != undefined){
                   $scope.projectDetails.builderId = details.builderId;  
                 }
-                $scope.projectDetails.projectName = details.projectName;
+                if($scope.projectDetails.completionDate != undefined){
+                    $scope.projectDetails.address = details.address;
+                }
                 if(details.projectType != undefined){
                     $scope.projectDetails.projectType = details.projectType;
                 } else {
@@ -208,6 +245,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 	}
 
 	$scope.save = function(){
+        console.log($scope.projectDetails);
 		var addProjectDetails = {};
         $ionicLoading.show({
             template: 'Loading...'
@@ -215,24 +253,29 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
 		console.log($scope.projectDetails);
 
-      	addProjectDetails["protectedResidential/"+$scope.projectDetails.address.cityId+"/projects/" + $scope.projectId +'/'+$scope.editableVersion+"/projectDetails"] = $scope.projectDetails;
+      	addProjectDetails[$scope.projectType+"/"+$scope.projectDetails.address.cityId+"/projects/" + $scope.projectId +'/'+$scope.editableVersion+"/projectDetails"] = $scope.projectDetails;
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails);
       	$scope.projectInfo = {
       		projectId: $scope.projectId,
-      		projectName: $scope.projectDetails.projectName,
+      		projectName: $scope.projectName,
       		version: $scope.editableVersion
       	}
 
        	var locationsData = {};
 
 		angular.forEach($scope.locations, function(value, key){
+            if($scope.projectType == 'protectedResidential'){
+                $scope.resOrpg = 'residential';
+            } else{
+                $scope.resOrpg = 'pg';
+            }
 			if(value.checked){
 				$scope.lala.locationName = value.locationName;
 				$scope.lala.locationId = value.locationId;
-				console.log('protectedResidential/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId);
-				locationsData['protectedResidential/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId] =$scope.lala;
-				locationsData['location/'+$scope.projectDetails.address.cityId+'/'+$scope.lala.locationId+'/projects/'+$scope.projectId] = $scope.projectInfo;
+				console.log($scope.projectType+'/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId);
+				locationsData[$scope.projectType+'/'+$scope.projectDetails.address.cityId+'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations/'+value.locationId] =$scope.lala;
+				locationsData['location/'+$scope.projectDetails.address.cityId+'/'+$scope.lala.locationId+'/'+$scope.resOrpg+'/'+$scope.projectId] = $scope.projectInfo;
 			}
 		});
 		 console.log(locationsData);

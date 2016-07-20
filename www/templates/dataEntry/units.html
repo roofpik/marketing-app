@@ -2,7 +2,7 @@
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
 		<h1 class="title">Units</h1>
-		<button class="button button-balanced" ng-click="popover.show($event)">View Forms</button>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
@@ -10,9 +10,31 @@
 				<div class="item heading">
 					Configurations
 				</div>
-				<label class="item item-input item-floating-label" ng-repeat="config in configurations1">
-					<span class="input-label labels">{{config.name}}</span>
-					<input type="text" placeholder="{{config.name}}" ng-model = "units.configurations[config.id]">
+				<label class="item item-input item-select">
+				    <div class="input-label">
+				        Project Type
+				    </div>
+				    <select ng-change="selectProjectType()" ng-model="project.type">
+				        <option 
+				            ng-repeat="type in propertyTypes" 
+				            value="{{type}}">
+				                {{type.name}}
+				        </option>
+				    </select>
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Type (BHK)</span>
+					<input type="text" placeholder="Type (BHK)" ng-model = "units.configurations.type">
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Minimum Price</span>
+					<input type="text" placeholder="Minimum Price" ng-model = "units.configurations.price.min">
+				</label><label class="item item-input item-floating-label">
+					<span class="input-label labels">Average Price</span>
+					<input type="text" placeholder="Average Price" ng-model = "units.configurations.price.average">
+				</label><label class="item item-input item-floating-label">
+					<span class="input-label labels">Maximum Price</span>
+					<input type="text" placeholder="Maximum Price" ng-model = "units.configurations.price.max">
 				</label>
 				<label class="item item-input item-floating-label" ng-repeat="config in configurations2">
 					<span class="input-label labels">{{config.name}}</span>
@@ -34,13 +56,44 @@
 				<div class="item heading">
 					Specifications
 				</div>
-				<div class="row" ng-repeat = "specification in specifications" ng-click="selectSpecification(specification.id)">
+				<div class="row" ng-repeat = "specification in specifications1" ng-click="selectSpecification(specification.id)">
 					<div class="col col-90">
 						<p>{{specification.name}}</p>
 					</div>
 					<div class="col col-10">
 						<i class="icon ion-checkmark-circled" ng-show="units.specifications.{{specification.id}}"></i>
 					</div>
+				</div>
+				<div ng-repeat="specification in specifications2">
+					<div class="spec2 row" ng-click="selectSpec(specification)" >
+						<div class="col col-90">
+							<p>{{specification.name}}</p>
+						</div>
+						<div class="col col-10">
+							<i class="icon ion-checkmark-circled" ng-show="specification.selected"></i>
+						</div>
+					</div>
+					<div class="row" id="chooseValue" ng-show="specification.selected">
+						<div class="col" ng-click="chooseSpecValue(specification,'All Rooms')" ng-class="units.specifications[specification.id]=='All Rooms'? 'selected': 'notSelected'">All Rooms</div>
+						<div class="col" ng-click="chooseSpecValue(specification,'Master Only')" ng-class="units.specifications[specification.id]=='Master Only'? 'selected': 'notSelected'">Master Only</div>
+					</div>
+				</div>
+				<div class="item-divider">
+					Flooring
+				</div>
+				<div class="flooring" ng-repeat="specification in specifications3">
+					<div class="flooringName">
+						{{specification.name}}
+					</div>
+					<label class="item item-input item-select">
+					    <select ng-change="selectFlooring(specification)" ng-model="flooring[specification.id].type">
+					        <option 
+					            ng-repeat="type in flooringTypes" 
+					            value="{{type}}">
+					                {{type.name}}
+					        </option>
+					    </select>
+					</label>
 				</div>
 			</div>
 			<div class="addUnit">

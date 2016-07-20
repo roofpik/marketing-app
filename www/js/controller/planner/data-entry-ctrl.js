@@ -42,7 +42,8 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
     firebase.database().ref('activity/' + userId + '/'+date+'/' + $scope.activityId).on('value', function(snapshot) {
       console.log(snapshot.val());
       $scope.activityDetails = snapshot.val();
-      console.log($scope.activityDetails);
+      $scope.activityDetails.planning.start.time = moment($scope.activityDetails.planning.start.time).format('H:mm');
+      $scope.activityDetails.planning.end.time = moment($scope.activityDetails.planning.end.time).format('H:mm');
       if($scope.activityDetails.summary){
         console.log('summary Exists')
         if($scope.activityDetails.summary.status != 'cancelled'){
@@ -201,9 +202,9 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
   }
 
   function getProjectEditable(projectid, cityid) {
-    console.log('protectedResidentialVersions/'+cityid+'/projects/'+projectid);
+    console.log($scope.activityDetails.planning.projectType+'Versions/'+cityid+'/projects/'+projectid);
     var projectRequiredDetail = {};
-    var newData = firebase.database().ref('protectedResidentialVersions/'+cityid+'/projects/'+projectid+'/editable');
+    var newData = firebase.database().ref($scope.activityDetails.planning.projectType+'Versions/'+cityid+'/projects/'+projectid+'/editable');
       newData.on('value', function(data) {
         console.log(data.val().version);
         //$scope.editableVersion = data.val().version;
@@ -211,6 +212,7 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
         projectRequiredDetail.projectId = projectid;
         projectRequiredDetail.cityId = cityid;
         projectRequiredDetail.activityId = $scope.activityId;
+        projectRequiredDetail.projectType = $scope.activityDetails.planning.projectType;
         // window.localStorage['projectRequiredDetail'] = JSON.stringify(projectRequiredDetail);
         // console.log(window.localStorage['projectRequiredDetail']);
         localStorage.setItem('projectRequiredDetail', JSON.stringify(projectRequiredDetail));

@@ -1,4 +1,4 @@
-app.factory("AuthenticationService", function($http, $location, $timeout, $window) {
+app.factory("AuthenticationService", function($http, $location, $timeout, $window, $q) {
     var service = {};
     service.LoginEmail = LoginEmail;
     service.Logout = Logout;
@@ -6,25 +6,23 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
 
     return service;
 
-    function LoginEmail(email, password, callback) {
+
+    function LoginEmail(email, password) {
+        var def = $q.defer();
         firebase.auth().signInWithEmailAndPassword(email, password).then(function(user) {
             db.ref().child("admins").child(user.uid).on("value", function(snapshot) {
-                window.localStorage.setItem("name", snapshot.val().fname);
-                window.localStorage.setItem("email", email);
-                window.localStorage.setItem("uid", user.uid);
-
-                console.log(localStorage.getItem("uid"));
-
-                $timeout(function() {
-                    $location.path('/welcome/'+user.uid);
-                }, 0);
+                $timeout(function(){
+                    window.localStorage.setItem("name", snapshot.val().fname);
+                    window.localStorage.setItem("email", snapshot.val().email);
+                    window.localStorage.setItem("uid", snapshot.val().uid);
+                    
+                    def.resolve(user);
+                }, 50);
             });
-
-
         }).catch(function(error) {
-            var errorCode = error.code;
-            var errorMessage = error.message;
+            def.reject(error);
         });
+        return def.promise;
     }
 
     function Logout() {

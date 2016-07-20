@@ -1,19 +1,29 @@
-app.controller("resetPasswordCtrl", function($scope, $state, $timeout) {
-    $scope.email = {};
-    $scope.submitEmail = function(form) {
-
+app.controller("resetPasswordCtrl", function($scope, $state, $ionicLoading, $ionicPopup) {
+    
+    $scope.submitEmail = function(email) {
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
         var auth = firebase.auth();
-        //   var emailAddress = $scope.email_reset;
 
-        auth.sendPasswordResetEmail($scope.email.reset).then(function() {
-            $timeout(function() {
+        auth.sendPasswordResetEmail(email).then(function() {
+
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+                 title: 'Reset Password',
+                 template: 'Your password reset link has been sent to '+email
+           }).then(function(res) {
                 $state.go('login');
-            }, 0);
-        }, function(error) {
+           });
 
+        }, function(error) {
+            $ionicLoading.hide();
+            $ionicPopup.alert({
+                 title: 'Invalid email',
+                 template: 'Please enter a valid email address.'
+           })
         });
     }
-
     $scope.login = function() {
         $state.go('login');
     }
