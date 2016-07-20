@@ -23,6 +23,7 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
   }); 
 
   getCurrentLocation = function() {
+    if(window.cordova){
     var posOptions = {
       timeout: 10000,
       enableHighAccuracy: false
@@ -36,6 +37,7 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
         console.log($scope.longitude);
         $ionicLoading.hide();
     });
+    }
   }
 
   getActivityDetails  = function() {
