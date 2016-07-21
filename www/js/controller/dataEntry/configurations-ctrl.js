@@ -33,7 +33,7 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	}
 
 	$scope.configurations2 = [
-		{name: 'Super Area', id: 'superArea'},
+		{name: 'Super Area(in sq.ft.)', id: 'superArea'},
 		{name: 'Carpet Area', id: 'carpetArea'},
 		{name: 'Total Balconies', id: 'totalBalconies'},
 		{name: 'Total Bedrooms', id: 'totalBedrooms'},
@@ -42,12 +42,12 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	];
 
 	$scope.configurations3 = [
-		{name: 'Servant Room', id: 'servantRoom'},
+		{name: 'Servant/Utility Room', id: 'servantUtilityRoom'},
 		{name: 'Study Room', id: 'studyRoom'},
 		{name: 'Family Lounge', id: 'familyLounge'},
 		{name: 'Kitchen', id: 'kitchen'},
-		{name: 'Puja Room', id: 'pujaRoom'},
-		{name: 'Store Room', id: 'storeRoom'}
+		{name: 'Puja/Store Room', id: 'pujaStoreRoom'},
+		{name: 'Hall', id: 'hall'}
 	];
 
 	$scope.selectConfig = function(val){

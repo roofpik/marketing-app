@@ -33,7 +33,8 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
         // approvedBankLoans: {},
         floors: {},
         lifts: {},
-        partners: {}
+        partners: {},
+        address: {}
     };
     getBuyRent();
 

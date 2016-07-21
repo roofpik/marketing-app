@@ -1062,3 +1062,21 @@ div.radio-content {
 .title {
   font-size:0.9em;
 }
+
+/*add Locations*/
+
+.add-project-locations #locName {
+    background-color: #f2f2f2;
+    border-bottom: 1px solid #ccc;
+    margin-bottom: 2px;
+}
+
+.add-project-locations .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
+}
+
+.add-project-locations .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
+}

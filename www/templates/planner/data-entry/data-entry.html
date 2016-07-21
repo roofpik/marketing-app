@@ -62,7 +62,7 @@
                 <p><b>Comment: </b>{{activityDetails.summary.cancellationRemark.comment}}</p>
             </div>
             <div class="getSumary" ng-hide="dataEntryStarted ||(activityDetails.summary.status =='completed') || (activityDetails.summary.status =='cancelled')">
-                <button class="button button-dark" ng-click="startDataEntry()" ng-show="showDataEntryButton">Start Data Entry</button>
+                <button class="button button-dark" ng-click="startDataEntry()">Start Data Entry</button>
             </div>
             <div class="remark" ng-show="(activityDetails.summary.status =='started')">
                 <label class="item item-input item-stacked-label icon-item-left remarkbox" style="border: 1px solid #ccc;">

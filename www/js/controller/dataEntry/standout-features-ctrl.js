@@ -11,7 +11,7 @@ app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$i
 	$scope.formName ='standout-features';
 	$scope.hideFeatures = true;
 
-	$scope.standoutFeatures = {};
+	$scope.showStandoutFeature = {};
 
 	getProjectDetails();
 
@@ -47,23 +47,23 @@ app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$i
     	}
     }
 
-    $scope.addStandoutFeatures = function(thisStandoutFeatures){
-    	console.log(thisStandoutFeatures);
+    $scope.addStandoutFeatures = function(thisStandoutFeature){
+    	console.log(thisStandoutFeature);
 	 	var updates = {};
-	    updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeatures.featureId+'/featureId'] = thisStandoutFeatures.featureId;
-	    updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeatures.featureId+'/featureName'] = thisStandoutFeatures.featureName;
+	    updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeature.featureId+'/featureId'] = thisStandoutFeature.featureId;
+	    updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeature.featureId+'/featureName'] = thisStandoutFeature.featureName;
 	    console.log(updates);
 	    firebase.database().ref().update(updates).then(function(){
-	    	$scope.standoutFeatures[thisStandoutFeatures.featureId] = {
-	    		featureId: thisStandoutFeatures.featureId,
-	    		featureName: thisStandoutFeatures.featureName
+	    	$scope.standoutFeatures[thisStandoutFeature.featureId] = {
+	    		featureId: thisStandoutFeature.featureId,
+	    		featureName: thisStandoutFeature.featureName
 	    	}
 	    });
     }
 
-    $scope.removeStandoutFeatures = function(thisStandoutFeatures){
-    	console.log(thisStandoutFeatures);
-    	db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeatures.featureId).remove();
+    $scope.removeStandoutFeatures = function(thisStandoutFeature){
+    	console.log(thisStandoutFeature);
+    	db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/standoutFeatures/'+thisStandoutFeature.featureId).remove();
     }
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

@@ -1,7 +1,8 @@
 app.controller('AllFormsCtrl', ['$scope', '$state', '$stateParams', '$timeout', function($scope, $state, $stateParams, $timeout){
 	$scope.forms = [
 		{id: 'project-basic-details', name: 'Project Details'},
-		{id: 'standoutFeatures', name: 'Standout Features'},
+		{id: 'add-project-locations', name: 'Add Locations'},
+		{id: 'standout-features', name: 'Standout Features'},
 		{id: 'important-contacts', name: 'Important Contacts'},
 		{id: 'configurations', name: 'Configurations'},
 		{id: 'specifications', name: 'Specifications'},

@@ -1,0 +1,32 @@
+<ion-view class="add-project-locations" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button ng-click="goBack()" class="icon ion-chevron-left"></button>
+		<h1 class="title">Project Locations</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="locations">
+                <label class="item item-input item-floating-label" id="locName">
+				    <span class="input-label labels">Locations</span>
+				    <input type="text" placeholder="Locations" ng-model="location.query">
+			  	</label>
+			  	<ion-list>
+					<ion-item ng-repeat="item in allLocations | filter:location.query" ng-click="selectLocation(item, index)">
+						<div class="row">
+							<div class="col col-75">
+								<p>{{item.locationName}}</p>
+							</div>
+							<div class="col col-25" style="text-align:right;">
+								<i class="icon ion-checkmark-circled" ng-class="item.checked?'greenTick':'greyTick'"></i>
+							</div>
+						</div>
+					</ion-item>
+				</ion-list>
+		  	</div>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-dark" ng-click="addLocations()">
+    	<h1 class="title">Add Locations</h1>
+    </ion-footer-bar>
+</ion-view>

@@ -106,6 +106,11 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/dataEntry/configurations.html',
     controller: 'ConfigurationsCtrl'
   });
+  $stateProvider.state('add-project-locations', {
+    url: '/add-project-locations',
+    templateUrl: 'templates/dataEntry/add-project-locations.html',
+    controller: 'AddProjectLocationsCtrl'
+  });
   $stateProvider.state('ranking-rating', {
     url: '/ranking-rating',
     templateUrl: 'templates/dataEntry/ranking-rating.html',
