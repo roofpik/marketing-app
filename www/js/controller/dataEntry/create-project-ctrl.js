@@ -31,6 +31,10 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 		}
 	}
 
+	$scope.sector = {
+		name:''
+	}
+
 	$scope.projectType = '';
 
 	$scope.selectProjectType = function(value){
@@ -134,6 +138,16 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	$scope.newKey = '';
 
 	$scope.addNewProject = function(){
+
+		console.log($scope.sector.name);
+		if($scope.sector.name != ''){
+			$scope.project.projectDetails.landmark = $scope.sector.name+ ', '+$scope.project.projectDetails.address.zoneName;
+			console.log($scope.project.projectDetails.landmark);
+		} else {
+			console.log('empty');
+		}
+		console.log($scope.project.projectDetails.builderId);
+
 		if($scope.projectType == ''){
 			$ionicPopup.alert({
 				title:'Warning',
@@ -174,7 +188,7 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	      	var addProjectAccess = {};
 	      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] = $scope.project.projectDetails.address.cityId;
 	      	addProjectAccess['admins/'+$scope.myId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] = $scope.project.projectDetails.address.cityName;
-	      	if($scope.selectedBuilder != undefined){
+	      	if($scope.project.projectDetails.builderId != undefined){
 	      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityId'] =$scope.project.projectDetails.address.cityId;
 	      		addProjectAccess['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/cityName'] =$scope.project.projectDetails.address.cityName;
 	      	}
@@ -185,7 +199,7 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 
 	      	var addProjectInfo = {};
 	      	addProjectInfo['admins/'+$scope.myId+ '/projectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey]  = $scope.projectInfo;
-	      	if($scope.selectedBuilder != undefined){
+	      	if($scope.project.projectDetails.builderId != undefined){
 	      		addProjectInfo['builders/'+$scope.project.projectDetails.builderId+'/projectAccess/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey]  = $scope.projectInfo;
 	      	}
 	      	addProjectInfo['city/'+$scope.project.projectDetails.address.cityId+'/'+$scope.projectLogType+'/'+newProjectKey] = $scope.projectInfo;
@@ -254,7 +268,7 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	  };
 
 	   $scope.myGoBack = function() {
-	    $ionicHistory.goBack();
+	    $state.go('welcome');
 	  };
 
 }]);

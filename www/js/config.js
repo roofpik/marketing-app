@@ -22,7 +22,7 @@ app.config(function($stateProvider, $urlRouterProvider) {
       controller:'welCtrl'
     })
    $stateProvider.state('tasks', {
-      url: '/tasks/:adminId',
+      url: '/tasks',
       templateUrl: 'templates/planner/tasks.html',
       controller:'tasksCtrl'
     })
@@ -96,10 +96,15 @@ app.config(function($stateProvider, $urlRouterProvider) {
     templateUrl: 'templates/dataEntry/near-me.html',
     controller: 'NearMeCtrl'
   });
-  $stateProvider.state('units', {
-    url: '/units',
-    templateUrl: 'templates/dataEntry/units.html',
-    controller: 'UnitsCtrl'
+  $stateProvider.state('specifications', {
+    url: '/specifications',
+    templateUrl: 'templates/dataEntry/specifications.html',
+    controller: 'SpecificationsCtrl'
+  });
+  $stateProvider.state('configurations', {
+    url: '/configurations',
+    templateUrl: 'templates/dataEntry/configurations.html',
+    controller: 'ConfigurationsCtrl'
   });
   $stateProvider.state('ranking-rating', {
     url: '/ranking-rating',
@@ -107,10 +112,10 @@ app.config(function($stateProvider, $urlRouterProvider) {
     controller: 'RankingRatingCtrl'
   });
 
-  $stateProvider.state('tags', {
-    url: '/tags',
-    templateUrl: 'templates/dataEntry/tags.html',
-    controller: 'TagsCtrl'
+  $stateProvider.state('standout-features', {
+    url: '/standout-features',
+    templateUrl: 'templates/dataEntry/standout-features.html',
+    controller: 'StandoutFeaturesCtrl'
   });
 
   $stateProvider.state('all-projects', {

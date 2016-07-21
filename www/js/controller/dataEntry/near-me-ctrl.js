@@ -9,17 +9,17 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.formName = 'near-me';
-	$scope.homeDelivery = {
-		restaurant: [],
-		grocery: [],
-		pharmacy: [],
-		parlour: [],
-		cableProvider: [],
-		isp: [],
-		milkman: [],
-		newspaperDelivery: [],
-		laundry: []
-	};
+	// $scope.homeDelivery = {
+	// 	restaurant: [],
+	// 	grocery: [],
+	// 	pharmacy: [],
+	// 	parlour: [],
+	// 	cableProvider: [],
+	// 	isp: [],
+	// 	milkman: [],
+	// 	newspaperDelivery: [],
+	// 	laundry: []
+	// };
 	$scope.nearMeDetails = {};
 
 	$scope.vendors = [];
@@ -29,18 +29,13 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	$scope.selectedType ={type:''};
 
 	$scope.nearMeTypes = [
-		{id: 'restaurant', name: 'Restaurant'},
 		{id: 'grocery', name: 'Grocery'},
-		{id: 'pharmacy', name: 'Pharmacy'},
 		{id: 'cableProvider', name: 'Cable Provider'},
 		{id: 'isp', name: 'ISP'},
-		{id: 'parlour', name: 'Parlour'},
 		{id: 'milkman', name: 'Milkman'},
 		{id: 'newspaperDelivery', name: 'Newspaper Delivery'},
 		{id: 'laundry', name: 'Laundry'},
-		{id: 'dth', name: 'DTH'},
-		{id: 'dayCare', name: 'Day Care'},
-		{id: 'playSchool', name: 'Play School'}
+		{id: 'dth', name: 'DTH'}
 	];
 
 	getProjectDetails();

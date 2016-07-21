@@ -56,13 +56,13 @@
 				<input type="text" placeholder="Project Name" ng-model="project.projectName">
 			</label>
 		  	<label class="item item-input item-floating-label">
-			    <span class="input-label labels">Landmark</span>
-			    <input type="text" placeholder="Landmark" ng-model="project.projectDetails.address.landmark">
+			    <span class="input-label labels">Sector</span>
+			    <input type="text" placeholder="Sector" ng-model="sector.name">
 		  	</label>
 			<div class="builder-name">
                 <label class="item item-input item-floating-label" id="bname">
-				    <span class="input-label labels">Builder</span>
-				    <input type="text" placeholder="Builder" ng-model="buildername.query" ng-click="showBuilders()">
+				    <span class="input-label labels">Developer</span>
+				    <input type="text" placeholder="Developer" ng-model="buildername.query" ng-click="showBuilders()">
 			  	</label>
 			  	<ion-list ng-hide="hideBuilders">
 					<ion-item ng-repeat="item in allBuilders | filter:buildername.query" ng-click="selectBuilder(item)">

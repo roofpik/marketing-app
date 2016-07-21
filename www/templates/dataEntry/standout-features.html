@@ -1,0 +1,35 @@
+<ion-view class="standout-features" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+		<h1 class="title">Standout Features</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="existingFeatures" ng-repeat="feature in standoutFeatures">
+				<div class="oldFeature row" ng-click="removeStandoutFeatures(feature)">
+					<div class="col col-75"><p>{{feature.featureName}}</p></div>
+					<div class="col col-25"><i class="icon ion-ios-close-empty"></i></div>
+				</div>
+			</div>
+			<div class="newFeature">
+                <label class="item item-input item-label" id="featureLabel">
+				    <span class="input-label"><b>Standout Features</b></span>
+				    <input type="text" placeholder="Type here" ng-model="showStandoutFeature.query" ng-change="showStandoutFeatures()">
+			  	</label>
+			  	<ion-list ng-hide="hideFeatures">
+					<ion-item ng-repeat="item in availableStandoutFeatures | filter:showStandoutFeature.query" ng-click="addStandoutFeatures(item)" class="featureList">
+						<div class="row">
+							<div class="col">
+								<p>{{item.featureName}}</p>
+							</div>
+							<div class="col">
+								<span class="addFeatureBtn">Add Standout Feature</span>
+							</div>
+						</div>
+					</ion-item>
+				</ion-list>
+		  	</div>
+		</div>
+	</ion-content>
+</ion-view>

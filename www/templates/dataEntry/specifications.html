@@ -1,0 +1,74 @@
+<ion-view class="specifications" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+		<h1 class="title">Specifications</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content>
+		<div class="card">
+			<div class="specifications">
+				<div class="row" ng-repeat = "specification in specifications1" ng-click="selectSpecification(specification.id)">
+					<div class="col col-90">
+						<p>{{specification.name}}</p>
+					</div>
+					<div class="col col-10">
+						<i class="icon ion-checkmark-circled" ng-show="specifications.{{specification.id}}"></i>
+					</div>
+				</div>
+				<div class="ac row" ng-click="selectAc()">
+					Air Conditioning
+				</div>
+				<div class="row" id="acType" ng-show="airConditioning.selected">
+					<div class="col" ng-click="selectAcType('Split')" ng-class="specifications.airConditioning=='Split'? 'selected': 'notSelected'">
+						Split
+					</div>
+					<div class="col" ng-click="selectAcType('Window')" ng-class="specifications.airConditioning=='Window'? 'selected': 'notSelected'" ng-show="airConditioning.selected">
+						Window
+					</div>
+				</div>
+				<div class="row" id="acType" ng-show="airConditioning.selected">
+					<div class="col" ng-click="selectAcType('Centralised')" ng-class="specifications.airConditioning=='Centralised'? 'selected': 'notSelected'">
+						Centralised
+					</div>
+					<div class="col" ng-click="selectAcType('VRV')" ng-class="specifications.airConditioning=='VRV'? 'selected': 'notSelected'">
+						VRV
+					</div>
+				</div>
+				<div ng-repeat="specification in specifications2">
+					<div class="spec2 row" ng-click="selectSpec(specification)" >
+						<div class="col col-90">
+							<p>{{specification.name}}</p>
+						</div>
+						<div class="col col-10">
+							<i class="icon ion-checkmark-circled" ng-show="specification.selected"></i>
+						</div>
+					</div>
+					<div class="row" id="chooseValue" ng-show="specification.selected">
+						<div class="col" ng-click="chooseSpecValue(specification,'All Rooms')" ng-class="specifications[specification.id]=='All Rooms'? 'selected': 'notSelected'">All Rooms</div>
+						<div class="col" ng-click="chooseSpecValue(specification,'Master Only')" ng-class="specifications[specification.id]=='Master Only'? 'selected': 'notSelected'">Master Only</div>
+					</div>
+				</div>
+				<div class="item-divider">
+					Flooring
+				</div>
+				<div class="flooring" ng-repeat="specification in specifications3">
+					<div class="flooringName">
+						{{specification.name}}
+					</div>
+					<label class="item item-input item-select">
+					    <select ng-change="selectFlooring(specification)" ng-model="flooring[specification.id].type">
+					        <option 
+					            ng-repeat="type in flooringTypes" 
+					            value="{{type}}">
+					                {{type.name}}
+					        </option>
+					    </select>
+					</label>
+				</div>
+			</div>
+			<div class="addUnit">
+				<button class="button button-block button-dark" ng-click="save()">Save</button>
+			</div>
+		</div>
+	</ion-content>
+</ion-view>

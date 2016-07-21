@@ -241,10 +241,16 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
     $scope.endActivity = function(){
       console.log($scope.endWithRemark.remark);
       // console.log('end called');
+      if($scope.latitude != undefined){
       $scope.end = {
-        latitude: $scope.latitude,
-        longitude: $scope.longitude,
-        time: new Date().getTime()
+          latitude: $scope.latitude,
+          longitude: $scope.longitude,
+          time: new Date().getTime()
+        }
+      } else {
+        $scope.end = {
+          time: new Date().getTime()
+        }
       }
 
       var endThisActivity = {};

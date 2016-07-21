@@ -12,7 +12,8 @@
             <div class="col col-75 content-view">
                 Activity Type : {{task.type}}</br>
                 Start Time : {{task.planning.start.time | date:'H:m' }}</br>
-                End Time : {{task.planning.end.time | date:'H:m' }}
+                End Time : {{task.planning.end.time | date:'H:m' }}</br>
+                Project Name: {{task.planning.projectName}}
             </div>
         </div>
     </ion-content>

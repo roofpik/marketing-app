@@ -19,12 +19,40 @@
 					<span class="typeName">Rent</span>
 				</div>
 			</div>
-			<div class="item item-divider">
-				Completion Date
+			<div class="row verified" ng-click="selectVerified()">
+				<div class="col col-75">
+					Validated by developer
+				</div>
+				<div class="col col-25">
+					<i class="icon ion-checkmark-circled"
+					ng-class="validated? 'greenTick': 'greyTick'"></i>
+				</div>
 			</div>
-			<label class="item item-input">
-			    <input type="text" placeholder="Completion Date(dd/mm/yyyy)" ng-model = "projectDetails.completionDate">
-		  	</label>
+			<div class="row completion-date">
+				<div class="col">
+					<label class="item item-input item-select">
+					    <div class="input-label" style="font-size:0.8em;">
+					        Month
+					    </div>
+					    <select ng-change="selectCompletionMonth()" ng-model="date.month">
+					        <option 
+					            ng-repeat="month in months" 
+					            value="{{month}}">
+					                {{month}}
+					        </option>
+					    </select>
+					</label>
+				</div>
+				<div class="col">
+					<label class="item item-input">
+					    <div class="input-label">
+					        Year
+					    </div>
+					     <input type="number" placeholder="yyyy" ng-model = "date.year">
+					</label>
+				</div>
+			</div>
+			
 			<div class="item item-divider">
 				Address
 			</div>
@@ -40,6 +68,19 @@
 		    	<span class="input-label labels">Pincode</span>
 		    	<input type="number" placeholder="Pincode" ng-model = "projectDetails.address.pincode">
 			</label>
+			<div class="item item-divider">
+				Latitude and Longitude
+			</div>
+			<div >
+				<label class="item item-input item-floating-label min">
+			    	<span class="input-label labels">Lat</span>
+			    	<input type="number" placeholder="Lat" ng-model = "projectDetails.address.lat">
+				</label>
+				<label class="item item-input item-floating-label max">
+					<span class="input-label labels">Lng</span>
+			    	<input type="number" placeholder="Lng" ng-model = "projectDetails.address.lng">
+				</label>
+			</div>
 		  	<div class="latlng">
 				 <div class="item item-input controls">
 	                <i class="icon ion-search placeholder-icon"></i>
@@ -68,10 +109,6 @@
 		  	<label class="item item-input item-floating-label">
 			    <span class="input-label labels">Total Towers</span>
 			    <input type="number" placeholder="Total Towers" ng-model = "projectDetails.totalTowers">
-		  	</label>
-		  	<label class="item item-input item-floating-label">
-			    <span class="input-label labels">Green Area</span>
-			    <input type="number" placeholder="Green Area" ng-model = "projectDetails.greenArea">
 		  	</label>
 		  	<label class="item item-input item-floating-label">
 			    <span class="input-label labels">Land Area</span>
@@ -131,7 +168,7 @@
 					</div>
 				</div>
 			</div>
-			<div class="bank-loans">
+			<!-- <div class="bank-loans">
 				<div class="item item-divider">
 					Approved Bank Loans
 				</div>
@@ -145,7 +182,7 @@
 						<p>{{bank.name}}</p>
 					</div>
 				</div>
-			</div>
+			</div> -->
 			<div class="partners">
 				<div class="item item-divider">
 					Construction Company

@@ -35,22 +35,21 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
 
 	$scope.parameters = [
-		{id:'maintenance', name:'Maintenance'},
 		{id:'waitingLoungeInTower', name:'Waiting Lounge In Tower'},
 		{id:'airConditioningInWaitingLounge', name: 'Air Conditioning In Waiting Lounge'},
 		{id:'petFriendly', name: 'Pet Friendly'},
 		{id:'wheelchairFriendly', name: 'Wheelchair Friendly'},
-		{id:'playSchool', name: 'Play School'},
-		{id:'daycare', name: 'Daycare'},
+		// {id:'playSchool', name: 'Play School'},
+		// {id:'daycare', name: 'Daycare'},
 		{id:'atm', name: 'ATM'},
-		{id:'grocery', name: 'Grocery'},
-		{id:'pharmacy', name: 'Pharmacy'},
-		{id:'parlour', name: 'Parlour'},
-		{id:'laundry', name: 'Laundry'},
-		{id:'bank', name: 'Bank'},
-		{id:'centralWifi', name: 'Central WiFi'},
-		{id:'DTHCabling', name: 'DTH Cabling'},
-		{id:'gasPipelineProvisioned', name: 'Gas Pipeline Provisioned'}
+		// {id:'grocery', name: 'Grocery'},
+		// {id:'pharmacy', name: 'Pharmacy'},
+		// {id:'parlour', name: 'Parlour'},
+		// {id:'laundry', name: 'Laundry'},
+		// {id:'bank', name: 'Bank'},
+		// {id:'centralWifi', name: 'Central WiFi'},
+		// {id:'DTHCabling', name: 'DTH Cabling'},
+		// {id:'gasPipelineProvisioned', name: 'Gas Pipeline Provisioned'}
 	];
 
 	$scope.powerBackupSelected = '';
@@ -93,14 +92,16 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		var addProjectDetails = {};
       	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
       	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails);
-      	$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project Details updates successfully'
-		}).then(function(){
-			$ionicLoading.hide();
-		})
-		$scope.other = {};
+      	db.ref().update(addProjectDetails).then(function(){
+      		$ionicLoading.hide();
+      		$ionicPopup.alert({
+				title: 'Successful',
+				template: 'Project Details updates successfully'
+			}).then(function(){
+				$state.go('costing-details');
+			})
+			$scope.other = {};
+      	});
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

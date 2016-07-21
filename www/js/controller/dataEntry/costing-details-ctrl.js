@@ -60,6 +60,8 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
       		$ionicPopup.alert({
 				title: 'Successful',
 				template: 'Project Details updates successfully'
+			}).then(function(){
+				$state.go('security-details');
 			})
       	});
 		$scope.costing = {};

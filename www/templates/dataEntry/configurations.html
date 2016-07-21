@@ -1,15 +1,12 @@
-<ion-view class="units" cache-view="false">
+<ion-view class="configurations" cache-view="false">
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
-		<h1 class="title">Units</h1>
+		<h1 class="title">Configurations</h1>
 		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
 			<div class="configurations">
-				<div class="item heading">
-					Configurations
-				</div>
 				<label class="item item-input item-select">
 				    <div class="input-label">
 				        Project Type
@@ -24,21 +21,21 @@
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label labels">Type (BHK)</span>
-					<input type="text" placeholder="Type (BHK)" ng-model = "units.configurations.type">
+					<input type="number" placeholder="Type (BHK)" ng-model = "configurations.type">
 				</label>
 				<label class="item item-input item-floating-label">
 					<span class="input-label labels">Minimum Price</span>
-					<input type="text" placeholder="Minimum Price" ng-model = "units.configurations.price.min">
+					<input type="number" placeholder="Minimum Price" ng-model = "configurations.price.min">
 				</label><label class="item item-input item-floating-label">
 					<span class="input-label labels">Average Price</span>
-					<input type="text" placeholder="Average Price" ng-model = "units.configurations.price.average">
+					<input type="number" placeholder="Average Price" ng-model = "configurations.price.average">
 				</label><label class="item item-input item-floating-label">
 					<span class="input-label labels">Maximum Price</span>
-					<input type="text" placeholder="Maximum Price" ng-model = "units.configurations.price.max">
+					<input type="number" placeholder="Maximum Price" ng-model = "configurations.price.max">
 				</label>
 				<label class="item item-input item-floating-label" ng-repeat="config in configurations2">
 					<span class="input-label labels">{{config.name}}</span>
-					<input type="number" placeholder="{{config.name}}" ng-model = "units.configurations[config.id]">
+					<input type="number" placeholder="{{config.name}}" ng-model = "configurations[config.id]">
 				</label>
 				<div class="item item-divider">
 					Extras
@@ -48,11 +45,11 @@
 						<p>{{config.name}}</p>
 					</div>
 					<div class="col col-10">
-						<i class="icon ion-checkmark-circled" ng-show="units.configurations.{{config.id}}"></i>
+						<i class="icon ion-checkmark-circled" ng-show="configurations.{{config.id}}"></i>
 					</div>
 				</div>
 			</div>
-			<div class="specifications">
+			<!-- <div class="specifications">
 				<div class="item heading">
 					Specifications
 				</div>
@@ -95,7 +92,7 @@
 					    </select>
 					</label>
 				</div>
-			</div>
+			</div> -->
 			<div class="addUnit">
 				<button class="button button-block button-dark" ng-click="addThisUnit()">Add Unit</button>
 			</div>

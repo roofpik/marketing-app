@@ -6,6 +6,9 @@
 	<ion-content>
 	<form name="myForm">
 		<div class = "card">
+			<div class="todayDate">
+				<h5>{{today| date:"mediumDate"}}</h5>
+			</div>
 			<div class="row">
 				<div class="col" ng-click="selectProjectType('protectedResidential')">
 					<i class="icon ion-checkmark-circled"

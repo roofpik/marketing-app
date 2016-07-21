@@ -174,7 +174,7 @@ blockquote p:before{
 }
 
 .project-basic-details .latlng {
-  height:400px;
+  height:300px;
 }
 .project-basic-details .controls {
     border-bottom: 2px solid #ccc;
@@ -338,6 +338,39 @@ blockquote p:before{
 .project-basic-details .location .ion-checkmark-circled{
   font-size:1.7em;
   color:#00b300;
+}
+
+.project-basic-details .completion-date option{
+  font-size:0.8em;
+}
+
+.project-basic-details .completion-date .item-select select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    padding: 0 10px 0 0px;
+    max-width: 72%;
+    border: none;
+    background: #fff;
+    color: #333;
+    text-indent: .01px;
+    text-overflow: '';
+    white-space: nowrap;
+    font-size: 14px;
+    cursor: pointer;
+    direction: rtl;
+}
+
+.project-basic-details .verified {
+    border: 1px solid #ccc;
+    margin: 1px 0px 1px 0;
+    padding: 10px 10px 10px 15px;
+    font-size: 15px;
+    color: #404040;
 }
 
 /*Create Project*/
@@ -550,6 +583,10 @@ div.radio-content {
   /*text-align:center;*/
 }
 
+.near-me .title{
+  font-size: 1em !important;
+}
+
 .near-me  #vendorTypeSelect {
   padding-left:7px;
 }
@@ -570,29 +607,29 @@ div.radio-content {
     font-size: 0.9em;
 }
 
-/*units*/
-.units .ion-checkmark-circled {
+/*configurations*/
+.configurations .ion-checkmark-circled {
   font-size:1.7em;
   color:#00b300;
 }
 
-.units .more{
+.configurations .more{
   font-size:1.5em;
   color:#f2f2f2;
 }
 
-.units .less{
+.configurations .less{
   font-size:1.5em;
   color:#f2f2f2;
 }
 
-.units .row{
+.configurations .row{
   border-top: 1px solid #ccc;
   min-height: 50px;
   padding: 2px;
 }
 
-.units .flooringName{
+.configurations .flooringName{
     height: 40px;
     border-bottom: 1px solid #ccc;
     line-height: 40px;
@@ -600,11 +637,11 @@ div.radio-content {
     background-color: #d9d9d9;
 }
 
-.units .col-10{
+.configurations .col-10{
   padding-top:15px;
 }
 
-.units .flooring .item-select select{
+.configurations .flooring .item-select select{
   max-width: 80%;
   /*position: absolute;*/
   top: 0;
@@ -623,60 +660,184 @@ div.radio-content {
   /*text-align:center;*/
 }
 
-.units #chooseValue{
+.configurations #chooseValue{
   background-color:#f2f2f2;
   text-align:center;
   padding:0px;
 }
 
-.units #chooseValue .col{
+.configurations #chooseValue .col{
   line-height: 36px;
   border:1px solid #ccc;
 }
 
-.units .flooring .item-divider {
+.configurations .flooring .item-divider {
   padding-left:7px;
 }
 
-.units .flooring label{
+.configurations .flooring label{
   height: 50px;
 }
 
-.units .flooring .input-label1{
+.configurations .flooring .input-label1{
   font-size:0.9em;
 }
 
-.units .spec2 {
+.configurations .spec2 {
   border-top:1px solid #ccc;
 }
-.units .specName{
+.configurations .specName{
   height:50px;
   padding-left: 10px;
 }
 
-.units .moreSelected{
+.configurations .moreSelected{
   color:#00b300;
 }
 
-.units .lessSelected {
+.configurations .lessSelected {
   color:red;
 }
 
-.units #specValue {
+.configurations #specValue {
   text-align:center;
   border:1px solid #ccc;
 }
 
-.units p{
+.configurations p{
   margin-top:10px;
 }
 
-.units .heading{
+.configurations .heading{
   background-color:#ccc;
   text-align:center;
   font-size: 1.3em;
   font-weight:500;
 }
+
+/*Specifications*/
+.specifications .ion-checkmark-circled {
+  font-size:1.7em;
+  color:#00b300;
+}
+
+.specifications .more{
+  font-size:1.5em;
+  color:#f2f2f2;
+}
+
+.specifications .less{
+  font-size:1.5em;
+  color:#f2f2f2;
+}
+
+.specifications .row{
+  border-top: 1px solid #ccc;
+  min-height: 50px;
+  padding: 2px;
+}
+
+.specifications .flooringName{
+    height: 40px;
+    border-bottom: 1px solid #ccc;
+    line-height: 40px;
+    text-align: center;
+    background-color: #d9d9d9;
+}
+
+.specifications .col-10{
+  padding-top:15px;
+}
+
+.specifications .flooring .item-select select{
+  max-width: 80%;
+  /*position: absolute;*/
+  top: 0;
+  bottom: 0;
+  /* right: 0; */
+  padding: 0 48px 0 16px;
+  border: none;
+  background: #fff;
+  color: #333;
+  text-indent: .01px;
+  text-overflow: '';
+  white-space: nowrap;
+  font-size: 14px;
+  cursor: pointer;
+  direction: rtl;
+  /*text-align:center;*/
+}
+
+.specifications #chooseValue{
+  background-color:#f2f2f2;
+  text-align:center;
+  padding:0px;
+}
+
+.specifications #chooseValue .col{
+  line-height: 36px;
+  border:1px solid #ccc;
+}
+
+.specifications .flooring .item-divider {
+  padding-left:7px;
+}
+
+.specifications .flooring label{
+  height: 50px;
+}
+
+.specifications .flooring .input-label1{
+  font-size:0.9em;
+}
+
+.specifications .spec2 {
+  border-top:1px solid #ccc;
+}
+.specifications .specName{
+  height:50px;
+  padding-left: 10px;
+}
+
+.specifications .moreSelected{
+  color:#00b300;
+}
+
+.specifications .lessSelected {
+  color:red;
+}
+
+.specifications #specValue {
+  text-align:center;
+  border:1px solid #ccc;
+}
+
+.specifications p{
+  margin-top:10px;
+}
+
+.specifications .heading{
+  background-color:#ccc;
+  text-align:center;
+  font-size: 1.3em;
+  font-weight:500;
+}
+
+.specifications .ac {
+  line-height: 40px;
+  margin-left: 8px;
+}
+
+.specifications #acType {
+  padding:0px;
+}
+
+.specifications #acType .col{
+  text-align:center;
+  border:1px solid #ccc;
+  line-height:40px;
+}
+
 
 /*Important Contacts*/
 
@@ -813,6 +974,13 @@ div.radio-content {
 }
 
 /*Add Task Css*/
+
+.add-task .todayDate{
+  text-align:center;
+  background-color: #ccc;
+  padding: 10px;
+
+}
 .add-task .input-label {
  width:100%;
 }
@@ -846,39 +1014,39 @@ div.radio-content {
 }
 
 /*Tags*/
-.tags .existingTags {
+.standout-features .existingFeatures {
     display: inline-block;
     margin: 2px;
 }
 
-.tags #tagLabel {
+.standout-features #featureLabel {
   background-color: #f2f2f2;
   border:1px solid #ccc;
   margin-bottom: 0px;
 }
 
-.tags .oldTag {
+.standout-features .oldFeature {
   background-color: #f26551;
   margin:3px 10px 3px 3px;
   border-radius: 10px;
   color:#fff;
 }
 
-.tags .oldTag .icon {
+.standout-features .oldFeature .icon {
   font-size:2em;
 }
 
-.tags .oldTag span{
+.standout-features .oldFeature span{
   line-height:10px;
   font-weight:500;
 }
 
-.tags .tagList{
+.standout-features .featureList{
   font-size: 1em;
   padding: 3px;
 }
 
-.tags .addTagBtn{
+.standout-features .addFeatureBtn{
   background-color: #f26551;
   padding: 5px;
   border-radius: 5px;

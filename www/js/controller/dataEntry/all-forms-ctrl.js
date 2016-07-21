@@ -1,17 +1,19 @@
 app.controller('AllFormsCtrl', ['$scope', '$state', '$stateParams', '$timeout', function($scope, $state, $stateParams, $timeout){
 	$scope.forms = [
-		{id: 'project-basic-details', name: 'Project Basic Details'},
+		{id: 'project-basic-details', name: 'Project Details'},
+		{id: 'standoutFeatures', name: 'Standout Features'},
+		{id: 'important-contacts', name: 'Important Contacts'},
+		{id: 'configurations', name: 'Configurations'},
+		{id: 'specifications', name: 'Specifications'},
+		{id: 'near-me', name: 'Services within the community'},
 		{id: 'sports-n-clubhouse', name: 'Sports And Clubhouse Details'},
-		{id: 'home-delivery', name: 'Home Delivery'},
-		{id: 'society-shops', name: 'Society Shops'},
-		{id: 'costing-details', name: 'Costing Details'},
-		{id: 'rwa-details', name: 'RWA Details'},
-		{id: 'security-details', name: 'Security Details'},
-		{id: 'connectivity-details', name: 'Connectivity Details'},
-		{id: 'units', name: 'Units'},
 		{id: 'other-details', name: 'Other Details'},
-		{id: 'ranking-rating', name: 'Ranking Rating And Area'},
-		{id: 'tags', name: 'Tags'}
+		{id: 'costing-details', name: 'Costing Details'},
+		{id: 'security-details', name: 'Security Details'}
+		// {id: 'society-shops', name: 'Society Shops'},
+		// {id: 'connectivity-details', name: 'Connectivity Details'},
+		// {id: 'ranking-rating', name: 'Ranking Rating And Area'},
+		
 	];
 
 	$scope.goToForm = function(val){

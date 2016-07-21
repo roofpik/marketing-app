@@ -15,12 +15,22 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
     console.log($scope.editableVersion);
     getProjectDetails();
     $scope.projectName = '';
+    $scope.date = {
+        month: '',
+        year: ''
+    }
+
+    $scope.months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September','October', 'November', 'December'];
     
+    $scope.selectCompletionMonth = function(){
+        console.log($scope.date.month);
+    }
+
     $scope.formName = 'project-basic-details';
 
     $scope.projectDetails={
         projectType: {},
-        approvedBankLoans: {},
+        // approvedBankLoans: {},
         floors: {},
         lifts: {},
         partners: {}
@@ -46,6 +56,12 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                 $scope.projectName  = snapshot.val();
             }
         });
+        db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/validated').once('value', function(snapshot){
+            console.log(snapshot.val());
+            if(snapshot.val() != null){
+                $scope.validated  = snapshot.val();
+            }
+        });
     }
 
     $scope.selectBuyRent = function(val){
@@ -57,6 +73,16 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
             db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/'+val).remove();
         }
         console.log($scope[val]);
+    }
+
+    $scope.selectVerified = function(){
+        $scope.validated = !$scope.validated;
+        if($scope.validated){
+            console.log($scope.validated);
+            db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/validated').set(true);
+        } else {
+            db.ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/validated').remove();
+        }
     }
 
 	//console.log(window.localStorage['project']);
@@ -85,7 +111,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                 if(details.builderId != undefined){
                   $scope.projectDetails.builderId = details.builderId;  
                 }
-                if($scope.projectDetails.completionDate != undefined){
+                if($scope.projectDetails.address != undefined){
                     $scope.projectDetails.address = details.address;
                 }
                 if(details.projectType != undefined){
@@ -94,13 +120,14 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                     $scope.projectDetails.projectType = {
                     };
                 }
-                if(details.approvedBankLoans != undefined){
-                    $scope.projectDetails.approvedBankLoans = details.approvedBankLoans;
-                }else{
-                    $scope.projectDetails.approvedBankLoans = {
+                // if(details.approvedBankLoans != undefined){
+                //     $scope.projectDetails.approvedBankLoans = details.approvedBankLoans;
+                // }else{
+                //     $scope.projectDetails.approvedBankLoans = {
 
-                    };
-                }
+                //     };
+                // }
+
                 if(details.floors != undefined){
                     $scope.projectDetails.floors = details.floors;
                 } else {
@@ -172,31 +199,31 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 		console.log($scope.projectDetails);
     }
 
-    $scope.banks1 = [
-    	{id:'HDFC', name: 'HDFC'},
-    	{id:'SBI', name: 'SBI'},
-    	{id:'AXIS', name: 'AXIS'}
-    ];
+  //   $scope.banks1 = [
+  //   	{id:'HDFC', name: 'HDFC'},
+  //   	{id:'SBI', name: 'SBI'},
+  //   	{id:'AXIS', name: 'AXIS'}
+  //   ];
 
-    $scope.banks2 = [
-    	{id:'ICICI', name: 'ICICI'},
-    	{id:'KOTAK', name: 'KOTAK'},
-    	{id:'HSBC', name: 'HSBC'}
-    ];
+  //   $scope.banks2 = [
+  //   	{id:'ICICI', name: 'ICICI'},
+  //   	{id:'KOTAK', name: 'KOTAK'},
+  //   	{id:'HSBC', name: 'HSBC'}
+  //   ];
 
 
-    $scope.selectBank = function(val){
-    	console.log(val);
-    	if($scope.projectDetails.approvedBankLoans[val] == undefined) {
-			$scope.projectDetails.approvedBankLoans[val] = true;
-		} else {
-			$scope.projectDetails.approvedBankLoans[val] = !$scope.projectDetails.approvedBankLoans[val];
-			if($scope.projectDetails.approvedBankLoans[val] == false){
-				delete $scope.projectDetails.approvedBankLoans[val];
-			}
-		}
-		console.log($scope.projectDetails.approvedBankLoans);
-    }
+  //   $scope.selectBank = function(val){
+  //   	console.log(val);
+  //   	if($scope.projectDetails.approvedBankLoans[val] == undefined) {
+		// 	$scope.projectDetails.approvedBankLoans[val] = true;
+		// } else {
+		// 	$scope.projectDetails.approvedBankLoans[val] = !$scope.projectDetails.approvedBankLoans[val];
+		// 	if($scope.projectDetails.approvedBankLoans[val] == false){
+		// 		delete $scope.projectDetails.approvedBankLoans[val];
+		// 	}
+		// }
+		// console.log($scope.projectDetails.approvedBankLoans);
+  //   }
 
 	$scope.locations = [];
 	$scope.wantLocations = false;
@@ -245,6 +272,12 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 	}
 
 	$scope.save = function(){
+        if($scope.date.month != '' && $scope.date.year!= ''){
+            $scope.projectDetails.completionDate = $scope.date.month+ ','+ $scope.date.year;  
+        } else if($scope.date.month == '' && $scope.date.year != ''){
+            $scope.projectDetails.completionDate = $scope.date.year; 
+        }
+        
         console.log($scope.projectDetails);
 		var addProjectDetails = {};
         $ionicLoading.show({
@@ -279,14 +312,15 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 			}
 		});
 		 console.log(locationsData);
-      	db.ref().update(locationsData);
-
-      	$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project Details updates successfully'
-		}).then(function(){
-            $ionicLoading.hide();
-        })
+      	db.ref().update(locationsData).then(function(){
+            $ionicPopup.alert({
+                title: 'Successful',
+                template: 'Project Details updates successfully'
+            }).then(function(){
+                $ionicLoading.hide();
+                $state.go('standout-features');
+            })
+        });
 	}
 
     $scope.goBack = function(){

@@ -5,6 +5,8 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	  });
 	$scope.myId = localStorage.getItem("uid");
 
+
+
 	console.log($scope.myId);
 	$scope.projects=[];
 	$scope.cities = [];
@@ -81,8 +83,8 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	 	$scope.data.projectId=projectDetails.projectId;
 	 	$scope.data.projectName=projectDetails.projectName;
 	 };
-	 
 	$scope.date=new Date();
+	$scope.today = $scope.date.toDateString();
     var dates = $filter('date')($scope.date, 'dd-MM-yy');
 	  
 	console.log(dates);
