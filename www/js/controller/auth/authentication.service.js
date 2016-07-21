@@ -27,7 +27,7 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
 
     function Logout() {
          console.log(window.localStorage);
-        if (window.localStorage.email && window.localStorage.uid) {
+       
             firebase.auth().signOut().then(function() {
                 $window.localStorage.removeItem('name');
                 $window.localStorage.removeItem('email');
@@ -43,7 +43,6 @@ app.factory("AuthenticationService", function($http, $location, $timeout, $windo
             }, function(error) {
 
             });
-        }
 
     }
 
