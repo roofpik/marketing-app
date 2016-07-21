@@ -121,6 +121,22 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                     $scope.projectDetails.projectType = {
                     };
                 }
+                if(details.completionDate != undefined){
+                    $scope.projectDetails.completionDate = details.completionDate;
+
+                }
+                if(details.carParking != undefined){
+                    $scope.projectDetails.carParking = details.carParking;
+
+                }
+                if(details.visitorCarParking != undefined){
+                    $scope.projectDetails.visitorCarParking = details.visitorCarParking;
+
+                }
+                if(details.vastuCompliant != undefined){
+                    $scope.projectDetails.vastuCompliant = details.vastuCompliant;
+
+                }
                 // if(details.approvedBankLoans != undefined){
                 //     $scope.projectDetails.approvedBankLoans = details.approvedBankLoans;
                 // }else{
@@ -146,6 +162,15 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
                     $scope.projectDetails.partners = details.partners;
                 } else {
                     $scope.projectDetails.partners = {};
+                }
+                if(details.totalUnits != undefined){
+                    $scope.projectDetails.totalUnits = details.totalUnits;
+                }
+                if(details.totalTowers != undefined){
+                    $scope.projectDetails.totalTowers = details.totalTowers;
+                }
+                if(details.landArea != undefined){
+                    $scope.projectDetails.landArea = details.landArea;
                 }
             	console.log($scope.projectDetails);
 	         	getLocations();
@@ -273,6 +298,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 	}
 
 	$scope.save = function(){
+        console.log($scope.projectDetails);
         if($scope.date.month != '' && $scope.date.year!= ''){
             $scope.projectDetails.completionDate = $scope.date.month+ ','+ $scope.date.year;  
         } else if($scope.date.month == '' && $scope.date.year != ''){
@@ -284,8 +310,6 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
         $ionicLoading.show({
             template: 'Loading...'
         });
-
-		console.log($scope.projectDetails);
 
       	addProjectDetails[$scope.projectType+"/"+$scope.projectDetails.address.cityId+"/projects/" + $scope.projectId +'/'+$scope.editableVersion+"/projectDetails"] = $scope.projectDetails;
       	console.log(addProjectDetails);

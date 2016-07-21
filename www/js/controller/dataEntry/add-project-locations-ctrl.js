@@ -74,6 +74,13 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 			});;
 		} else {
 			console.log($scope.selectedLocations.length);
+			$ionicLoading.hide();
+			$ionicPopup.alert({
+					title: 'Location not selected',
+					template: 'Please select at least one location'
+				}).then(function(){
+					
+				});
 		}
 	}
 
