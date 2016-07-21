@@ -79,8 +79,10 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
       	$ionicPopup.alert({
 			title: 'Successful',
 			template: 'Project Details updates successfully'
+		}).then(function(){
+			$scope.security = {};
+			$state.go('data-entry', {activityId:projectRequiredDetail.activityId});
 		})
-		$scope.security = {};
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

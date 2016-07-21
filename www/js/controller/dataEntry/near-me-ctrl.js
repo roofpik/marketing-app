@@ -1,7 +1,7 @@
-app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '$ionicLoading', function($scope,$ionicPopover,$timeout, $state, $ionicLoading){
-	// $ionicLoading.show({
-	//     template: 'Loading...'
-	//   });
+app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '$ionicLoading', '$ionicPopup', function($scope,$ionicPopover,$timeout, $state, $ionicLoading, $ionicPopup){
+	$ionicLoading.show({
+	    template: 'Loading...'
+	  });
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -76,8 +76,8 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 		  });
 		console.log($scope.nearMeDetails);
 		if($scope.nearMeDetails.name != undefined && $scope.nearMeDetails.name != '' && $scope.nearMeDetails.contact != undefined && $scope.nearMeDetails.contact != '' && $scope.vendorType != ''){
-			var newKey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType).push().key;
-			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+newKey] = $scope.nearMeDetails;
+			var newKey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts').push().key;
+			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts/'+newKey] = $scope.nearMeDetails;
 	 		db.ref().update(addProjectDetails);
 	 		console.log(addProjectDetails);
 	 		$scope.nearMeDetails.type = $scope.vendorType;
@@ -85,8 +85,20 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	 		$scope.vendorsCount++;
 	 		$scope.nearMeDetails = {};
 	 		$ionicLoading.hide();
+		} else if($scope.vendorType != ''){
+			$ionicLoading.hide();
+			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType).set(true).then(function(){
+				$ionicPopup.alert({
+					title:'Added Successfully',
+					template: 'Details successfully updated'
+				})
+			});
 		} else {
 			$ionicLoading.hide();
+			$ionicPopup.alert({
+				title:'Added Successfully',
+				template: 'Details successfully updated'
+			})
 		}
 	}
 
@@ -110,6 +122,10 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	$scope.goBack = function(){
         console.log('called');
         $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+    }
+
+    $scope.next = function(){
+    	$state.go('sports-n-clubhouse');
     }
 
 }]);

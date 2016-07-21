@@ -160,4 +160,8 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 		}
 	}
 
+	$scope.next = function(){
+		$state.go('near-me');
+	}
+
 }]);

@@ -141,8 +141,8 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 
 		console.log($scope.sector.name);
 		if($scope.sector.name != ''){
-			$scope.project.projectDetails.landmark = $scope.sector.name+ ', '+$scope.project.projectDetails.address.zoneName;
-			console.log($scope.project.projectDetails.landmark);
+			$scope.project.projectDetails.address.landmark = $scope.sector.name+ ', '+$scope.project.projectDetails.address.zoneName;
+			console.log($scope.project.projectDetails.address.landmark);
 		} else {
 			console.log('empty');
 		}

@@ -76,4 +76,8 @@ app.controller('ImportantContactsCtrl',['$scope', '$timeout', '$state', '$ionicP
         $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
     }
 
+    $scope.next = function(){
+    	$state.go('configurations');
+    }
+
 }]);

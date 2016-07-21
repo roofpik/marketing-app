@@ -98,4 +98,8 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
         $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
     }
 
+    $scope.next = function(){
+    	$state.go('specifications');
+    }
+
 }]);

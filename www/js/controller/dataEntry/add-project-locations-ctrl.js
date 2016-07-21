@@ -1,7 +1,7 @@
 app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $ionicLoading, $ionicPopup, $ionicPopover){
-	// $ionicLoading.show({
-	//     template: 'Loading...'
-	// });
+	$ionicLoading.show({
+	    template: 'Loading...'
+	});
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	console.log(projectRequiredDetail);
@@ -26,6 +26,7 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	        	angular.forEach(data.val(), function(value , key){
 	        		$scope.allLocations.push(value);
 	        	})
+	        	$ionicLoading.hide();
 	        },50);   
 		});
 	}
@@ -47,6 +48,9 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	}
 
 	$scope.addLocations = function(){
+		$ionicLoading.show({
+		    template: 'Loading...'
+		});
 		if($scope.selectedLocations.length){
 			console.log($scope.selectedLocations.length);
 			angular.forEach($scope.selectedLocations, function(value, key){
@@ -60,6 +64,13 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 			console.log($scope.locations);
 			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/projectDetails/address/locations").update($scope.locations).then(function(){
 				console.log('details added');
+				$ionicLoading.hide();
+				$ionicPopup.alert({
+					title: 'Successful',
+					template: 'Project Details updates successfully'
+				}).then(function(){
+					$state.go('standout-features');
+				})
 			});;
 		} else {
 			console.log($scope.selectedLocations.length);

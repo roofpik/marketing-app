@@ -314,12 +314,12 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 		});
 		 console.log(locationsData);
       	db.ref().update(locationsData).then(function(){
+            $ionicLoading.hide();
             $ionicPopup.alert({
                 title: 'Successful',
                 template: 'Project Details updates successfully'
             }).then(function(){
-                $ionicLoading.hide();
-                $state.go('standout-features');
+                $state.go('add-project-locations');
             })
         });
 	}

@@ -9,7 +9,7 @@
 			<div class="configurations">
 				<label class="item item-input item-select">
 				    <div class="input-label">
-				        Project Type
+				        Unit Type
 				    </div>
 				    <select ng-change="selectProjectType()" ng-model="project.type">
 				        <option 
@@ -94,8 +94,11 @@
 				</div>
 			</div> -->
 			<div class="addUnit">
-				<button class="button button-block button-dark" ng-click="addThisUnit()">Add Unit</button>
+				<button class="button button-block button-positive" ng-click="addThisUnit()">Add Unit</button>
 			</div>
 		</div>
 	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-dark" ng-click="next()">
+    	<h1 class="title">Next</h1>
+    </ion-footer-bar>
 </ion-view>
