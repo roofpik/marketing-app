@@ -23,24 +23,25 @@ app.controller('DataEntryCtrl', ['$scope', '$state', '$stateParams', '$filter', 
   }); 
 
   getCurrentLocation = function() {
-    if(window.cordova){
-    var posOptions = {
-      timeout: 10000,
-      enableHighAccuracy: false
-    };
-    $cordovaGeolocation
-      .getCurrentPosition(posOptions)
-      .then(function(position) {
-        $scope.latitude = position.coords.latitude;
-        $scope.longitude = position.coords.longitude;
-        console.log($scope.latitude);
-        console.log($scope.longitude);
-        $ionicLoading.hide();
-    });
-    }
-    else{
-      $ionicLoading.hide();
-    }
+    $ionicLoading.hide();
+    // if(window.cordova){
+    // var posOptions = {
+    //   timeout: 10000,
+    //   enableHighAccuracy: false
+    // };
+    // $cordovaGeolocation
+    //   .getCurrentPosition(posOptions)
+    //   .then(function(position) {
+    //     $scope.latitude = position.coords.latitude;
+    //     $scope.longitude = position.coords.longitude;
+    //     console.log($scope.latitude);
+    //     console.log($scope.longitude);
+    //     $ionicLoading.hide();
+    // });
+    // }
+    // else{
+    //   $ionicLoading.hide();
+    // }
   }
 
   getActivityDetails  = function() {
