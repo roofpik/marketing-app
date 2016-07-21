@@ -31,6 +31,7 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	$scope.nearMeTypes = [
 		{id: 'grocery', name: 'Grocery'},
 		{id: 'cableProvider', name: 'Cable Provider'},
+		{id: 'pharmacy', name: 'Pharmacy'},
 		{id: 'isp', name: 'ISP'},
 		{id: 'milkman', name: 'Milkman'},
 		{id: 'newspaperDelivery', name: 'Newspaper Delivery'},
