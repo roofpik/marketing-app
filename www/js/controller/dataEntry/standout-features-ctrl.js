@@ -86,7 +86,7 @@ app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$i
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
     $scope.next = function(){
         $state.go('specifications');

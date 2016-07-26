@@ -28,24 +28,25 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
             	$scope.sportsActivities = snapshot.val();
             	console.log($scope.sportsActivities);
             }  
+         }).then(function(){
+			firebase.database().ref($scope.projectType +'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
+	            console.log(snapshot.val());
+	            if(snapshot.val() != null){
+	            	$scope.clubHouse = snapshot.val();
+	            	console.log($scope.clubHouse);
+	            	angular.forEach(snapshot.val().operatingTimes.holiday, function(value, key){
+	            		console.log(value, key);
+	            		if(value == true){
+	            			$scope.day[key] = true;
+	            		}
+	            	})
+	            }  
+	         }).then(function(){
+	         	$timeout(function(){
+		        	$ionicLoading.hide();
+		        }, 1000);
+	         });	
          });
-
-        firebase.database().ref($scope.projectType +'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
-            console.log(snapshot.val());
-            if(snapshot.val() != null){
-            	$scope.clubHouse = snapshot.val();
-            	console.log($scope.clubHouse);
-            	angular.forEach(snapshot.val().operatingTimes.holiday, function(value, key){
-            		console.log(value, key);
-            		if(value == true){
-            			$scope.day[key] = true;
-            		}
-            	})
-            }  
-         });
-        $timeout(function(){
-        	$ionicLoading.hide();
-        }, 1000);
     };
 
 	$scope.selectSports = function(val){
@@ -122,7 +123,7 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 }]);

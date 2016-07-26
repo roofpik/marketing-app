@@ -150,11 +150,11 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
     $scope.next = function(){
-  		$scope.addThisUnit(2);
+  		$state.go('sports-n-clubhouse');
     }
 
 }]);

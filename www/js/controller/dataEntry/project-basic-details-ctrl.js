@@ -171,8 +171,8 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
     $scope.extras = [
         {id: 'carParking', name: 'Car Parking', icon: 'icon ion-android-car'},
-        {id: 'visitorCarParking', name: 'Visitor Car Parking', icon: 'icon ion-model-s'},
-        {id: 'vastuCompliant', name: 'Vastu Compliant', icon: 'icon ion-android-compass'}
+        {id: 'visitorCarParking', name: 'Visitor Car Parking', icon: 'icon ion-model-s'}
+        // {id: 'vastuCompliant', name: 'Vastu Compliant', icon: 'icon ion-android-compass'}
     ];
 
     $scope.selectExtras = function(val){
@@ -300,7 +300,7 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
     $scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 

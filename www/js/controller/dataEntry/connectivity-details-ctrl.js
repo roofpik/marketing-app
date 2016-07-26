@@ -58,7 +58,7 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 	$scope.save = function(){
@@ -76,6 +76,7 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 				template: 'Project Details updates successfully'
 			}).then(function(){
 				$scope.connectivity = {};
+				$state.go('data-entry', {activityId:projectRequiredDetail.activityId});
 			})
       	});
 	}

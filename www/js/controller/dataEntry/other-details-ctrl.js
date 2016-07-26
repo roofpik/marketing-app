@@ -89,19 +89,26 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		$ionicLoading.show({
 		    template: 'Loading...'
 		  });
-		var addProjectDetails = {};
-      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
-      	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails).then(function(){
-      		$ionicLoading.hide();
-      		$ionicPopup.alert({
-				title: 'Successful',
-				template: 'Project Details updates successfully'
-			}).then(function(){
-				$state.go('configurations');
-			})
-			$scope.other = {};
-      	});
+
+		if(Object.keys($scope.other).length == 0){
+			$ionicLoading.hide();
+			$state.go('configurations');
+		} else {
+			var addProjectDetails = {};
+	      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/other"] = $scope.other;
+	      	console.log(addProjectDetails);
+	      	db.ref().update(addProjectDetails).then(function(){
+	      		$ionicLoading.hide();
+	      		$ionicPopup.alert({
+					title: 'Successful',
+					template: 'Project Details updates successfully'
+				}).then(function(){
+					$state.go('configurations');
+				})
+				$scope.other = {};
+	      	});
+		}
+		
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
@@ -124,6 +131,6 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 }]);

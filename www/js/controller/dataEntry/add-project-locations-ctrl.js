@@ -19,11 +19,14 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	getProjectLocations();
 
 	function getProjectLocations() {
+		$scope.existingLocations = [];
         db.ref($scope.projectType+'/'+$scope.cityId +'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations').once('value', function(snapshot){
             console.log(snapshot.val());
-            angular.forEach(snapshot.val(), function(value, key){
-            	$scope.existingLocations.push(value);
-            })
+            $timeout(function(){
+            	angular.forEach(snapshot.val(), function(value, key){
+	            	$scope.existingLocations.push(value);
+	            })
+            },500);
         }).then(function(){
         	db.ref($scope.projectType+'/'+$scope.cityId +'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectName').once('value', function(data){
         		console.log(data.val());
@@ -44,7 +47,7 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	        		$scope.allLocations.push(value);
 	        	})
 	        	$ionicLoading.hide();
-	        },50);   
+	        },500);   
 		});
 	}
 
@@ -118,10 +121,9 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 		var num = $scope.selectedLocations.length;
 		var x = 0;
 		angular.forEach($scope.locations, function(value, key){
-			console.log(value);
-			x++;
 			console.log(num, x);
 			db.ref('location/'+$scope.cityId+'/'+value.locationId+'/projectAccess/residential/'+$scope.projectId).update($scope.insertProject).then(function(){
+				x++;
 				if(x == num){
 					$ionicLoading.hide();
 					$ionicPopup.alert({
@@ -133,6 +135,27 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 				}
 			});
 		})
+	}
+
+	$scope.removeLocation = function(location){
+
+		$ionicLoading.show({
+			template: 'Loading...'
+		})
+		console.log(location);
+		db.ref('location/'+$scope.cityId+'/'+location.locationId+'/projectAccess/residential/'+$scope.projectId).remove().then(function(){
+			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/projectDetails/address/locations/"+location.locationId).remove().then(function(){
+				$ionicLoading.hide();
+				$ionicPopup.alert({
+					title: 'Location Removed Successfully'
+				}).then(function(){
+					$ionicLoading.show({
+							template: 'Loading...'
+						})
+					getProjectLocations();
+				})
+			});
+		});
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
@@ -155,7 +178,7 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 

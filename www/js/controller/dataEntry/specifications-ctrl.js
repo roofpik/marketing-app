@@ -52,8 +52,8 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 	];
 
 	$scope.specifications3 = [
-		{name: 'Master Bedroom', id: 'flooringMasterBedroom'},
 		{name: 'Living Dining', id: 'flooringLivingDining'},
+		{name: 'Master Bedroom', id: 'flooringMasterBedroom'},
 		{name: 'Other Bedrooms', id: 'flooringOtherBedrooms'}
 	];
 	$scope.flooring = {
@@ -125,23 +125,29 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 		$ionicLoading.show({
 		    template: 'Loading...'
 		 });
-		var updates = {};
-		updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/units/specifications'] = $scope.specifications;
-		db.ref().update(updates).then(function(){
+		if(Object.keys($scope.specifications).length == 0){
 			$ionicLoading.hide();
-      		$ionicPopup.alert({
-				title: 'Successful',
-				template: 'Project Details updates successfully'
-			}).then(function(){
-				$state.go('other-details');
+			$state.go('other-details');
+		} else {
+			var updates = {};
+			updates[$scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/units/specifications'] = $scope.specifications;
+			db.ref().update(updates).then(function(){
+				$ionicLoading.hide();
+	      		$ionicPopup.alert({
+					title: 'Successful',
+					template: 'Project Details updates successfully'
+				}).then(function(){
+					$state.go('other-details');
+				})
+				$scope.specifications = {};
 			})
-			$scope.specifications = {};
-		})
+		}
+		
 	}
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 

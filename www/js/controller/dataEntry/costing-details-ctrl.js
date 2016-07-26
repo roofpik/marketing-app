@@ -89,7 +89,7 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 }]);

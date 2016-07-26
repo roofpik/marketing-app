@@ -105,7 +105,7 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 }]);

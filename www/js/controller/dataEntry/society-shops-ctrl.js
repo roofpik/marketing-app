@@ -93,7 +93,7 @@ app.controller('SocietyShopsCtrl', ['$scope', '$ionicPopover', '$timeout', '$sta
 
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
 }]);

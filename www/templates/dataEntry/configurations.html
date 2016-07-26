@@ -23,7 +23,7 @@
 					<span class="input-label labels">Type (BHK)</span>
 					<input type="number" placeholder="Type (BHK)" ng-model = "configurations.type">
 				</label>
-				<label class="item item-input item-floating-label">
+				<!-- <label class="item item-input item-floating-label">
 					<span class="input-label labels">Minimum Price</span>
 					<input type="number" placeholder="Minimum Price" ng-model = "configurations.price.min">
 				</label><label class="item item-input item-floating-label">
@@ -32,7 +32,7 @@
 				</label><label class="item item-input item-floating-label">
 					<span class="input-label labels">Maximum Price</span>
 					<input type="number" placeholder="Maximum Price" ng-model = "configurations.price.max">
-				</label>
+				</label> -->
 				<label class="item item-input item-floating-label" ng-repeat="config in configurations2">
 					<span class="input-label labels">{{config.name}}</span>
 					<input type="number" placeholder="{{config.name}}" ng-model = "configurations[config.id]">
@@ -56,11 +56,13 @@
 				</div>
 				<div class="row" style="background-color:#ccc;">
 					<div class="col" style="border:1px solid #ccc;">Super Area</div>
+					<div class="col" style="border:1px solid #ccc;">BHK</div>
 					<div class="col" style="border:1px solid #ccc;">Type</div>
 				</div>
 				<div class="row" ng-repeat="config in existingUnits">
 					<div class="col" style="border:1px solid #ccc;">{{config.superArea}}</div>
 					<div class="col" style="border:1px solid #ccc;">{{config.type}}</div>
+					<div class="col" style="border:1px solid #ccc;">{{config.propertyType}}</div>
 				</div>
 			</div>
 			<!-- <div class="specifications">

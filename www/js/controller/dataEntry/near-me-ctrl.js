@@ -48,23 +48,26 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
     	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
         firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/nearMe').once('value', function(snapshot) {
             console.log(snapshot.val());
-            angular.forEach(snapshot.val(), function(value,key){
-            	value.name=key;
-            	$scope.availableOptions.push(value);
-            })
             if(snapshot.val() != null){
-            	angular.forEach(snapshot.val(), function(value, key){
-            		console.log(value, key);
-            		var hdoption = {};
-            		angular.forEach(value, function(value1, key1){
-            			hdoption.type = key;
-            			hdoption.name = value1.name;
-            			hdoption.contact = value1.contact;
-            			$scope.vendors.push(hdoption);
-            			$scope.vendorsCount++;
-            		})
-            	})
-            } 
+            	angular.forEach(snapshot.val(), function(value,key){
+	            	value.name=key;
+	            	$scope.availableOptions.push(value);
+	            })	
+            }
+            
+            // if(snapshot.val() != null){
+            // 	angular.forEach(snapshot.val(), function(value, key){
+            // 		console.log(value, key);
+            // 		var hdoption = {};
+            // 		angular.forEach(value, function(value1, key1){
+            // 			hdoption.type = key;
+            // 			hdoption.name = value1.name;
+            // 			hdoption.contact = value1.contact;
+            // 			$scope.vendors.push(hdoption);
+            // 			$scope.vendorsCount++;
+            // 		})
+            // 	})
+            // } 
          }).then(function(){
          	$ionicLoading.hide();
          });
@@ -83,23 +86,43 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 		  });
 		console.log($scope.nearMeDetails);
 		if($scope.nearMeDetails.name != undefined && $scope.nearMeDetails.name != '' && $scope.nearMeDetails.contact != undefined && $scope.nearMeDetails.contact != '' && $scope.vendorType != ''){
-			var newKey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts').push().key;
-			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType] = true;
-			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts/'+newKey] = $scope.nearMeDetails;
-	 		db.ref().update(addProjectDetails).then(function(){
-	 			console.log(addProjectDetails);
-		 		$scope.nearMeDetails.type = $scope.vendorType;
-		 		$scope.vendors.push($scope.nearMeDetails);
-		 		$scope.vendorsCount++;
-		 		$scope.nearMeDetails = {};
-		 		$ionicLoading.hide();
-	 			$ionicPopup.alert({
-					title:'Added Successfully',
-					template: 'Details successfully updated'
-				}).then(function(){
-					window.location.reload(true);
+			var exists = false;
+			angular.forEach($scope.availableOptions, function(value,key){
+				console.log(value.name);
+				if($scope.vendorType == value.name){
+					angular.forEach(value.contacts, function(value1, key1){
+						console.log(value1);
+						if(value1.contact == $scope.nearMeDetails.contact){
+							console.log('exists');
+							exists = true;
+						}
+					})
+				}
+			});
+			if(exists){
+				$ionicLoading.hide();
+				$ionicPopup.alert({
+					title: 'Already Added'
 				})
-	 		});
+			} else {
+				var newKey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts').push().key;
+				addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType] = true;
+				addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts/'+newKey] = $scope.nearMeDetails;
+		 		db.ref().update(addProjectDetails).then(function(){
+		 			console.log(addProjectDetails);
+			 		$scope.nearMeDetails.type = $scope.vendorType;
+			 		$scope.vendors.push($scope.nearMeDetails);
+			 		$scope.vendorsCount++;
+			 		$scope.nearMeDetails = {};
+			 		$ionicLoading.hide();
+		 			$ionicPopup.alert({
+						title:'Added Successfully',
+						template: 'Details successfully updated'
+					}).then(function(){
+						window.location.reload(true);
+					})
+		 		});
+			}
 		} else if($scope.vendorType != ''){
 			$ionicLoading.hide();
 			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType).set(true).then(function(){
@@ -138,7 +161,7 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	}
 	$scope.goBack = function(){
         console.log('called');
-        $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+        $state.go('all-forms');
     }
 
     $scope.next = function(){

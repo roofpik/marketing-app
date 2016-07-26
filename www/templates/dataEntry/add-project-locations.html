@@ -6,13 +6,20 @@
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
-			<div class="existingLoc" ng-show="existingLocations">
+			<div class="existingLoc">
 				<div class="item item-divider">
 					Selected Locations
 				</div>
 				<ion-list>
 					<ion-item ng-repeat="loc in existingLocations">
-						{{loc.locationName}}
+						<div class="row">
+							<div class="col col-75">
+								{{loc.locationName}}
+							</div>
+							<div class="col col-25" style="text-align:right;" ng-click="removeLocation(loc)">
+								<i class="icon ion-close-circled" style="font-size:1.5em;color:red"></i>
+							</div>
+						</div>
 					</ion-item>
 				</ion-list>
 			</div>
