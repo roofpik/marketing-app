@@ -8,13 +8,30 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	$scope.cityId = projectRequiredDetail.cityId;
 	$scope.editableVersion = projectRequiredDetail.version;
 	$scope.projectType = projectRequiredDetail.projectType;
+	$scope.projectName = '';
 	$scope.formName = 'all-project-locations';
 
 	$scope.allLocations = [];
 	$scope.selectedLocations = [];
+	$scope.existingLocations = [];
 	$scope.locations = {};
 
-	getLocations();
+	getProjectLocations();
+
+	function getProjectLocations() {
+        db.ref($scope.projectType+'/'+$scope.cityId +'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectDetails/address/locations').once('value', function(snapshot){
+            console.log(snapshot.val());
+            angular.forEach(snapshot.val(), function(value, key){
+            	$scope.existingLocations.push(value);
+            })
+        }).then(function(){
+        	db.ref($scope.projectType+'/'+$scope.cityId +'/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/projectName').once('value', function(data){
+        		console.log(data.val());
+        		$scope.projectName = data.val();
+        	})
+        	getLocations();
+        })
+    }
 
 	function getLocations(){
 		console.log('location/'+ $scope.cityId);
@@ -32,16 +49,30 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	}
 
 	$scope.selectLocation = function(value, index){
+		var exist = false;
+		angular.forEach($scope.existingLocations, function(value1, key1){
+			if(value1.locationId == value.locationId){
+				exist = true;
+			}
+		})
 		//console.log(value.checked);
-		if(value.checked == undefined) {
-			value.checked = true;
-			$scope.selectedLocations.push(value);
-		} else {
-			value.checked = !value.checked;
-			$scope.selectedLocations.splice(index,1);
+		if(exist){
+			$ionicPopup.alert({
+				title:'Location already exists',
+				template: 'Please select a different location'
+			});
+		} else{
+			if(value.checked == undefined) {
+				value.checked = true;
+				$scope.selectedLocations.push(value);
+			} else {
+				value.checked = !value.checked;
+				$scope.selectedLocations.splice(index,1);
+			}
+			console.log($scope.selectedLocations);
 		}
-		console.log($scope.selectedLocations);
 	}
+	
 	$scope.loc = {
 		locationName: '',
 		locationId: ''
@@ -64,13 +95,7 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 			console.log($scope.locations);
 			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/projectDetails/address/locations").update($scope.locations).then(function(){
 				console.log('details added');
-				$ionicLoading.hide();
-				$ionicPopup.alert({
-					title: 'Successful',
-					template: 'Project Details updates successfully'
-				}).then(function(){
-					$state.go('standout-features');
-				})
+				$scope.addProjectToLocations();
 			});;
 		} else {
 			console.log($scope.selectedLocations.length);
@@ -82,6 +107,32 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 					
 				});
 		}
+	}
+
+	$scope.addProjectToLocations = function(){
+		$scope.insertProject = {
+			projectId: $scope.projectId,
+			projectName: $scope.projectName
+		}
+
+		var num = $scope.selectedLocations.length;
+		var x = 0;
+		angular.forEach($scope.locations, function(value, key){
+			console.log(value);
+			x++;
+			console.log(num, x);
+			db.ref('location/'+$scope.cityId+'/'+value.locationId+'/projectAccess/residential/'+$scope.projectId).update($scope.insertProject).then(function(){
+				if(x == num){
+					$ionicLoading.hide();
+					$ionicPopup.alert({
+						title: 'Successful',
+						template: 'Project Details updates successfully'
+					}).then(function(){
+						$state.go('standout-features');
+					})
+				}
+			});
+		})
 	}
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {

@@ -4,7 +4,7 @@
 		<h1 class="title">Configurations</h1>
 		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
-	<ion-content>
+	<ion-content class="has-footer">
 		<div class="card">
 			<div class="configurations">
 				<label class="item item-input item-select">
@@ -38,7 +38,7 @@
 					<input type="number" placeholder="{{config.name}}" ng-model = "configurations[config.id]">
 				</label>
 				<div class="item item-divider">
-					Extras
+					Y/N
 				</div>
 				<div class="row" ng-repeat = "config in configurations3" ng-click="selectConfig(config.id)">
 					<div class="col col-90">
@@ -47,6 +47,20 @@
 					<div class="col col-10">
 						<i class="icon ion-checkmark-circled" ng-show="configurations.{{config.id}}"></i>
 					</div>
+				</div>
+			</div>
+			
+			<div class="presentUnits" style="text-align:center;">
+				<div class="item-divider" style="text-align:left;">
+					Added Configurations
+				</div>
+				<div class="row" style="background-color:#ccc;">
+					<div class="col" style="border:1px solid #ccc;">Super Area</div>
+					<div class="col" style="border:1px solid #ccc;">Type</div>
+				</div>
+				<div class="row" ng-repeat="config in existingUnits">
+					<div class="col" style="border:1px solid #ccc;">{{config.superArea}}</div>
+					<div class="col" style="border:1px solid #ccc;">{{config.type}}</div>
 				</div>
 			</div>
 			<!-- <div class="specifications">
@@ -93,12 +107,19 @@
 					</label>
 				</div>
 			</div> -->
-			<div class="addUnit">
+			<!-- <div class="addUnit">
 				<button class="button button-block button-positive" ng-click="addThisUnit()">Add Unit</button>
-			</div>
+			</div> -->
 		</div>
 	</ion-content>
-	<ion-footer-bar align-title="center" class="bar-dark" ng-click="next()">
-    	<h1 class="title">Next</h1>
-    </ion-footer-bar>
+	<!-- <ion-footer-bar align-title="center" class="bar-dark" ng-click="next()">
+		<div class="row">
+			<div class="col">Add Unit</div>
+			<div class="col">Next</div>
+		</div>
+    </ion-footer-bar> -->
+    <div id="config-footer" class="button-bar"  >
+	  <a style="min-width: 50%;border-radius: 0px;" class="button button-positive" ng-click="addThisUnit(1)">Add Unit</a>
+	  <a style="min-width: 50%;border-radius: 0px;"  class="button button-dark" ng-click="next()">Next</a>
+	</div>
 </ion-view>

@@ -24,9 +24,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
             	if($scope.other.park != undefined){
             		$scope.parkSelected = true;
             	}
-            	// if($scope.other.powerBackup != undefined){
-
-            	// }
+            	if($scope.other.powerBackup != undefined){
+            		$scope.powerBackupSelected = true;
+            	}
             	console.log($scope.other);
             }
             $ionicLoading.hide(); 
@@ -98,7 +98,7 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 				title: 'Successful',
 				template: 'Project Details updates successfully'
 			}).then(function(){
-				$state.go('costing-details');
+				$state.go('configurations');
 			})
 			$scope.other = {};
       	});

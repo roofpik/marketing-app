@@ -91,17 +91,25 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 
 	 $scope.addTask=function(){
 	 	console.log($scope.data);
-	 	if($scope.data.cityId != undefined && $scope.data.projectId != undefined && $scope.data.start.time != undefined && $scope.data.end.time != undefined &&$scope.data.projectType != undefined){
-		 	var newPostKey = firebase.database().ref('/activity/'+$scope.myId).child(dates).push().key;
-		 	var updates = {};
-		    updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/type'] = "Data Entry";
-		    $scope.data.active=true;
-	        updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/planning'] = $scope.data;
-		    console.log($scope.data);
+	 	if($scope.data.cityId != undefined && $scope.data.projectId != undefined && $scope.data.start.time != undefined && $scope.data.end.time != undefined &&$scope.data.projectType != undefined && $scope.data.purpose != undefined){
+	 		if($scope.data.purpose.length != 0){
+	 			var newPostKey = firebase.database().ref('/activity/'+$scope.myId).child(dates).push().key;
+			 	var updates = {};
+			    updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/type'] = "Data Entry";
+			    $scope.data.active=true;
+		        updates['/activity/' + $scope.myId  + '/' + dates + '/' + newPostKey + '/planning'] = $scope.data;
+			    console.log($scope.data);
 
-		    firebase.database().ref().update(updates).then(function(){
-		    	$state.go('tasks', {adminId:$scope.myId});
-		    });
+			    firebase.database().ref().update(updates).then(function(){
+			    	$state.go('tasks', {adminId:$scope.myId});
+			    });
+	 		} else {
+	 			$ionicPopup.alert({
+		 			title:'Data missing',
+		 			template: 'Please fill all the information'
+		 		});
+	 		}
+		 	
 	 	} else {
 	 		$ionicPopup.alert({
 	 			title:'Data missing',

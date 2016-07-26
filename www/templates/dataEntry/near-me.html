@@ -32,16 +32,30 @@
 						<button class="button button-dark" ng-click="addShop()">Add</button>
 					</div>
 				</div>
-				<div class="display" ng-show="vendorsCount">
+
+				<!-- <div class="display" ng-show="vendorsCount">
 					<div class="row headings">
 						<div class="col">Name</div>
 						<div class="col">Contact</div>
 						<div class="col">Type</div>
 					</div>
-					<div class="row" ng-repeat="vendor in vendors">
+					<div class="row" ng-repeat="vendor in vendors track by $index">
 						<div class="col"><strong>{{vendor.name}}</strong></div>
 						<div class="col"><strong>{{vendor.contact}}</strong></div>
 						<div class="col"><strong>{{vendor.type}}</strong></div>
+					</div>
+				</div> -->
+			</div>
+			<div class="available" ng-repeat="option in availableOptions">
+				<div class="item" id="catName">
+					{{option.name}}
+				</div>
+				<div class="row" ng-repeat="item in option.contacts" style="padding:0px;">
+					<div class="col" style="text-align:center;border:1px solid #ccc">
+						{{item.name}}
+					</div>
+					<div class="col" style="text-align:center;border:1px solid #ccc">
+						{{item.contact}}
 					</div>
 				</div>
 			</div>

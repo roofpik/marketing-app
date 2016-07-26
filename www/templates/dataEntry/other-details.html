@@ -1,7 +1,7 @@
 <ion-view class="other-details" cache-view="false">
 	<ion-header-bar class="bar-balanced" align-title="center">
 		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
-		<h1 class="title">Other Details</h1>
+		<h1 class="title">Other Specifications</h1>
 		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
@@ -28,8 +28,8 @@
 				</div>
 			</div>
 			<div class="row" id="chooseValue" ng-show="powerBackupSelected">
-				<div class="col" ng-click="chooseBackup('Full')" ng-class="other.powerBackup=='Full'? 'selected': 'notSelected'">Full</div>
-				<div class="col" ng-click="chooseBackup('Partial')" ng-class="other.powerBackup=='Partial'? 'selected': 'notSelected'">Partial</div>
+				<div class="col backupType" ng-click="chooseBackup('Full')" ng-class="other.powerBackup=='Full'? 'selected': 'notSelected'">Full</div>
+				<div class="col backupType" ng-click="chooseBackup('Partial')" ng-class="other.powerBackup=='Partial'? 'selected': 'notSelected'">Partial</div>
 			</div>
 			<div>
 				<button class="button button-block button-dark" ng-click="save()">Save</button>

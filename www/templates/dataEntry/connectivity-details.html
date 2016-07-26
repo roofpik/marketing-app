@@ -6,46 +6,76 @@
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
-			<div class="{{mode.id}}" ng-repeat="mode in connectivity1">
-				<div class="item item-divider">
-					{{mode.name}}
+			<div class="autoNcab">
+				<ion-item ng-click="selectStand('autoStand')">
+					<div class="row">
+						<div class="col col-90">
+							<div class="standName">Auto Stand</div>
+						</div>
+						<div class="col col-10">
+							<i class="icon ion-checkmark-circled" ng-class="connectivity.autoStand.autoStand? 'greenTick': 'greyTick'"></i>
+						</div>
+					</div>
+				</ion-item>
+				<div class="row" ng-show="connectivity.autoStand.autoStand">
+					<div class="col latNlng">
+						<label class="item item-input item-floating-label">
+					    	<span class="input-label labels">Lat</span>
+					    	<input type="number" placeholder="Lat" ng-model = "connectivity.autoStand.lat">
+						</label>
+					</div>
+					<div class="col latNlng">
+						<label class="item item-input item-floating-label">
+					    	<span class="input-label labels">Lng</span>
+					    	<input type="number" placeholder="Lng" ng-model = "connectivity.autoStand.lng">
+						</label>
+					</div>
 				</div>
-				<div class="all-fields" ng-repeat="param in params1">
-					<label class="item item-input item-floating-label">
-						<span class="input-label labels">{{param.name}}</span>
-					   	<input type="number" placeholder="{{param.name}}" ng-model = "connectivity[mode.id][param.id]">
-					</label>
+				<ion-item ng-click="selectStand('cabStand')">
+					<div class="row">
+						<div class="col col-90">
+							<div class="standName">Cab Stand</div>
+						</div>
+						<div class="col col-10">
+							<i class="icon ion-checkmark-circled" ng-class="connectivity.cabStand.cabStand? 'greenTick': 'greyTick'"></i>
+						</div>
+					</div>
+				</ion-item>
+				<div class="row" ng-show="connectivity.cabStand.cabStand">
+					<div class="col latNlng">
+						<label class="item item-input item-floating-label">
+					    	<span class="input-label labels">Lat</span>
+					    	<input type="number" placeholder="Lat" ng-model = "connectivity.cabStand.lat">
+						</label>
+					</div>
+					<div class="col latNlng">
+						<label class="item item-input item-floating-label">
+					    	<span class="input-label labels">Lng</span>
+					    	<input type="number" placeholder="Lng" ng-model = "connectivity.cabStand.lng">
+						</label>
+					</div>
 				</div>
 			</div>
-			<div class="{{stand.id}}" ng-repeat="stand in connectivity2">
+			<div class="police-stn">
 				<div class="item item-divider">
-					{{stand.name}}
+				    Local Police Station
 				</div>
-				<div class="all-fields" ng-repeat="param in params2">
-					<label class="item item-input item-floating-label">
-						<span class="input-label labels">{{param.name}}</span>
-					   	<input type="number" placeholder="{{param.name}}" ng-model = "connectivity[stand.id][param.id]">
-					</label>
-				</div>
-			</div>
-			<div class="road-n-expressway">
-				<div class="item item-divider">
-					Main Road And ExpressWay
-				</div>
-				<div class="otherModes" ng-repeat="item in otherMeans">
-					<label class="item item-input item-floating-label">
-						<span class="input-label labels">{{item.name1}}</span>
-					   	<input type="text" placeholder="{{item.name1}}" ng-model = "connectivity[item.id1]">
-					</label>
-					<label class="item item-input item-floating-label">
-						<span class="input-label labels">{{item.name2}}</span>
-					   	<input type="number" placeholder="{{item.name2}}" ng-model = "connectivity[item.id2]">
-					</label>
-				</div>
-			</div>
-			<div>
-				<button class="button button-block button-dark" ng-click="save()">Save</button>
+				<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Name</span>
+			    	<input type="text" placeholder="Name" ng-model = "connectivity.policeStn.name">
+				</label>
+				<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Lat</span>
+			    	<input type="number" placeholder="Lat" ng-model = "connectivity.policeStn.lat">
+				</label>
+				<label class="item item-input item-floating-label">
+			    	<span class="input-label labels">Lng</span>
+			    	<input type="number" placeholder="Lng" ng-model = "connectivity.policeStn.lng">
+				</label>
 			</div>
 		</div>
 	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-dark" ng-click="save()">
+    	<h1 class="title">Save</h1>
+    </ion-footer-bar>
 </ion-view>

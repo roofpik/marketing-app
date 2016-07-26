@@ -1,11 +1,21 @@
 <ion-view class="add-project-locations" cache-view="false">
 	<ion-header-bar class="bar-balanced" align-title="center">
-		<button ng-click="goBack()" class="icon ion-chevron-left"></button>
+		<button ng-click="goBack()" class="icon ion-chevron-left button button-balanced"></button>
 		<h1 class="title">Project Locations</h1>
 		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
+			<div class="existingLoc" ng-show="existingLocations">
+				<div class="item item-divider">
+					Selected Locations
+				</div>
+				<ion-list>
+					<ion-item ng-repeat="loc in existingLocations">
+						{{loc.locationName}}
+					</ion-item>
+				</ion-list>
+			</div>
 			<div class="locations">
                 <label class="item item-input item-floating-label" id="locName">
 				    <span class="input-label labels">Locations</span>

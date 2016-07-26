@@ -10,12 +10,8 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 	$scope.projectType = projectRequiredDetail.projectType;
 
 	$scope.connectivity = {
-		airport: {},
-		cabStand: {},
 		autoStand: {},
-		metroStation: {},
-		railwayStation: {},
-		busStand: {}
+		cabStand: {}
 	};
 
 	getProjectDetails();
@@ -33,33 +29,14 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
          });
     };
 
-	$scope.connectivity1 = [
-		{name:'Airport', id:'airport'},
-		{name: 'Metro Station', id:'metroStation'},
-		{name:'Railway Station', id:'railwayStation'},
-		{name:'Bus Stand', id:'busStand'}
-	];
-	$scope.params1= [
-		{name: 'Latitude', id: 'lat'},
-		{name:'Longitude', id:'lng'},
-		{name:'Distance', id: 'distance'},
-		{name: 'Peak Time', id:'peakTime'},
-		{name: 'Off Peak Time', id: 'offPeakTime'}
-	];
-	$scope.connectivity2 = [
-		{name:'Cab Stand', id:'cabStand'},
-		{name: 'Auto Stand', id:'autoStand'}
-	];
-	$scope.params2 = [
-		{name: 'Latitude', id: 'lat'},
-		{name:'Longitude', id:'lng'},
-		{name:'Distance', id:'distance'}
-	];
-
-	$scope.otherMeans = [
-		{name1: 'Nearest Main Road', id1: 'nearestMainRoad', name2: 'Main Road Distance', id2: 'mainRoadDistance'},
-		{name1: 'Nearest Expressway', id1: 'nearestExpressway', name2: 'Expressway Distance', id2: 'expresswayDistance'}
-	];
+    $scope.selectStand = function(value){
+    	console.log(value);
+    	$scope.connectivity[value][value] = !$scope.connectivity[value][value];
+    	console.log($scope.connectivity[value][value]);
+    	if(!$scope.connectivity[value][value]){
+    		delete $scope.connectivity[value];
+    	}
+    }
 
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
 	    scope: $scope,
@@ -92,17 +69,15 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 		var addProjectDetails = {};
       	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
       	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails);
-      	$ionicPopup.alert({
-			title: 'Successful',
-			template: 'Project Details updates successfully'
-		}).then(function(){
-			$ionicLoading.hide();
-		})
-		$scope.connectivity = {};
+      	db.ref().update(addProjectDetails).then(function(){
+      		$ionicLoading.hide();
+	      		$ionicPopup.alert({
+				title: 'Successful',
+				template: 'Project Details updates successfully'
+			}).then(function(){
+				$scope.connectivity = {};
+			})
+      	});
 	}
 
-	$scope.goToActivity = function(){
-		
-	}
 }]);

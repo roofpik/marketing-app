@@ -5,7 +5,7 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 
 	$timeout(function(){
 		$ionicLoading.hide();
-	},1000);
+	},8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -24,7 +24,10 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
             	$scope.specifications = snapshot.val();
             	console.log($scope.specifications);
             }
-            $ionicLoading.hide(); 
+            $timeout(function(){
+            	$ionicLoading.hide(); 
+            }, 500);
+            
          });
     };
 
@@ -83,7 +86,7 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 	$scope.selectFlooring = function(value){
 		//console.log(value);
 		//console.log($scope.flooring[value.id].type);
-		$scope.specifications[value.id] = JSON.parse($scope.flooring[value.id].type).id;
+		$scope.specifications[value.id] = JSON.parse($scope.flooring[value.id].type).name;
 		console.log($scope.specifications[value.id]);
 	}
 
@@ -130,7 +133,7 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 				title: 'Successful',
 				template: 'Project Details updates successfully'
 			}).then(function(){
-				$state.go('near-me');
+				$state.go('other-details');
 			})
 			$scope.specifications = {};
 		})
@@ -161,7 +164,7 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 	}
 
 	$scope.next = function(){
-		$state.go('near-me');
+		$state.go('other-details');
 	}
 
 }]);

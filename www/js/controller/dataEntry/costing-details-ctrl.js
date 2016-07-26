@@ -27,20 +27,23 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
          });
     };
 	$scope.parameters = [
+		{id:'cookingChargeOneMeal', name: 'Cooking Charges One Meal'},
+		{id:'cookingChargeTwoMeals', name: 'Cooking Charges Two Meals'},
+		{id:'cleaningUtensilsOneTime', name: 'Cleaning Utensils One Time'},
+		{id:'cleaningUtensilsTwoTime', name: 'Cleaning Utensils Two Time'},
+		{id:'maid12Hours', name: 'Maid 12 Hours'},
+		{id:'maid24Hours', name: 'Maid 24 Hours'}
+	];
+
+	$scope.parameters1 = [
+		{id:'carParkingCharges', name: 'Car Parking Charges(Buy)'},
+		{id:'extraCarParkingCharges', name: 'Extra Car Parking Charges(Rent)'},
 		{id:'powerBackupChargesFixed', name:'Power Backup Charges Fixed'},
 		{id:'powerBackupChargesVariable', name:'Power Backup Charges Variable'},
 		{id:'maintenanceChargesFixed', name:'Maintenance Charges Fixed'},
 		{id:'maintenanceChargesVariable', name:'Maintenance Charges Variable'},
 		{id:'moveInCharges', name: 'Move In Charges'},
 		{id:'moveOutCharges', name: 'Move Out Charges'},
-		{id:'cookingChargeOneMeal', name: 'Cooking Charges One Meal'},
-		{id:'cookingChargeTwoMeals', name: 'Cooking Charges Two Meals'},
-		{id:'cleaningUtensilsOneTime', name: 'Cleaning Utensils One Time'},
-		{id:'cleaningUtensilsTwoTime', name: 'Cleaning Utensils Two Time'},
-		{id:'maid12Hours', name: 'Maid 12 Hours'},
-		{id:'maid24Hours', name: 'Maid 24 Hours'},
-		{id:'carParkingCharges', name: 'Car Parking Charges'},
-		{id:'extraCarParkingCharges', name: 'Extra Car Parking Charges'},
 		{id: 'EDC-IDC', name: 'EDC/IDC'},
 		{id: 'IFMS', name: 'IFMS'},
 		{id: 'PLC', name: 'PLC'},
@@ -61,7 +64,7 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 				title: 'Successful',
 				template: 'Project Details updates successfully'
 			}).then(function(){
-				$state.go('security-details');
+				$state.go('important-contacts');
 			})
       	});
 		$scope.costing = {};

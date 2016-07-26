@@ -1,11 +1,11 @@
-app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover, $ionicLoading){
+app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPopover', '$ionicLoading', '$ionicPopup', function($scope, $timeout, $state, $ionicPopover, $ionicLoading, $ionicPopup){
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
 
 	$timeout(function(){
 		$ionicLoading.hide();
-	},1000);
+	},8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -19,6 +19,23 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		{id: 'studio', name: 'Studio'},
 		{id: 'servicedApartment', name: 'Serviced Apartment'}
 	];
+
+	getProjectDetails();
+
+	$scope.existingUnits = [];
+
+	function getProjectDetails(){
+		console.log($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations");
+		db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations").once('value', function(snapshot){
+			console.log(snapshot.val());
+			angular.forEach(snapshot.val(), function(value, key){
+				$scope.existingUnits.push(value);
+			})
+		}).then(function(){
+			$ionicLoading.hide();
+			console.log($scope.existingUnits);
+		});
+	}
 
 	$scope.configurations = {};
 
@@ -34,7 +51,7 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
 	$scope.configurations2 = [
 		{name: 'Super Area(in sq.ft.)', id: 'superArea'},
-		{name: 'Carpet Area', id: 'carpetArea'},
+		{name: 'Carpet Area(in sq.ft.)', id: 'carpetArea'},
 		{name: 'Total Balconies', id: 'totalBalconies'},
 		{name: 'Total Bedrooms', id: 'totalBedrooms'},
 		{name: 'Total Washrooms', id: 'totalWashrooms'},
@@ -62,18 +79,56 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		}
 	}
 
-	$scope.addThisUnit = function(){
-		console.log($scope.configurations);
-		
-		var addProjectDetails = {};
-		//$scope.units[newkey] = $scope.units;
-		var newkey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations").push().key;
-      	console.log(newkey);
-      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/configurations/"+ newkey] = $scope.configurations;
-      	console.log(addProjectDetails);
-      	db.ref().update(addProjectDetails);
-      	$scope.configurations = {};
-      	
+	$scope.exist = false;
+
+	$scope.addThisUnit = function(x){
+		console.log(x);
+		if($scope.configurations.propertyType != undefined && $scope.configurations.superArea != undefined){
+			console.log($scope.configurations);
+			angular.forEach($scope.existingUnits, function(value, key){
+				console.log(value.superArea, $scope.configurations.superArea);
+				if(value.superArea == $scope.configurations.superArea && value.type == $scope.configurations.type){
+					console.log('exists');
+					$scope.exist = true;
+				}
+			})
+
+			console.log($scope.exist);
+
+			if($scope.exist){
+				$ionicPopup.alert({
+					title: 'Already exists',
+					template: 'This unit already exists'
+				}).then(function(){
+					$scope.configurations = {};
+					$scope.exist = false;
+					window.location.reload(true);
+				})
+			} else {
+				var addProjectDetails = {};
+				//$scope.units[newkey] = $scope.units;
+				var newkey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations").push().key;
+		      	console.log(newkey);
+		      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/configurations/"+ newkey] = $scope.configurations;
+		      	console.log(addProjectDetails);
+		      	db.ref().update(addProjectDetails).then(function(){
+		      		$scope.existingUnits.push($scope.configurations);
+		      		$scope.configurations = {};
+			      	$scope.exist = false;
+			      	if(x == 1){
+			      		window.location.reload(true);
+			      	} else {
+			      		$state.go('sports-n-clubhouse');
+			      	}
+			      	
+		      	});
+			}
+		} else {
+			$ionicPopup.alert({
+				title:'Empty Fields',
+				template: 'Please select a unit type enter the super area'
+			})
+		}
 	}
 	$ionicPopover.fromTemplateUrl('templates/dataEntry/popover.html', {
 	    scope: $scope,
@@ -99,7 +154,7 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
     }
 
     $scope.next = function(){
-    	$state.go('specifications');
+  		$scope.addThisUnit(2);
     }
 
 }]);

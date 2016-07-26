@@ -18,6 +18,10 @@
 				<span class="input-label labels">Car Wash Charges Max</span>
 		    	<input type="number" placeholder="Car Wash Charges Max" ng-model = "costing.carWashCharges.max">
 			</label>
+			<label class="item item-input item-floating-label" ng-repeat="item in parameters1">
+			    <span class="input-label labels">{{item.name}}</span>
+			    <input type="number" placeholder="{{item.name}}" ng-model="costing[item.id]">
+		  	</label>
 		  	<div>
 				<button class="button button-block button-dark" ng-click="save()">Save</button>
 			</div>

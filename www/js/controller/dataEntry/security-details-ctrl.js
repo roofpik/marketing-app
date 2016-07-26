@@ -81,7 +81,7 @@ app.controller('SecurityDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPo
 			template: 'Project Details updates successfully'
 		}).then(function(){
 			$scope.security = {};
-			$state.go('data-entry', {activityId:projectRequiredDetail.activityId});
+			$state.go('costing-details');
 		})
 	}
 

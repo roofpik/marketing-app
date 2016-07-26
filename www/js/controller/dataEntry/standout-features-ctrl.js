@@ -89,6 +89,6 @@ app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$i
         $state.go('data-entry', {activityId:projectRequiredDetail.activityId});
     }
     $scope.next = function(){
-        $state.go('important-contacts');
+        $state.go('specifications');
     }
 }]);

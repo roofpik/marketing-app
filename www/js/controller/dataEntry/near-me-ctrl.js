@@ -39,6 +39,8 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 		{id: 'dth', name: 'DTH'}
 	];
 
+	$scope.availableOptions = [];
+
 	getProjectDetails();
 
     function getProjectDetails(){
@@ -46,6 +48,10 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
     	console.log($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion);
         firebase.database().ref($scope.projectType+'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/nearMe').once('value', function(snapshot) {
             console.log(snapshot.val());
+            angular.forEach(snapshot.val(), function(value,key){
+            	value.name=key;
+            	$scope.availableOptions.push(value);
+            })
             if(snapshot.val() != null){
             	angular.forEach(snapshot.val(), function(value, key){
             		console.log(value, key);
@@ -78,27 +84,37 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 		console.log($scope.nearMeDetails);
 		if($scope.nearMeDetails.name != undefined && $scope.nearMeDetails.name != '' && $scope.nearMeDetails.contact != undefined && $scope.nearMeDetails.contact != '' && $scope.vendorType != ''){
 			var newKey = db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts').push().key;
+			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType] = true;
 			addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/contacts/'+newKey] = $scope.nearMeDetails;
-	 		db.ref().update(addProjectDetails);
-	 		console.log(addProjectDetails);
-	 		$scope.nearMeDetails.type = $scope.vendorType;
-	 		$scope.vendors.push($scope.nearMeDetails);
-	 		$scope.vendorsCount++;
-	 		$scope.nearMeDetails = {};
-	 		$ionicLoading.hide();
+	 		db.ref().update(addProjectDetails).then(function(){
+	 			console.log(addProjectDetails);
+		 		$scope.nearMeDetails.type = $scope.vendorType;
+		 		$scope.vendors.push($scope.nearMeDetails);
+		 		$scope.vendorsCount++;
+		 		$scope.nearMeDetails = {};
+		 		$ionicLoading.hide();
+	 			$ionicPopup.alert({
+					title:'Added Successfully',
+					template: 'Details successfully updated'
+				}).then(function(){
+					window.location.reload(true);
+				})
+	 		});
 		} else if($scope.vendorType != ''){
 			$ionicLoading.hide();
 			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/nearMe/"+$scope.vendorType+'/'+$scope.vendorType).set(true).then(function(){
 				$ionicPopup.alert({
 					title:'Added Successfully',
 					template: 'Details successfully updated'
+				}).then(function(){
+					window.location.reload(true);
 				})
 			});
 		} else {
 			$ionicLoading.hide();
 			$ionicPopup.alert({
-				title:'Added Successfully',
-				template: 'Details successfully updated'
+				title:'Empty Fields',
+				template: 'Please fill the empty fields'
 			})
 		}
 	}
@@ -126,7 +142,7 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
     }
 
     $scope.next = function(){
-    	$state.go('sports-n-clubhouse');
+    	$state.go('connectivity-details');
     }
 
 }]);

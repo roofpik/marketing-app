@@ -98,7 +98,7 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
       	console.log(addProjectDetails);
       	db.ref().update(addProjectDetails).then(function(){
       		$ionicLoading.hide();
-      		$state.go('other-details');
+      		$state.go('security-details');
       	});
 	}
 

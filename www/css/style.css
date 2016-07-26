@@ -352,7 +352,7 @@ blockquote p:before{
     top: 0;
     bottom: 0;
     right: 0;
-    padding: 0 10px 0 0px;
+    padding: 0 30px 0 0px;
     max-width: 72%;
     border: none;
     background: #fff;
@@ -368,10 +368,41 @@ blockquote p:before{
 .project-basic-details .verified {
     border: 1px solid #ccc;
     margin: 1px 0px 1px 0;
-    padding: 10px 10px 10px 15px;
+    padding: 15px 10px 15px 15px;;
     font-size: 15px;
     color: #404040;
 }
+
+.project-basic-details #landmark div {
+  display:inline-block;
+}
+
+.project-basic-details #landmark .landmark1 {
+    height: 63px;
+    padding-top: 2px;
+    text-align:right;
+}
+
+.project-basic-details #landmarkInput {
+  padding: 20px 0 0 0px;
+}
+
+.project-basic-details #landmark .landmark2 {
+    text-align: left;
+    height: 58px;
+    padding: 0px;
+    line-height: 75px;
+    margin-top: 0px;
+}
+
+.project-basic-details .projectName {
+  border-bottom: 1px solid #ccc;
+}
+
+.project-basic-details #buyRent {
+  padding: 13px;
+}
+
 
 /*Create Project*/
 
@@ -509,19 +540,27 @@ div.radio-content {
     min-height: 40px;
     padding-left:15px;
 }
-.other-details .size{
+.other-details .size, .other-details .backupType{
   text-align:center;
   border:1px solid #ccc;
 }
 
+
 /*Connectivity*/
-.airport span{
-  font-size:0.9em;
+
+.connectivity-details .greenTick{
+  color:#33CD5F;
+  font-size:1.5em;
 }
 
-.otherModes, .all-fields{
-  border-top:1px solid #ccc;
-  /*border-bottom:1px solid #ccc;*/
+.connectivity-details .greyTick{
+  color:#F8F8F8;
+  font-size:1.5em;
+}
+
+.connectivity-details .latNlng{
+  border:1px solid #ccc;
+  text-align:center;
 }
 
 /*Society shops*/
@@ -607,6 +646,12 @@ div.radio-content {
     font-size: 0.9em;
 }
 
+.near-me #catName {
+  border:1px solid #666;
+  font-weight:500;
+  background-color:#f2f2f2;
+}
+
 /*configurations*/
 .configurations .ion-checkmark-circled {
   font-size:1.7em;
@@ -616,6 +661,13 @@ div.radio-content {
 .configurations .more{
   font-size:1.5em;
   color:#f2f2f2;
+}
+
+.configurations #config-footer {
+  position : absolute;
+  bottom : 0;
+  height : 40px;
+  margin-top : 40px;
 }
 
 .configurations .less{
@@ -724,6 +776,14 @@ div.radio-content {
 .specifications .more{
   font-size:1.5em;
   color:#f2f2f2;
+}
+
+.specifications #existingAc {
+  font-size:1.1em;
+  color:#4d4d4d;
+  font-weight:500;
+  padding-right:30px;
+  text-align:right;
 }
 
 .specifications .less{
@@ -851,6 +911,15 @@ div.radio-content {
   font-size:1.5em;
 }
 
+.important-contacts .redCross{
+  color:red;
+  font-size:1.5em;
+}
+
+.important-contacts .greyCross{
+  color:#F8F8F8;
+  font-size:1.5em;
+}
 
 /*all projects*/
 
