@@ -2,6 +2,9 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+	$timeout(function(){
+		$ionicLoading.hide();	
+	}, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -30,16 +33,28 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
             }  
          }).then(function(){
 			firebase.database().ref($scope.projectType +'/' + $scope.cityId + '/projects/'+$scope.projectId+'/'+$scope.editableVersion+'/clubHouse').once('value', function(snapshot) {
-	            console.log(snapshot.val());
 	            if(snapshot.val() != null){
 	            	$scope.clubHouse = snapshot.val();
+	            	if(snapshot.val().operatingTimes == null){
+	            		$scope.clubhouse.operatingTimes= {
+							start: '',
+							end: '',
+							holiday: {
+
+							}
+						}
+	            	} else {
+	            		$scope.clubHouse.operatingTimes.holiday = {};
+	            	}
 	            	console.log($scope.clubHouse);
-	            	angular.forEach(snapshot.val().operatingTimes.holiday, function(value, key){
-	            		console.log(value, key);
-	            		if(value == true){
-	            			$scope.day[key] = true;
-	            		}
-	            	})
+	            	if(snapshot.val().operatingTimes.holiday != undefined){
+		            	angular.forEach(snapshot.val().operatingTimes.holiday, function(value, key){
+		            		console.log(value, key);
+		            		if(value == true){
+		            			$scope.day[key] = true;
+		            		}
+		            	})
+	            	}
 	            }  
 	         }).then(function(){
 	         	$timeout(function(){
@@ -80,8 +95,11 @@ app.controller('SportsNClubhouseCtrl',['$scope', '$timeout', '$state', '$ionicPo
 
 	$scope.save = function(){
 		$ionicLoading.show({
-	    template: 'Loading...'
-	  });
+		    template: 'Loading...'
+		  });
+		$timeout(function(){
+			$ionicLoading.hide();	
+		}, 8000);
 		console.log($scope.day);
 		angular.forEach($scope.days, function(value, key){
 			if($scope.day[value] == true){

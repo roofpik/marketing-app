@@ -7,11 +7,17 @@
 	</ion-header-bar>
 	<ion-content>
 		<div class="card">
-			<div class="projectName">
-				<label class="item item-input item-floating-label">
+			<div class="projectName padding">
+				<!-- <label class="item item-input item-floating-label">
 			    	<span class="input-label labels">Project Name</span>
 			    	<input type="text" placeholder="Project Name" ng-model = "project.projectName">
-				</label>
+				</label> -->
+				<div class="row">
+					<span class="input-label labels">Project Name</span>
+				</div>
+				<div class="row">
+					{{project.projectName}}
+				</div>
 			</div>
 
 			<div class="row" id="buyRent">
@@ -206,7 +212,7 @@
 						<p>{{type.name}}</p>
 					</div>
 				</div>
-				<div class="row row2">
+				<div class="row row1">
 					<div class="col" ng-click="selectType(type.id)" ng-class="project.projectDetails.projectType[type.id]?'selected': 'notSelected'" ng-repeat="type in types2">
 						<i class="icon ion-ios-home"></i>
 						<p>{{type.name}}</p>

@@ -1,7 +1,11 @@
 app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ionicPopover','$ionicPopup', '$ionicLoading', function($scope, $timeout, $state, $ionicPopover, $ionicPopup, $ionicLoading){
 	$ionicLoading.show({
 	    template: 'Loading...'
-	  }); 
+	  });
+	$timeout(function(){
+		$ionicLoading.hide();	
+	}, 8000);
+	
 	$scope.formName = 'connectivity-details';
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
@@ -65,7 +69,10 @@ app.controller('ConnectivityDetailsCtrl',['$scope', '$timeout', '$state', '$ioni
 		console.log($scope.connectivity);
 		$ionicLoading.show({
 		    template: 'Loading...'
-		  }); 
+		  });
+		$timeout(function(){
+			$ionicLoading.hide();
+		}, 8000);
 		var addProjectDetails = {};
       	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/"+ $scope.projectId+'/'+$scope.editableVersion+ "/connectivity"] = $scope.connectivity;
       	console.log(addProjectDetails);

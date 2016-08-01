@@ -125,6 +125,9 @@ app.controller('SpecificationsCtrl', ['$scope', '$timeout', '$state', '$ionicLoa
 		$ionicLoading.show({
 		    template: 'Loading...'
 		 });
+		$timeout(function(){
+			$ionicLoading.hide();	
+		}, 8000);
 		if(Object.keys($scope.specifications).length == 0){
 			$ionicLoading.hide();
 			$state.go('other-details');

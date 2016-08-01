@@ -2,6 +2,9 @@ app.controller('ImportantContactsCtrl',['$scope', '$timeout', '$state', '$ionicP
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+    $timeout(function(){
+        $ionicLoading.hide();   
+    }, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;

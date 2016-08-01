@@ -3,6 +3,9 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  }); 
+	$timeout(function(){
+		$ionicLoading.hide();	
+	}, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -55,6 +58,9 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		$ionicLoading.show({
 		    template: 'Loading...'
 		  }); 
+		$timeout(function(){
+			$ionicLoading.hide();	
+		}, 8000);
 		var addProjectDetails = {};
       	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/costing"] = $scope.costing;
       	console.log(addProjectDetails);

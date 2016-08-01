@@ -13,6 +13,10 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
     $ionicLoading.show({
         template: 'Loading...'
     });
+
+    $timeout(function(){
+        $ionicLoading.hide();
+    }, 8000); 
     var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 
     $scope.projectId = projectRequiredDetail.projectId;
@@ -141,7 +145,8 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
 
     $scope.types2 = [
         {id: 'studio', name: 'Studio'},
-        {id: 'servicedApartment', name: 'Serviced Apartment'}
+        {id: 'servicedApartment', name: 'Serviced Apartment'},
+        {id: 'penthouse', name: 'Penthouse'}
     ];
 
     $scope.selectType = function(val){
@@ -198,6 +203,10 @@ app.controller('ProjectBasicDetailsCtrl', ['$ionicHistory', '$scope', '$statePar
         $ionicLoading.show({
             template: 'Loading...'
         });
+
+        $timeout(function(){
+            $ionicLoading.hide();
+        }, 8000); 
         $scope.project.projectDetails.address.landmark = $scope.address.landmark+ ', '+ $scope.project.projectDetails.address.zoneName;
         if($scope.project.projectDetails.builderId == $scope.previousBuilder && $scope.project.projectDetails.address.zoneId == $scope.previousZone){
            db.ref($scope.projectType+'/'+$scope.cityId +'/projects/'+$scope.projectId+'/'+$scope.editableVersion).update($scope.project).then(function(){

@@ -17,7 +17,8 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		{id: 'villa', name: 'Villa'},
 		{id: 'rowHouse', name: 'Row House'},
 		{id: 'studio', name: 'Studio'},
-		{id: 'servicedApartment', name: 'Serviced Apartment'}
+		{id: 'servicedApartment', name: 'Serviced Apartment'},
+		{id: 'penthouse', name: 'Penthouse'}
 	];
 
 	getProjectDetails();
@@ -82,13 +83,21 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	$scope.exist = false;
 
 	$scope.addThisUnit = function(x){
-		console.log(x);
-		if($scope.configurations.propertyType != undefined && $scope.configurations.superArea != undefined){
+		$ionicLoading.show({
+		    template: 'Loading...'
+		  });
+
+		$timeout(function(){
+			$ionicLoading.hide();
+		},8000);
+		if($scope.configurations.propertyType != undefined && $scope.configurations.superArea != undefined &&$scope.configurations.type != undefined){
 			console.log($scope.configurations);
 			angular.forEach($scope.existingUnits, function(value, key){
-				console.log(value.superArea, $scope.configurations.superArea);
-				if(value.superArea == $scope.configurations.superArea && value.type == $scope.configurations.type){
+				if(value.superArea == $scope.configurations.superArea && value.type == $scope.configurations.type && value.propertyType == $scope.configurations.propertyType){
 					console.log('exists');
+					console.log(value.superArea, $scope.configurations.superArea);
+					console.log(value.type, $scope.configurations.type);
+					console.log(value.propertyType, $scope.configurations.propertyType);
 					$scope.exist = true;
 				}
 			})
@@ -100,6 +109,7 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 					title: 'Already exists',
 					template: 'This unit already exists'
 				}).then(function(){
+					$ionicLoading.hide();
 					$scope.configurations = {};
 					$scope.exist = false;
 					window.location.reload(true);
@@ -112,18 +122,23 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		      	addProjectDetails[$scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/units/configurations/"+ newkey] = $scope.configurations;
 		      	console.log(addProjectDetails);
 		      	db.ref().update(addProjectDetails).then(function(){
+		      		$ionicLoading.hide();
 		      		$scope.existingUnits.push($scope.configurations);
 		      		$scope.configurations = {};
 			      	$scope.exist = false;
-			      	if(x == 1){
+			      	$ionicPopup.alert({
+			      		title: 'Added Successfully'
+			      	}).then(function(){
+			      		if(x == 1){
 			      		window.location.reload(true);
-			      	} else {
-			      		$state.go('sports-n-clubhouse');
-			      	}
-			      	
+				      	} else {
+				      		$state.go('sports-n-clubhouse');
+				      	}
+			      	})	
 		      	});
 			}
 		} else {
+			$ionicLoading.hide();
 			$ionicPopup.alert({
 				title:'Empty Fields',
 				template: 'Please select a unit type enter the super area'

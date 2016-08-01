@@ -1,7 +1,10 @@
-app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$ionicLoading','$firebaseArray', function($scope, $ionicPopover, $state, $ionicLoading, $firebaseArray){
+app.controller('StandoutFeaturesCtrl', ['$scope', '$ionicPopover', '$state', '$ionicLoading','$firebaseArray', '$timeout', function($scope, $ionicPopover, $state, $ionicLoading, $firebaseArray, $timeout){
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+    $timeout(function(){
+        $ionicLoading.hide();   
+    }, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;

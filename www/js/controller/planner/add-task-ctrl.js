@@ -3,6 +3,9 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+	$timeout(function(){
+		$ionicLoading.hide();
+	}, 8000); 
 	$scope.myId = localStorage.getItem("uid");
 
 
@@ -49,7 +52,12 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 	$scope.selectCity=function(cityDetails){
 		$ionicLoading.show({
 		    template: 'Loading...'
-		  });
+		});
+
+		$timeout(function(){
+			$ionicLoading.hide();
+		}, 8000); 
+
 		$scope.citySelected = true;
 	 	console.log(cityDetails);
 	 	cityDetails=JSON.parse(cityDetails);	
@@ -60,9 +68,6 @@ app.controller('AddTaskCtrl', ['$scope', '$timeout', '$ionicPopup', '$state', '$
 
 
 	function getProjects(){
-		console.log('called');
-		console.log($scope.myId);
-		console.log($scope.data.cityId);
 		var newData = firebase.database().ref('admins/'+$scope.myId+'/projectAccess/'+$scope.data.cityId+'/'+$scope.adminProjectType);
 	    newData.on('value', function(data) {
 	    	console.log(data.val());

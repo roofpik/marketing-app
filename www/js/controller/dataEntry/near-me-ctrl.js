@@ -2,6 +2,9 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+	$timeout(function(){
+		$ionicLoading.hide();	
+	}, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -84,6 +87,9 @@ app.controller('NearMeCtrl', ['$scope', '$ionicPopover', '$timeout', '$state', '
 		$ionicLoading.show({
 		    template: 'Loading...'
 		  });
+		$timeout(function(){
+			$ionicLoading.hide();	
+		}, 8000);
 		console.log($scope.nearMeDetails);
 		if($scope.nearMeDetails.name != undefined && $scope.nearMeDetails.name != '' && $scope.nearMeDetails.contact != undefined && $scope.nearMeDetails.contact != '' && $scope.vendorType != ''){
 			var exists = false;

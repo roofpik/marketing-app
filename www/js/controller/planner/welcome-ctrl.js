@@ -22,4 +22,24 @@ app.controller("welCtrl", function($scope, $state, AuthenticationService) {
         $state.go('login');
     }
 
+    getData();
+
+    $scope.names = [];
+
+    function getData(){
+        console.log('called');
+            db.ref("protectedResidential/-KN7HFa3un2SPyrUKosy/projects").once('value', function(snapshot){
+        console.log(snapshot.val());
+        angular.forEach(snapshot.val(), function(value, key){
+            console.log(value['1-1'].projectName);
+            $scope.names.push(value['1-1'].projectName);
+        })
+
+        $scope.names = $scope.names.sort();
+        console.log($scope.names);
+    })  
+    }
+
+
+
 });

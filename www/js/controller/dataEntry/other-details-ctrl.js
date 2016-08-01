@@ -2,6 +2,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 	$ionicLoading.show({
 	    template: 'Loading...'
 	  });
+	$timeout(function(){
+		$ionicLoading.hide();	
+	}, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	$scope.cityId = projectRequiredDetail.cityId;
@@ -89,6 +92,9 @@ app.controller('OtherDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPopov
 		$ionicLoading.show({
 		    template: 'Loading...'
 		  });
+		$timeout(function(){
+			$ionicLoading.hide();	
+		}, 8000);
 
 		if(Object.keys($scope.other).length == 0){
 			$ionicLoading.hide();

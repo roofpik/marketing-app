@@ -2,6 +2,9 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 	$ionicLoading.show({
 	    template: 'Loading...'
 	});
+	$timeout(function(){
+		$ionicLoading.hide();
+	}, 8000);
 	var projectRequiredDetail = JSON.parse(localStorage.getItem('projectRequiredDetail'));
 	$scope.projectId = projectRequiredDetail.projectId;
 	console.log(projectRequiredDetail);
@@ -85,6 +88,9 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 		$ionicLoading.show({
 		    template: 'Loading...'
 		});
+		$timeout(function(){
+			$ionicLoading.hide();
+		}, 8000);
 		if($scope.selectedLocations.length){
 			console.log($scope.selectedLocations.length);
 			angular.forEach($scope.selectedLocations, function(value, key){
@@ -142,6 +148,9 @@ app.controller('AddProjectLocationsCtrl', function($scope, $state, $timeout, $io
 		$ionicLoading.show({
 			template: 'Loading...'
 		})
+		$timeout(function(){
+			$ionicLoading.hide();
+		}, 8000);
 		console.log(location);
 		db.ref('location/'+$scope.cityId+'/'+location.locationId+'/projectAccess/residential/'+$scope.projectId).remove().then(function(){
 			db.ref($scope.projectType+"/"+$scope.cityId+"/projects/" + $scope.projectId+'/'+$scope.editableVersion+ "/projectDetails/address/locations/"+location.locationId).remove().then(function(){

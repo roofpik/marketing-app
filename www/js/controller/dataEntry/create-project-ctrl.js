@@ -2,7 +2,10 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 	function($ionicHistory, $scope, $timeout,$ionicPopup, $state, $ionicPopover, $ionicLoading){
 	$ionicLoading.show({
 	    template: 'Loading...'
-	  }); 
+	});
+	$timeout(function(){
+		$ionicLoading.hide();
+	}, 8000); 
 	getCities();
 
 	//$scope.myId = window.localStorage.uid;
@@ -62,7 +65,10 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 		if(!$scope.hasCity){
 			$ionicLoading.show({
 			    template: 'Loading...'
-			  }); 
+			});
+			$timeout(function(){
+				$ionicLoading.hide();
+			}, 8000); 
 			$scope.cityDetails =JSON.parse($scope.address.selectedCity);
 			$scope.hasCity = true;
 			$scope.project.projectDetails.address.cityName = $scope.cityDetails.cityName;
@@ -70,14 +76,11 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 			console.log($scope.cityDetails);
 			var zoneData = firebase.database().ref('zone/'+$scope.cityDetails.cityId);
 		     zoneData.on('value', function(data) {
-		        //console.log(data.val());
 		        $timeout(function(){
 		        	angular.forEach(data.val(), function(value, key){
 			         	$scope.zones.push(value);
-			         	//$timeout(function(){console.log($scope.zones);},50);
 			         })
 		        	$ionicLoading.hide();
-			        //console.log($scope.zones);
 		        }, 50);   
 			});
 		 }	
@@ -143,7 +146,10 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 
 		$ionicLoading.show({
 		    template: 'Loading...'
-		}); 
+		});
+		$timeout(function(){
+			$ionicLoading.hide();
+		}, 8000); 
 		
 		if($scope.projectType == ''){
 			$ionicLoading.hide();
