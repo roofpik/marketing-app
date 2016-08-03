@@ -181,6 +181,19 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 							exist = true;
 						}
 					})
+				var addProjectPermission = false;
+
+				if(exist){
+					$ionicLoading.hide();
+					$ionicPopup.confirm({
+						title:'Project Cannot Be Created',
+						template: 'This project name already exists.'
+					}).then(function(res){
+					})
+				} else {
+					$scope.addThisProject();
+				}
+				console.log(addProjectPermission);
 				})
 			} else {
 				$ionicLoading.hide();
@@ -190,23 +203,6 @@ app.controller('CreateProjectCtrl', [ '$ionicHistory', '$scope', '$timeout', '$i
 				})
 			}
 
-			var addProjectPermission = false;
-
-			if(exist){
-				$ionicLoading.hide();
-				$ionicPopup.confirm({
-					title:'Already Exists',
-					template: 'This project name already exists. Do you still want to add this project?'
-				}).then(function(res){
-					console.log(res);
-					if(res){
-						$scope.addThisProject();
-					}
-				})
-			} else {
-				$scope.addThisProject();
-			}
-			console.log(addProjectPermission);
 	    }
 	}
 

@@ -1,0 +1,50 @@
+<ion-view class="edit-configuration" cache-view="false">
+	<ion-header-bar class="bar-balanced" align-title="center">
+		<button class="icon ion-chevron-left button button-balanced" ng-click="goBack()"></button>
+		<h1 class="title">Edit Configurations</h1>
+		<button class="button button-balanced icon ion-ios-list-outline" ng-click="popover.show($event)"></button>
+	</ion-header-bar>
+	<ion-content class="has-footer">
+		<div class="card">
+			<div class="configurations">
+				<div class="item-divider" style="padding-left:10px;">
+				       Unit Type : {{selectedUnit.propertyType}}
+				</div>
+				<label class="item item-input item-select" style="height: 50px;">
+					<div class="input-label">
+				        Select Unit Type
+				    </div>
+				    <select ng-change="selectProjectType()" ng-model="project.type">
+				        <option 
+				            ng-repeat="type in propertyTypes" 
+				            value="{{type}}">
+				                {{type.name}}
+				        </option>
+				    </select>
+				</label>
+				<label class="item item-input item-floating-label">
+					<span class="input-label labels">Type (BHK)</span>
+					<input type="number" placeholder="Type (BHK)" ng-model = "selectedUnit.type">
+				</label>
+				<label class="item item-input item-floating-label" ng-repeat="config in configurations1">
+					<span class="input-label labels">{{config.name}}</span>
+					<input type="number" placeholder="{{config.name}}" ng-model = "selectedUnit[config.id]">
+				</label>
+				<div class="item item-divider">
+					Y/N
+				</div>
+				<div class="row" ng-repeat = "config in configurations2" ng-click="selectConfig(config.id)">
+					<div class="col col-90">
+						<p>{{config.name}}</p>
+					</div>
+					<div class="col col-10">
+						<i class="icon ion-checkmark-circled" ng-show="selectedUnit.{{config.id}}"></i>
+					</div>
+				</div>
+			</div>
+		</div>
+	</ion-content>
+	<ion-footer-bar align-title="center" class="bar-dark" ng-click="submitEdited()">
+	<h1 class="title">Submit</h1>
+    </ion-footer-bar>
+</ion-view>

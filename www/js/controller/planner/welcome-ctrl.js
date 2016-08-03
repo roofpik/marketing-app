@@ -21,24 +21,12 @@ app.controller("welCtrl", function($scope, $state, AuthenticationService) {
         AuthenticationService.Logout();
         $state.go('login');
     }
-
-    getData();
-
-    $scope.names = [];
-
-    function getData(){
-        console.log('called');
-            db.ref("protectedResidential/-KN7HFa3un2SPyrUKosy/projects").once('value', function(snapshot){
-        console.log(snapshot.val());
+      db.ref('projetcs/-KN7HFa3un2SPyrUKosy/residential').once('value', function(snapshot){
         angular.forEach(snapshot.val(), function(value, key){
-            console.log(value['1-1'].projectName);
-            $scope.names.push(value['1-1'].projectName);
+            console.log(value.sportsActivities); 
         })
-
-        $scope.names = $scope.names.sort();
-        console.log($scope.names);
-    })  
-    }
+        
+      })
 
 
 

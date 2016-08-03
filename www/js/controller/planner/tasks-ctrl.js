@@ -115,4 +115,5 @@ app.controller("tasksCtrl", function($ionicHistory, $scope, $state, $http,  $fil
     $scope.myGoBack = function() {
         $state.go('welcome');
       };
+
 });

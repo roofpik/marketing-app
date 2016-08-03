@@ -41,6 +41,7 @@ app.controller('CostingDetailsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 	$scope.parameters1 = [
 		{id:'carParkingCharges', name: 'Car Parking Charges(Buy)'},
 		{id:'extraCarParkingCharges', name: 'Extra Car Parking Charges(Rent)'},
+		{id:'visitorCarParkingCharges', name: 'Visitor Car Parking Charges'},
 		{id:'powerBackupChargesFixed', name:'Power Backup Charges Fixed'},
 		{id:'powerBackupChargesVariable', name:'Power Backup Charges Variable'},
 		{id:'maintenanceChargesFixed', name:'Maintenance Charges Fixed'},

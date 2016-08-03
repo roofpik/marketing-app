@@ -49,22 +49,62 @@
 					</div>
 				</div>
 			</div>
-			
-			<div class="presentUnits" style="text-align:center;">
-				<div class="item-divider" style="text-align:left;">
+
+			<div class="presentUnits">
+				<div class="item-divider">
 					Added Configurations
 				</div>
-				<div class="row" style="background-color:#ccc;">
-					<div class="col" style="border:1px solid #ccc;">Super Area</div>
-					<div class="col" style="border:1px solid #ccc;">BHK</div>
-					<div class="col" style="border:1px solid #ccc;">Type</div>
+				<div class = "all">
+					<div class="superA" style="width:20%;">SuperArea</div>
+					<div class="bhk" style="width:20%;">BHK</div>
+					<div class="type" style="width:30%;">Type</div>
+					<div class="edit" style="width:13%">Edit</div>
+					<div class="delete" style="width:13%">Delete</div>
 				</div>
-				<div class="row" ng-repeat="config in existingUnits">
-					<div class="col" style="border:1px solid #ccc;">{{config.superArea}}</div>
-					<div class="col" style="border:1px solid #ccc;">{{config.type}}</div>
-					<div class="col" style="border:1px solid #ccc;">{{config.propertyType}}</div>
+				<div class = "allUnits" ng-repeat="config in existingUnits">
+					<div class="superA" style="width:20%;">{{config.superArea}}</div>
+					<div class="bhk" style="width:20%;">{{config.type}}</div>
+					<div class="type" style="width:30%;">{{config.propertyType}}</div>
+					<div class="edit1" style="width:13%">
+						<div id="edit" ng-click="editUnit(config)">
+							<i class="icon ion-edit"></i>
+						</div>
+					</div>
+					<div class="delete1" style="width:13%">
+						<div id="delete" ng-click="deleteUnit(config)">
+							<i class="icon ion-trash-b"></i>
+						</div>
+					</div>
 				</div>
 			</div>
+			
+<!-- 			<div class="presentUnits" style="text-align:center;">
+				<div class="item-divider" style="text-align:left;padding-left: 10px;">
+					Added Configurations
+				</div>
+				<div class = "row">
+					<div class="col col-75">
+						<div class="row previous-units" style="background-color:#ccc;">
+							<div class="col">Super Area</div>
+							<div class="col">BHK</div>
+							<div class="col">Type</div>
+							<div class="col col-10">Edit</div>
+						</div>
+					</div>
+					<div class="col col-25">
+						<div class="row" ng-repeat="config in existingUnits">
+							<div class="col">{{config.superArea}}</div>
+							<div class="col">{{config.type}}</div>
+							<div class="col">{{config.propertyType}}</div>
+							<div class="col col-10" ng-click="editUnit(config)">
+								<div id="edit">
+									<i class="icon ion-edit"></i>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div> -->
 			<!-- <div class="specifications">
 				<div class="item heading">
 					Specifications

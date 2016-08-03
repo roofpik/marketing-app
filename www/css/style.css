@@ -658,6 +658,21 @@ div.radio-content {
   color:#00b300;
 }
 
+.configurations .ion-edit {
+  font-size: 1.5em;
+
+}
+
+.configurations .ion-trash-b {
+  font-size: 1.5em;
+
+}
+
+
+.configurations .previous-units .col{
+  border:1px solid #ccc;
+}
+
 .configurations .more{
   font-size:1.5em;
   color:#f2f2f2;
@@ -668,6 +683,24 @@ div.radio-content {
   bottom : 0;
   height : 40px;
   margin-top : 40px;
+}
+
+.configurations #edit {
+    height: 40px;
+    width: 40px;
+    background-color: #ccc;
+    border-radius: 50%;
+    padding: 3px 11px;
+    color: #000;
+}
+
+.configurations #delete {
+    height: 40px;
+    width: 40px;
+    background-color: red;
+    border-radius: 50%;
+    padding-top: 0px;
+    color: #000;
 }
 
 .configurations .less{
@@ -689,8 +722,30 @@ div.radio-content {
     background-color: #d9d9d9;
 }
 
-.configurations .col-10{
-  padding-top:15px;
+.configurations .all {
+    width: 100%;
+    background-color: #ccc;
+}
+
+.configurations .all div {
+    display: inline-block;
+    border: 1px solid #808080;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+}
+
+.configurations .allUnits{
+  width: 100%;
+  border-bottom:1px solid #808080;
+}
+
+.configurations .allUnits div {
+    display: inline-block;
+    height: 47px;
+    line-height: 40px;
+    text-align: center;
+    padding-top: 5px;
 }
 
 .configurations .flooring .item-select select{

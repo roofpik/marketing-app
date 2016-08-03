@@ -30,6 +30,7 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations").once('value', function(snapshot){
 			console.log(snapshot.val());
 			angular.forEach(snapshot.val(), function(value, key){
+				value.unitId = key;
 				$scope.existingUnits.push(value);
 			})
 		}).then(function(){
@@ -123,9 +124,10 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 		      	console.log(addProjectDetails);
 		      	db.ref().update(addProjectDetails).then(function(){
 		      		$ionicLoading.hide();
-		      		$scope.existingUnits.push($scope.configurations);
-		      		$scope.configurations = {};
-			      	$scope.exist = false;
+		      		// $scope.configurations.unitId = newKey;
+		      		// $scope.existingUnits.push($scope.configurations);
+		      		// $scope.configurations = {};
+			      	// $scope.exist = false;
 			      	$ionicPopup.alert({
 			      		title: 'Added Successfully'
 			      	}).then(function(){
@@ -170,6 +172,38 @@ app.controller('ConfigurationsCtrl', ['$scope', '$timeout', '$state', '$ionicPop
 
     $scope.next = function(){
   		$state.go('sports-n-clubhouse');
+    }
+
+    $scope.editUnit = function(value){
+    	console.log(value);
+    	$state.go('edit-configuration', {unit:value.unitId});
+    }
+
+    $scope.deleteUnit = function(value){
+    	$ionicPopup.confirm({
+    		title:'Alert!!!',
+    		template:'Are you sure you want to delete this unit?'
+    	}).then(function(res){
+    		if(res){
+				$ionicLoading.show({
+				    template: 'Loading...'
+				  });
+
+				$timeout(function(){
+					$ionicLoading.hide();
+				},8000);
+		    	console.log(value);
+		    	db.ref($scope.projectType+"/"+$scope.cityId+"/projects/"+$scope.projectId+'/'+$scope.editableVersion+"/units/configurations/"+value.unitId).remove().then(function(){
+		    		$ionicLoading.hide();
+		    		$ionicPopup.alert({
+		    			title:'Unit deleted'
+		    		}).then(function(){
+		    			window.location.reload(true);
+		    		})
+		    	})	
+    		}
+    	})
+
     }
 
 }]);
